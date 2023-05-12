@@ -1,7 +1,20 @@
 import { AppStyled } from "./App.styled.jsx";
+import { Routes, Route } from "react-router-dom";
+import SharedLayout from "./SharedLayout/SharedLayout.jsx";
+import Research from "../pages/Research/Research";
+import Library from "../pages/Library/Library";
 
-function App() {
-  return <AppStyled>skdbhjf</AppStyled>;
-}
+const App = () => {
+  return (
+    <AppStyled>
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Research />} />
+          <Route path="/library" element={<Library />} />
+        </Route>
+      </Routes>
+    </AppStyled>
+  );
+};
 
 export default App;
