@@ -3,7 +3,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Roboto", sans-serif;
-  color: #606770;
+  color: var(--text-main);
 }
 
 code {
@@ -14,7 +14,7 @@ code {
 #root {
   width: 100%;
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: var(--bg-grey);
   display: flex;
   justify-content: center;
 }

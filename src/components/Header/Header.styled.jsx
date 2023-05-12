@@ -5,11 +5,11 @@ export const HeaderStyled = styled.div`
   height: 77px;
   display: flex;
   align-items: center;
-  padding: 0 51px;
+  /* padding: 0 51px; */
 `;
 
 export const Logo = styled.img`
-  margin-right: 30px;
+  margin-right: 22px;
   position: relative;
   top: -4px;
 `;
@@ -23,35 +23,37 @@ export const NavigationList = styled.ul`
 export const NavigationItem = styled.li``;
 
 export const NavigationLink = styled(NavLink)`
-  color: #242424;
+  color: var(--nav-black);
+  display: flex;
+  align-items: center;
+  height: 40px;
   font-size: 16px;
   line-height: 19px;
-  color: #242424;
+  color: var(--nav-black);
   position: relative;
+  transition: 0.3s;
+  padding: 0px 12px;
+  border-radius: 6px;
   &:first-child {
-    margin-right: 20px;
+    margin-right: 4px;
+  }
+  &:hover,
+  &:active {
+    background-color: var(--hover-grey);
   }
   &.active {
-    color: #fb6d00;
-    &::after {
-      content: "";
-      width: 100%;
-      height: 1px;
-      background-color: #fb6d00;
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-    }
+    color: var(--accent);
   }
 `;
 
 export const Login = styled.button`
-  background: #ffffff;
+  background: var(--pure-white);
+  height: 40px;
+  align-items: center;
   border-radius: 10px;
-  padding: 10px;
+  padding: 0px 12px;
   display: flex;
   margin-left: auto;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
   & > svg {
     margin-right: 10px;
@@ -59,12 +61,12 @@ export const Login = styled.button`
   }
   &:hover,
   &:active {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    background-color: var(--hover-grey);
   }
 `;
 
 export const Logintext = styled.p`
   font-size: 16px;
   line-height: 19px;
-  color: #242424;
+  color: var(--nav-black);
 `;
