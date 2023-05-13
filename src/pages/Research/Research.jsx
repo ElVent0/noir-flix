@@ -10,31 +10,25 @@ import {
   MoviesName,
   MoviesYear,
   MoviesParagraph,
-  RatingIcon,
-  MoviesNavigation,
-  MoviesNavigationList,
-  MoviesNavigationItem,
-  MoviesNavigationButton,
-  MoviesNavigationButtonActive,
-  EndButton,
 } from "./Research.styled.jsx";
+import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import ResearchFilters from "../../components/ResearchFilters/ResearchFilters";
-import imdb from "../../media/imdb.png";
 import { getMovies } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { MdOutlineAutoGraph } from "react-icons/md";
+import poster from "../../media/poster.jpg";
 
 const Research = () => {
   const [moviesList, setMoviesList] = useState(null);
-  const [totalPages, setTotalPages] = useState(null);
-
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [inputSort, setInputSort] = useState("Popularity");
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getMovies(searchParams.get("page"));
+      const data = await getMovies(searchParams.get("page"), inputSort);
       setMoviesList(data.results);
-      setTotalPages(data.total_pages);
     };
 
     getData();
@@ -58,40 +52,66 @@ const Research = () => {
     }
     pageNumbers = [
       ...pageNumbers.filter(function (x) {
-        return x > 0 && x <= totalPages;
+        return x > 0 && x <= 496;
       }),
     ];
   };
   createPageNumbersList();
 
-  // console.log(currentPage, pageNumbers);
+  const genres = {
+    28: "Action",
+    12: "Adventure",
+    16: "Animation",
+    35: "Comedy",
+    80: "Crime",
+    99: "Documentary",
+    18: "Drama",
+    10751: "Family",
+    14: "Fantasy",
+    36: "History",
+    27: "Horror",
+    10402: "Music",
+    9648: "Mystery",
+    10749: "Romance",
+    878: "Science Fiction",
+    10770: "TV Movie",
+    53: "Thriller",
+    10752: "War",
+    37: "Western",
+  };
+
+  const genreIds = (item) => {
+    return item.genre_ids.map((item) => genres[item]).join(", ");
+  };
 
   return (
     <ResearchStyled>
-      <ResearchFilters />
+      <ResearchFilters setInputSort={setInputSort} inputSort={inputSort} />
       {moviesList ? (
         <MoviesList>
           {moviesList.map((item) => {
-            const path = `https://image.tmdb.org/t/p/original/${item.poster_path}`;
+            const path = item.poster_path
+              ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+              : poster;
 
             return (
               <MoviesItem key={item.id}>
                 <MoviesHeader>
                   <MoviesPoster path={path}></MoviesPoster>
                   <MoviesHeaderContent>
-                    <MoviesName>{item.original_title}</MoviesName>
+                    <MoviesName>{item.title}</MoviesName>
                     <MoviesYear>
                       {new Date(item.release_date).getFullYear()}
                     </MoviesYear>
                     <MoviesParagraph>
-                      <RatingIcon src={imdb} width="30" />
-                      {item.vote_average}
+                      <MdOutlineAutoGraph />
+                      <b>{item.vote_average}</b> / 10
                     </MoviesParagraph>
                     {/* <MoviesParagraph>
                       <span>Director: </span>
                       {item.director}
                     </MoviesParagraph> */}
-                    {/* <MoviesParagraph>{item.duration}</MoviesParagraph> */}
+                    <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
                   </MoviesHeaderContent>
                 </MoviesHeader>
                 <MoviesBody>{item.overview}</MoviesBody>
@@ -103,39 +123,7 @@ const Research = () => {
       ) : (
         <p>Loading...</p>
       )}
-      <MoviesNavigation>
-        <EndButton onClick={() => setSearchParams({ page: 1 })}>
-          First
-        </EndButton>
-        {currentPage > 5 && <p>...</p>}
-        <MoviesNavigationList>
-          {pageNumbers.length > 0 &&
-            pageNumbers.map((item) => (
-              <MoviesNavigationItem key={item}>
-                {currentPage !== item && (
-                  <MoviesNavigationButton
-                    onClick={() =>
-                      setSearchParams({
-                        page: item,
-                      })
-                    }
-                  >
-                    {item}
-                  </MoviesNavigationButton>
-                )}
-                {currentPage === item && (
-                  <MoviesNavigationButtonActive>
-                    {item}
-                  </MoviesNavigationButtonActive>
-                )}
-              </MoviesNavigationItem>
-            ))}
-        </MoviesNavigationList>
-        {currentPage < totalPages - 4 && <p>...</p>}
-        <EndButton onClick={() => setSearchParams({ page: totalPages })}>
-          Last
-        </EndButton>
-      </MoviesNavigation>
+      <MoviesNavigation pageNumbers={pageNumbers} />
     </ResearchStyled>
   );
 };

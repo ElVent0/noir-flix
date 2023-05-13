@@ -106,9 +106,17 @@ export const MoviesParagraph = styled.p`
   font-size: 13px;
   line-height: 15px;
   color: var(--text-main-transparent);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  max-height: 60px;
+  overflow: hidden;
   & > span {
     color: var(--text-main);
+  }
+  & > svg {
+    margin-right: 4px;
+    font-size: 15px;
+    position: relative;
+    top: 3px;
   }
   &:last-child {
     margin-bottom: 0;
@@ -119,61 +127,4 @@ export const RatingIcon = styled.img`
   margin-right: 4px;
   position: relative;
   top: 3px;
-`;
-
-export const MoviesNavigation = styled.div`
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-`;
-
-export const MoviesNavigationList = styled.ul`
-  display: flex;
-  gap: 6px;
-`;
-
-export const MoviesNavigationItem = styled.li`
-  /* width: 26px; */
-  height: 26px;
-`;
-
-export const MoviesNavigationButton = styled.button`
-  height: 100%;
-  padding: 6px;
-  min-width: 26px;
-  background-color: var(--bg-grey);
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover,
-  &:focus {
-    background-color: var(--element-grey);
-  }
-`;
-
-export const MoviesNavigationButtonActive = styled.button`
-  height: 100%;
-  padding: 6px;
-  min-width: 26px;
-  background-color: var(--accent);
-  color: var(--pure-white);
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const EndButton = styled.button`
-  background-color: var(--bg-grey);
-  padding: 6px 12px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover,
-  &:focus {
-    background-color: var(--element-grey);
-  }
 `;

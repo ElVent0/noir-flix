@@ -8,12 +8,7 @@ import {
 } from "./MoviesNavigation.styled";
 import { useSearchParams } from "react-router-dom";
 
-const MoviesNavigation = (
-  //   currentPage,
-  pageNumbers,
-  totalPages
-  //   setSearchParams
-) => {
+const MoviesNavigation = ({ pageNumbers, totalPages }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage =
     searchParams.get("page") !== null ? Number(searchParams.get("page")) : 1;
@@ -45,10 +40,8 @@ const MoviesNavigation = (
             </MoviesNavigationItem>
           ))}
       </MoviesNavigationList>
-      {currentPage < totalPages - 4 && <p>...</p>}
-      <EndButton onClick={() => setSearchParams({ page: totalPages })}>
-        Last
-      </EndButton>
+      {currentPage < 496 && <p>...</p>}
+      <EndButton onClick={() => setSearchParams({ page: 496 })}>Last</EndButton>
     </MoviesNavigationStyled>
   );
 };
