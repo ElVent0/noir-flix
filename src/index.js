@@ -12,8 +12,9 @@ const GlobalStyle = createGlobalStyle`
   --element-grey: #DADDE1;
   --hover-grey: #eaeaea;
   --text-main: #606770;
-  --pure-white: #fff;
+  --text-main-transparent: #60677099;
   --nav-black: #242424;
+  --pure-white: #fff;
   }`;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
