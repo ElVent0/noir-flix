@@ -2,64 +2,6 @@ import styled from "styled-components";
 
 export const ResearchStyled = styled.div``;
 
-// Фільтри -------------------------------------
-
-export const Filters = styled.div`
-  display: flex;
-  align-items: center;
-  height: 68px;
-  border-bottom: 1px solid var(--element-grey);
-  /* margin-bottom: 16px; */
-  /* position: relative; */
-  /* &::after {
-    content: "";
-    width: 100%;
-    height: 1px;
-    background-color: var(--element-grey);
-    position: absolute;
-    top: 36px;
-  } */
-`;
-
-export const FiltersParagraph = styled.p`
-  font-size: 14px;
-  line-height: 17px;
-  color: var(--text-main);
-  margin-right: 10px;
-  margin-left: 30px;
-  position: relative;
-  &::before {
-    content: "";
-    width: 1px;
-    height: 30px;
-    background-color: var(--element-grey);
-    position: absolute;
-    left: -15px;
-    top: -6.5px;
-  }
-  &:first-child {
-    margin-left: 0;
-    &::before {
-      display: none;
-    }
-  }
-`;
-
-export const SearchInput = styled.input`
-  display: block;
-  margin-left: auto;
-  border: 0.6px solid var(--element-grey);
-  border-radius: 4px;
-  width: 160px;
-  height: 28px;
-  padding: 0 13px;
-  display: flex;
-  align-items: center;
-  &:focus {
-    outline: none;
-  }
-`;
-
 export const MoviesList = styled.ul`
   padding: 30px 0 0 0;
   display: flex;
@@ -86,7 +28,9 @@ export const MoviesPoster = styled.div`
   min-width: 90px;
   height: 128px;
   border-radius: 10px;
-  background-color: red;
+  background-image: url(${(props) => props.path});
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 export const MoviesHeaderContent = styled.div`
@@ -124,7 +68,7 @@ export const ReadMore = styled.button`
 `;
 
 export const MoviesName = styled.p`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 17px;
   max-height: 17px;
   -webkit-mask-image: linear-gradient(
@@ -175,4 +119,61 @@ export const RatingIcon = styled.img`
   margin-right: 4px;
   position: relative;
   top: 3px;
+`;
+
+export const MoviesNavigation = styled.div`
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+`;
+
+export const MoviesNavigationList = styled.ul`
+  display: flex;
+  gap: 6px;
+`;
+
+export const MoviesNavigationItem = styled.li`
+  /* width: 26px; */
+  height: 26px;
+`;
+
+export const MoviesNavigationButton = styled.button`
+  height: 100%;
+  padding: 6px;
+  min-width: 26px;
+  background-color: var(--bg-grey);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover,
+  &:focus {
+    background-color: var(--element-grey);
+  }
+`;
+
+export const MoviesNavigationButtonActive = styled.button`
+  height: 100%;
+  padding: 6px;
+  min-width: 26px;
+  background-color: var(--accent);
+  color: var(--pure-white);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EndButton = styled.button`
+  background-color: var(--bg-grey);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover,
+  &:focus {
+    background-color: var(--element-grey);
+  }
 `;
