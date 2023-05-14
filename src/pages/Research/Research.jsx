@@ -22,13 +22,14 @@ import poster from "../../media/poster.jpg";
 const Research = () => {
   const [moviesList, setMoviesList] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [totalPages, setTotalPages] = useState(null);
   const [inputSort, setInputSort] = useState("Popularity");
 
   useEffect(() => {
     const getData = async () => {
       const data = await getMovies(searchParams.get("page"), inputSort);
       setMoviesList(data.results);
+      setTotalPages(data.total_pages);
     };
 
     getData();
@@ -37,26 +38,6 @@ const Research = () => {
       behavior: "smooth",
     });
   }, [searchParams]);
-
-  const currentPage =
-    searchParams.get("page") !== null ? Number(searchParams.get("page")) : 1;
-
-  let pageNumbers = [];
-  const createPageNumbersList = () => {
-    pageNumbers.push(currentPage - 4);
-    pageNumbers.push(currentPage - 3);
-    pageNumbers.push(currentPage - 2);
-    pageNumbers.push(currentPage - 1);
-    for (let i = 0; i < 5; i += 1) {
-      pageNumbers.push(currentPage + i);
-    }
-    pageNumbers = [
-      ...pageNumbers.filter(function (x) {
-        return x > 0 && x <= 496;
-      }),
-    ];
-  };
-  createPageNumbersList();
 
   const genres = {
     28: "Action",
@@ -123,7 +104,7 @@ const Research = () => {
       ) : (
         <p>Loading...</p>
       )}
-      <MoviesNavigation pageNumbers={pageNumbers} />
+      <MoviesNavigation totalPages={totalPages} />
     </ResearchStyled>
   );
 };

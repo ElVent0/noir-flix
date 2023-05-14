@@ -25,6 +25,7 @@ export const MoviesNavigationButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--text-main);
   &:hover,
   &:focus {
     background-color: var(--element-grey);
@@ -50,8 +51,13 @@ export const EndButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--text-main);
   &:hover,
   &:focus {
     background-color: var(--element-grey);
+  }
+  & > svg {
+    margin-left: auto;
+    font-size: 14px;
   }
 `;

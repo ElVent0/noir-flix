@@ -22,7 +22,7 @@ const ResearchFilters = ({ setInputSort, inputSort }) => {
     setSearchParams({ sort: item });
   };
 
-  const sortItems = ["Popularity", "Vote", "Title", "Date"];
+  const sortItems = ["Popularity", "Vote", "Title", "New", "Future"];
 
   return (
     <Filters>
