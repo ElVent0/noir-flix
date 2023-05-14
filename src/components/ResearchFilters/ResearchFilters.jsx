@@ -11,7 +11,12 @@ import {
 import { IoIosArrowDown } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 
-const ResearchFilters = ({ setInputSort, inputSort }) => {
+const ResearchFilters = ({
+  setInputSort,
+  inputSort,
+  searchInput,
+  changeSearchInput,
+}) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -26,27 +31,35 @@ const ResearchFilters = ({ setInputSort, inputSort }) => {
 
   return (
     <Filters>
-      <FiltersParagraph>Sort</FiltersParagraph>
-      <FilterInputSort>
-        <HeaderSort onClick={() => setIsOpenSort((prev) => !prev)}>
-          {inputSort}
-          <IoIosArrowDown />
-        </HeaderSort>
-        {isOpenSort && (
-          <BodySort>
-            {sortItems.map((item) => (
-              <ItemSort key={item} onClick={() => onSort(item)}>
-                {item}
-              </ItemSort>
-            ))}
-          </BodySort>
-        )}
-      </FilterInputSort>
+      {searchInput === "" && (
+        <>
+          <FiltersParagraph>Sort</FiltersParagraph>
+          <FilterInputSort>
+            <HeaderSort onClick={() => setIsOpenSort((prev) => !prev)}>
+              {inputSort}
+              <IoIosArrowDown />
+            </HeaderSort>
+            {isOpenSort && (
+              <BodySort>
+                {sortItems.map((item) => (
+                  <ItemSort key={item} onClick={() => onSort(item)}>
+                    {item}
+                  </ItemSort>
+                ))}
+              </BodySort>
+            )}
+          </FilterInputSort>
+        </>
+      )}
       {/* <FiltersParagraph>Rating</FiltersParagraph>
       <div>aaa</div>
       <FiltersParagraph>Categories</FiltersParagraph>
       <div>aaa</div> */}
-      <SearchInput placeholder="Search"></SearchInput>
+      <SearchInput
+        placeholder="Search"
+        value={searchInput}
+        onChange={changeSearchInput}
+      ></SearchInput>
     </Filters>
   );
 };

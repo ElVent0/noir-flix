@@ -14,6 +14,7 @@ import {
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import ResearchFilters from "../../components/ResearchFilters/ResearchFilters";
 import { getMovies } from "../../api/movies";
+import { getMovieByTitle } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MdOutlineAutoGraph } from "react-icons/md";
@@ -23,21 +24,39 @@ const Research = () => {
   const [moviesList, setMoviesList] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
   const [inputSort, setInputSort] = useState("Popularity");
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getMovies(searchParams.get("page"), inputSort);
-      setMoviesList(data.results);
-      setTotalPages(data.total_pages);
-    };
+  const getData = async () => {
+    const data = await getMovies(searchParams.get("page"), inputSort);
+    setMoviesList(data.results);
+    setTotalPages(data.total_pages);
+  };
 
-    getData();
+  const getDataByTitle = async () => {
+    const data = await getMovieByTitle(searchInput, searchParams.get("page"));
+    setMoviesList(data.results);
+    setTotalPages(data.total_pages);
+  };
+
+  useEffect(() => {
+    if (searchInput === "") {
+      getData();
+    }
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [searchParams]);
+
+  useEffect(() => {
+    if (searchInput !== "") {
+      getDataByTitle();
+    } else if (searchInput === "") {
+      getData();
+    }
+  }, [searchInput, searchParams]);
 
   const genres = {
     28: "Action",
@@ -65,9 +84,19 @@ const Research = () => {
     return item.genre_ids.map((item) => genres[item]).join(", ");
   };
 
+  const changeSearchInput = (e) => {
+    setSearchInput(e.currentTarget.value);
+    setSearchParams({ page: 1 });
+  };
+
   return (
     <ResearchStyled>
-      <ResearchFilters setInputSort={setInputSort} inputSort={inputSort} />
+      <ResearchFilters
+        setInputSort={setInputSort}
+        inputSort={inputSort}
+        searchInput={searchInput}
+        changeSearchInput={changeSearchInput}
+      />
       {moviesList ? (
         <MoviesList>
           {moviesList.map((item) => {
@@ -104,6 +133,7 @@ const Research = () => {
       ) : (
         <p>Loading...</p>
       )}
+      {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
       <MoviesNavigation totalPages={totalPages} />
     </ResearchStyled>
   );
