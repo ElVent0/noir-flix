@@ -5,13 +5,12 @@ export const HeaderStyled = styled.div`
   height: 77px;
   display: flex;
   align-items: center;
-  /* padding: 0 51px; */
 `;
 
 export const Logo = styled.img`
-  margin-right: 22px;
+  margin-left: 150px;
   position: relative;
-  top: -4px;
+  top: -10px;
 `;
 
 export const Navigation = styled.nav``;

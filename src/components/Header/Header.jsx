@@ -9,13 +9,13 @@ import {
   Logintext,
   //   Profile,
 } from "./Header.styled.jsx";
-import logo from "../../media/noirlib.png";
+// import logo from "../../media/noirlib.png";
+import logo from "../../media/noirflix.png";
 import { FcGoogle } from "react-icons/fc";
 
 const Header = () => {
   return (
     <HeaderStyled>
-      <Logo src={logo} alt="Logo" width="72" />
       <Navigation>
         <NavigationList>
           <NavigationItem>
@@ -24,8 +24,15 @@ const Header = () => {
           <NavigationItem>
             <NavigationLink to="library">Library</NavigationLink>
           </NavigationItem>
+          <NavigationItem>
+            <NavigationLink to="сollection">Collection</NavigationLink>
+          </NavigationItem>
+          <NavigationItem>
+            <NavigationLink to="random">Surprise movie</NavigationLink>
+          </NavigationItem>
         </NavigationList>
       </Navigation>
+      <Logo src={logo} alt="Logo" width="94" />
       <Login>
         <FcGoogle />
         <Logintext>Login</Logintext>

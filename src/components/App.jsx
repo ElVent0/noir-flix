@@ -11,6 +11,7 @@ const App = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Research />} />
           <Route path="/library" element={<Library />} />
+          {/* <Route path="/сollection" element={<Collection />} /> */}
         </Route>
       </Routes>
     </AppStyled>

@@ -31,16 +31,34 @@ export const FiltersParagraph = styled.p`
   }
 `;
 
-export const SearchInput = styled.input`
+export const Search = styled.div`
   display: block;
   margin-left: auto;
-  border: 0.6px solid var(--element-grey);
   border-radius: 8px;
-  width: 160px;
   height: 30px;
-  padding: 0 13px;
+  padding: 0 12px 0 8px;
   display: flex;
   align-items: center;
+  & > svg {
+    margin-right: 6px;
+    font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "16px")};
+  }
+  transition: 0.5s;
+  width: ${({ focusEvent }) => (focusEvent === true ? "100%" : "160px")};
+  border: ${({ focusEvent }) =>
+    focusEvent === true ? "none" : "0.6px solid var(--element-grey)"};
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  color: var(---text-main);
+  font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "14px")};
+  &::placeholder {
+    font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "14px")};
+  }
   &:focus {
     outline: none;
   }
@@ -82,10 +100,6 @@ export const BodySort = styled.ul`
 `;
 
 export const ItemSort = styled.li`
-  padding: 6px 8px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
   position: relative;
   &::after {
     content: "";
@@ -101,9 +115,18 @@ export const ItemSort = styled.li`
       display: none;
     }
   }
+`;
+
+export const ButtonSort = styled.button`
+  width: 100%;
+  text-align: start;
+  background-color: var(--pure-white);
+  padding: 6px 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
   &:hover,
   &:focus {
     background-color: var(--hover-grey);
-    cursor: pointer;
   }
 `;

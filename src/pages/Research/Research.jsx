@@ -13,10 +13,12 @@ import {
 } from "./Research.styled.jsx";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import ResearchFilters from "../../components/ResearchFilters/ResearchFilters";
+import MovieModal from "../../components/MovieModal/MovieModal";
 import { getMovies } from "../../api/movies";
 import { getMovieByTitle } from "../../api/movies";
+import { getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { MdOutlineAutoGraph } from "react-icons/md";
 import poster from "../../media/poster.jpg";
 
@@ -26,6 +28,9 @@ const Research = () => {
   const [totalPages, setTotalPages] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [inputSort, setInputSort] = useState("Popularity");
+  const [movieData, setMovieData] = useState(null);
+
+  const location = useLocation();
 
   const getData = async () => {
     const data = await getMovies(searchParams.get("page"), inputSort);
@@ -40,15 +45,24 @@ const Research = () => {
   };
 
   useEffect(() => {
+    if (searchParams.get("id") !== null) {
+      const getDataForMovie = async () => {
+        console.log("id", searchParams.get("id"));
+        const data = await getMovieById(searchParams.get("id"));
+        setMovieData(data);
+      };
+      getDataForMovie();
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
     if (searchInput === "") {
       getData();
     }
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     if (searchInput !== "") {
@@ -56,7 +70,8 @@ const Research = () => {
     } else if (searchInput === "") {
       getData();
     }
-  }, [searchInput, searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput, location]);
 
   const genres = {
     28: "Action",
@@ -89,56 +104,84 @@ const Research = () => {
     setSearchParams({ page: 1 });
   };
 
-  return (
-    <ResearchStyled>
-      <ResearchFilters
-        setInputSort={setInputSort}
-        inputSort={inputSort}
-        searchInput={searchInput}
-        changeSearchInput={changeSearchInput}
-      />
-      {moviesList ? (
-        <MoviesList>
-          {moviesList.map((item) => {
-            const path = item.poster_path
-              ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
-              : poster;
+  const onReadMore = async (id) => {
+    const params = {};
+    if (searchParams.get("page")) {
+      params.page = searchParams.get("page");
+    }
+    params.id = id;
+    setSearchParams(params);
+  };
 
-            return (
-              <MoviesItem key={item.id}>
-                <MoviesHeader>
-                  <MoviesPoster path={path}></MoviesPoster>
-                  <MoviesHeaderContent>
-                    <MoviesName>{item.title}</MoviesName>
-                    <MoviesYear>
-                      {new Date(item.release_date).getFullYear()}
-                    </MoviesYear>
-                    <MoviesParagraph>
-                      <MdOutlineAutoGraph />
-                      <b>{item.vote_average}</b> / 10
-                    </MoviesParagraph>
-                    {/* <MoviesParagraph>
-                      <span>Director: </span>
-                      {item.director}
-                    </MoviesParagraph> */}
-                    <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
-                  </MoviesHeaderContent>
-                </MoviesHeader>
-                <MoviesBody>{item.overview}</MoviesBody>
-                <ReadMore>More</ReadMore>
-              </MoviesItem>
-            );
-          })}
-        </MoviesList>
-      ) : (
-        <p>Loading...</p>
+  const onCloseReadMore = (e) => {
+    const onclose = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.delete("id");
+      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+      window.history.replaceState({}, "", newUrl);
+      setMovieData(null);
+    };
+    if (e.target === e.currentTarget) {
+      onclose();
+    }
+    if (e.currentTarget.id === "button-close") {
+      onclose();
+    }
+  };
+
+  return (
+    <>
+      <ResearchStyled>
+        <ResearchFilters
+          setInputSort={setInputSort}
+          inputSort={inputSort}
+          searchInput={searchInput}
+          changeSearchInput={changeSearchInput}
+        />
+        {moviesList ? (
+          <MoviesList>
+            {moviesList.map((item) => {
+              const path = item.poster_path
+                ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+                : poster;
+
+              return (
+                <MoviesItem key={item.id}>
+                  <MoviesHeader>
+                    <MoviesPoster path={path}></MoviesPoster>
+                    <MoviesHeaderContent>
+                      <MoviesName>{item.title}</MoviesName>
+                      <MoviesYear>
+                        {new Date(item.release_date).getFullYear()}
+                      </MoviesYear>
+                      <MoviesParagraph>
+                        <MdOutlineAutoGraph />
+                        <b>{item.vote_average}</b> / 10
+                      </MoviesParagraph>
+                      <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
+                    </MoviesHeaderContent>
+                  </MoviesHeader>
+                  <MoviesBody>{item.overview}</MoviesBody>
+                  <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
+                </MoviesItem>
+              );
+            })}
+          </MoviesList>
+        ) : (
+          <p>Loading...</p>
+        )}
+        {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
+        <MoviesNavigation totalPages={totalPages} />
+      </ResearchStyled>
+      {movieData !== null && (
+        <MovieModal
+          movieData={movieData}
+          onCloseReadMore={onCloseReadMore}
+          genresInEnglish={genres}
+        />
       )}
-      {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
-      <MoviesNavigation totalPages={totalPages} />
-    </ResearchStyled>
+    </>
   );
 };
 
 export default Research;
-
-// https://image.tmdb.org/t/p/original/
