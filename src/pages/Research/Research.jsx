@@ -1,7 +1,7 @@
 import { ResearchStyled } from "./Research.styled.jsx";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
-import ResearchFilters from "../../components/ResearchFilters/ResearchFilters";
+import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MovieModal from "../../components/MovieModal/MovieModal";
 import { getMovies } from "../../api/movies";
 import { getMovieByTitle } from "../../api/movies";
@@ -106,7 +106,7 @@ const Research = () => {
   return (
     <>
       <ResearchStyled>
-        <ResearchFilters
+        <MoviesFilters
           setInputSort={setInputSort}
           inputSort={inputSort}
           searchInput={searchInput}

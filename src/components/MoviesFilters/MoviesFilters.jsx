@@ -9,7 +9,7 @@ import {
   BodySort,
   ItemSort,
   ButtonSort,
-} from "./ResearchFilters.styled";
+} from "./MoviesFilters.styled";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
