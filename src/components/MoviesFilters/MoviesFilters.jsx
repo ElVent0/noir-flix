@@ -39,16 +39,19 @@ const ResearchFilters = ({
 
   return (
     <Filters>
-      {!onFocus && (
+      {!onFocus && window.location.pathname === "/" && (
         <>
           <FiltersParagraph>Sort</FiltersParagraph>
-          <FilterInputSort>
-            <HeaderSort onClick={() => setIsOpenSort((prev) => !prev)}>
+          <FilterInputSort
+            onMouseEnter={() => setIsOpenSort((prev) => !prev)}
+            onMouseLeave={() => setIsOpenSort((prev) => !prev)}
+          >
+            <HeaderSort>
               {inputSort}
               <IoIosArrowDown />
             </HeaderSort>
             {isOpenSort && (
-              <BodySort>
+              <BodySort isOpenSort={isOpenSort}>
                 {sortItems
                   .filter((item) => item !== inputSort)
                   .map((item) => (
@@ -61,17 +64,19 @@ const ResearchFilters = ({
           </FilterInputSort>
         </>
       )}
-      <Search focusEvent={onFocus}>
-        <AiOutlineSearch />
-        <SearchInput
-          placeholder="Search"
-          value={searchInput}
-          onChange={changeSearchInput}
-          onFocus={onFocusInput}
-          onBlur={onFocusInput}
-          focusEvent={onFocus}
-        ></SearchInput>
-      </Search>
+      {window.location.pathname === "/" && (
+        <Search focusEvent={onFocus}>
+          <AiOutlineSearch />
+          <SearchInput
+            placeholder="Search"
+            value={searchInput}
+            onChange={changeSearchInput}
+            onFocus={onFocusInput}
+            onBlur={onFocusInput}
+            focusEvent={onFocus}
+          ></SearchInput>
+        </Search>
+      )}
     </Filters>
   );
 };

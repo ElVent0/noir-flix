@@ -23,6 +23,7 @@ export const getMovies = async (currentPage, inputSort) => {
     `https://api.themoviedb.org/3/discover/movie?api_key=55f0b5ef3d71b89f5c992026821b4edc&page=${currentPage}&sort_by=${inputSortType()}`
   );
   const result = await data.json();
+  console.log(result);
   return result;
 };
 
@@ -45,13 +46,11 @@ export const getMovieById = async (id) => {
   return result;
 };
 
-// export const getVideo = async (id) => {
+// export const getMoviesByIds = async (id) => {
 //   const data = await fetch(
-//     `https://api.themoviedb.org/3/movie/502356/videos?api_key=55f0b5ef3d71b89f5c992026821b4edc&&language=en-US
+//     `https://api.themoviedb.org/3/movie/${id}?api_key=55f0b5ef3d71b89f5c992026821b4edc&&language=en-US
 // `
 //   );
 //   const result = await data.json();
 //   return result;
 // };
-
-// getVideo(502356);

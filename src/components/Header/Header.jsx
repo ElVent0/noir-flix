@@ -24,12 +24,12 @@ const Header = () => {
           <NavigationItem>
             <NavigationLink to="library">Library</NavigationLink>
           </NavigationItem>
-          <NavigationItem>
+          {/* <NavigationItem>
             <NavigationLink to="сollection">Collection</NavigationLink>
           </NavigationItem>
           <NavigationItem>
             <NavigationLink to="random">Surprise movie</NavigationLink>
-          </NavigationItem>
+          </NavigationItem> */}
         </NavigationList>
       </Navigation>
       <Logo src={logo} alt="Logo" width="94" />

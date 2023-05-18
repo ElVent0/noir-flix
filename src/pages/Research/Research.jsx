@@ -1,11 +1,9 @@
 import { ResearchStyled } from "./Research.styled.jsx";
+import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
-import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MovieModal from "../../components/MovieModal/MovieModal";
-import { getMovies } from "../../api/movies";
-import { getMovieByTitle } from "../../api/movies";
-import { getMovieById } from "../../api/movies";
+import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 
