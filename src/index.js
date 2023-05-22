@@ -8,6 +8,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 :root {
   --accent: #fb6d00;
+  --accent-hover: #c76010;
   /* --accent: #11b3ff; */
   --bg-grey: #f7f7f7;
   --element-grey: #DADDE1;

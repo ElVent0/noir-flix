@@ -29,6 +29,8 @@ export const ModalPoster = styled.img`
 export const ModalContent = styled.div`
   width: 380px;
   padding: 0 6px 0 12px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ModalContentHeader = styled.div`
@@ -89,4 +91,70 @@ export const ModalParagraph = styled.p`
   }
 `;
 
-export const ModalContentFooter = styled.div``;
+export const ModalContentFooter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-bottom: 10px;
+`;
+
+export const AddButton = styled.button`
+  background-color: transparent;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 10px;
+  padding: 0px 16px;
+  transition: 0.3s;
+  &:hover,
+  &:active {
+    background-color: var(--hover-grey);
+  }
+`;
+
+export const StarsList = styled.ul`
+  display: flex;
+  gap: 4px;
+  background-color: var(--pure-white);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 0px 10px;
+`;
+
+export const StarItem = styled.li`
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+  }
+`;
+
+export const StarButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-size: 22px;
+  color: var(--accent);
+`;
+
+export const ConfirmButton = styled.button`
+  background-color: var(--accent);
+  color: var(--pure-white);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0px 16px;
+  transition: 0.3s;
+  &:hover,
+  &:active {
+    background-color: var(--accent-hover);
+  }
+`;
