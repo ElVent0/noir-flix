@@ -13,7 +13,14 @@ import {
 import { MdOutlineAutoGraph } from "react-icons/md";
 import poster from "../../media/poster.jpg";
 
-const MoviesList = ({ moviesList, genres, searchParams, setSearchParams }) => {
+const MoviesList = ({
+  moviesList,
+  genres,
+  searchParams,
+  setSearchParams,
+  stars,
+  forLater,
+}) => {
   const genreIds = (item) => {
     return item.genre_ids.map((item) => genres[item]).join(", ");
   };

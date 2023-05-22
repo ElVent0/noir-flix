@@ -9,16 +9,30 @@ import {
   BodySort,
   ItemSort,
   ButtonSort,
+  CloseSerachButton,
+  StarsList,
+  StarItem,
+  StarButton,
+  MoreCheck,
+  MoreCheckButton,
 } from "./MoviesFilters.styled";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
+import { RiCloseLine } from "react-icons/ri";
+import { TbStar } from "react-icons/tb";
+import { TbStarFilled } from "react-icons/tb";
+import { MdMoreTime } from "react-icons/md";
 
 const ResearchFilters = ({
   setInputSort,
   inputSort,
   searchInput,
   changeSearchInput,
+  stars,
+  onStars,
+  forLater,
+  onForLater,
 }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
@@ -35,6 +49,17 @@ const ResearchFilters = ({
 
   const onFocusInput = () => {
     setOnFocus((prev) => !prev);
+  };
+
+  const getRatingList = () => {
+    const ratingList = [];
+    for (let i = 1; i <= stars; i += 1) {
+      ratingList.push(true);
+    }
+    for (let i = 1; i <= 5 - stars; i += 1) {
+      ratingList.push(false);
+    }
+    return ratingList;
   };
 
   return (
@@ -64,6 +89,26 @@ const ResearchFilters = ({
           </FilterInputSort>
         </>
       )}
+      {!onFocus && window.location.pathname === "/library" && (
+        <>
+          <FiltersParagraph>Rating</FiltersParagraph>
+          <StarsList>
+            {getRatingList().map((item, index) => (
+              <StarItem key={index}>
+                <StarButton item={item} onClick={() => onStars(index + 1)}>
+                  {item ? <TbStarFilled /> : <TbStar />}
+                </StarButton>
+              </StarItem>
+            ))}
+          </StarsList>
+          <FiltersParagraph>Watch again</FiltersParagraph>
+          <MoreCheck>
+            <MoreCheckButton forLater={forLater} onClick={onForLater}>
+              <MdMoreTime />
+            </MoreCheckButton>
+          </MoreCheck>
+        </>
+      )}
       {window.location.pathname === "/" && (
         <Search focusEvent={onFocus}>
           <AiOutlineSearch />
@@ -75,6 +120,11 @@ const ResearchFilters = ({
             onBlur={onFocusInput}
             focusEvent={onFocus}
           ></SearchInput>
+          {onFocus && (
+            <CloseSerachButton>
+              <RiCloseLine />
+            </CloseSerachButton>
+          )}
         </Search>
       )}
     </Filters>

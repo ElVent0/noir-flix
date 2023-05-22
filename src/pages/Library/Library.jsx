@@ -16,6 +16,9 @@ const Library = () => {
   const [inputSort, setInputSort] = useState("Popularity");
   const [movieData, setMovieData] = useState(null);
 
+  const [stars, setStars] = useState(0);
+  const [forLater, setForLater] = useState(false);
+
   const location = useLocation();
 
   // "Список id фільмів з бібліотеки"
@@ -107,6 +110,25 @@ const Library = () => {
     }
   };
 
+  const onStars = (number) => {
+    setStars(number);
+  };
+
+  const onForLater = () => {
+    setForLater((prev) => !prev);
+  };
+
+  console.log("stars", stars, "forLater", forLater);
+
+  useEffect(
+    () => {
+      // Тут змінюємо фінальний список фільмів для рендеру в
+      // MoviesList для /library  в залежності від фільтрів
+    },
+    stars,
+    forLater
+  );
+
   return (
     <>
       <LibraryStyled>
@@ -115,6 +137,10 @@ const Library = () => {
           inputSort={inputSort}
           searchInput={searchInput}
           changeSearchInput={changeSearchInput}
+          stars={stars}
+          onStars={onStars}
+          forLater={forLater}
+          onForLater={onForLater}
         />
         {moviesList ? (
           <MoviesList
@@ -122,6 +148,8 @@ const Library = () => {
             genres={genres}
             searchParams={searchParams}
             setSearchParams={setSearchParams}
+            stars={stars}
+            forLater={forLater}
           />
         ) : (
           <p>Loading...</p>

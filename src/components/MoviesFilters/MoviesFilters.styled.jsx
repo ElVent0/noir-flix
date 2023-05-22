@@ -151,3 +151,73 @@ export const SearchInput = styled.input`
     outline: none;
   }
 `;
+
+export const CloseSerachButton = styled.button`
+  display: block;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--pure-white);
+  background-color: var(--element-grey);
+  border-radius: 6px;
+  padding: 0;
+  font-size: 18px;
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    background-color: var(--hover-grey);
+  }
+`;
+
+export const StarsList = styled.ul`
+  display: flex;
+  gap: 4px;
+`;
+
+export const StarItem = styled.li`
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+  }
+`;
+
+export const StarButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-size: 22px;
+  color: var(--accent);
+`;
+
+export const MoreCheck = styled.div`
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+  }
+`;
+
+export const MoreCheckButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  font-size: 18px;
+  transition: 0.3s;
+  border-radius: 6px;
+  background-color: ${({ forLater }) =>
+    forLater === true ? "var(--accent)" : "var(--bg-grey)"};
+  color: ${({ forLater }) =>
+    forLater === true ? "var(--pure-white)" : "var(--text-main)"};
+`;
