@@ -52,6 +52,8 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
     console.log("Sending data", movieData.id, stars);
   };
 
+  console.log(console.log(process.env.REACT_APP_DB_PASSWORD));
+
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
       <Modal>

@@ -36,7 +36,7 @@ export const MoviesHeaderContent = styled.div`
 `;
 
 export const MoviesBody = styled.div`
-  max-height: 45px;
+  height: 45px;
   font-size: 13px;
   line-height: 15px;
   color: var(--text-main);
@@ -103,6 +103,7 @@ export const MoviesYear = styled.p`
 export const MoviesParagraph = styled.p`
   font-size: 13px;
   line-height: 15px;
+
   color: var(--text-main-transparent);
   margin-bottom: 6px;
   max-height: 60px;

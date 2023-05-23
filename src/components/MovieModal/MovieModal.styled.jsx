@@ -19,6 +19,7 @@ export const Modal = styled.div`
   border-radius: 10px;
   display: flex;
   padding: 6px 0 6px 6px;
+  position: relative;
 `;
 
 export const ModalPoster = styled.img`
@@ -60,7 +61,9 @@ export const Year = styled.p`
 export const CloseButton = styled.button`
   width: 20px;
   height: 20px;
-  margin-left: auto;
+  position: absolute;
+  top: 6px;
+  right: 6px;
   background-color: transparent;
   & > svg {
     font-size: 20px;

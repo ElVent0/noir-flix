@@ -12,12 +12,13 @@ const GlobalStyle = createGlobalStyle`
   /* --accent: #11b3ff; */
   --bg-grey: #f7f7f7;
   --element-grey: #DADDE1;
-  --hover-grey: #eaeaea;
+  --hover-grey: #efefef;
   --text-main: #606770;
   /* --element-grey: #e1deda;
   --text-main: #706c60; */
   --text-main-transparent: #60677099;
   --nav-black: #242424;
+  --nav-black-transparent: #24242490;
   --pure-white: #fff;
   }`;
 
