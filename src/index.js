@@ -4,6 +4,12 @@ import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { createGlobalStyle } from "styled-components";
+import { createClient } from "@supabase/supabase-js";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const GlobalStyle = createGlobalStyle`
 :root {
@@ -25,9 +31,11 @@ const GlobalStyle = createGlobalStyle`
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyle />
-      <App />
-    </BrowserRouter>
+    <SessionContextProvider supabaseClient={supabase}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <App />
+      </BrowserRouter>
+    </SessionContextProvider>
   </React.StrictMode>
 );

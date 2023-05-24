@@ -10,7 +10,7 @@ export const HeaderStyled = styled.div`
 export const Logo = styled.img`
   margin-left: 150px;
   position: relative;
-  top: -10px;
+  top: -6px;
 `;
 
 export const Navigation = styled.nav``;

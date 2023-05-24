@@ -18,7 +18,7 @@ export const Modal = styled.div`
   background: #f7f7f7;
   border-radius: 10px;
   display: flex;
-  padding: 6px;
+  padding: 18px 12px;
   position: relative;
 `;
 
@@ -50,6 +50,9 @@ export const Logout = styled.button`
   padding: 6px 16px 6px 8px;
   display: flex;
   transition: 0.3s;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
   & > svg {
     font-size: 23px;
     margin-right: 7px;
@@ -60,3 +63,34 @@ export const Logout = styled.button`
     background-color: var(--hover-grey);
   }
 `;
+
+export const Profile = styled.div`
+  width: 50%;
+  border-right: 1px solid var(--element-grey);
+  padding-top: 60px;
+`;
+
+export const UserImage = styled.img`
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+`;
+
+export const UserName = styled.p`
+  text-align: center;
+  color: var(--text-main);
+  font-size: 16px;
+  margin-bottom: 6px;
+`;
+
+export const UserMail = styled.p`
+  text-align: center;
+  color: var(--text-main);
+  font-size: 14px;
+`;
+
+export const Statistics = styled.div``;

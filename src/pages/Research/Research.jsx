@@ -32,7 +32,7 @@ const Research = () => {
   useEffect(() => {
     if (searchParams.get("id") !== null) {
       const getDataForMovie = async () => {
-        console.log("id", searchParams.get("id"));
+        // console.log("id", searchParams.get("id"));
         const data = await getMovieById(searchParams.get("id"));
         setMovieData(data);
       };

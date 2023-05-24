@@ -23,7 +23,7 @@ export const getMovies = async (currentPage, inputSort) => {
     `https://api.themoviedb.org/3/discover/movie?api_key=55f0b5ef3d71b89f5c992026821b4edc&page=${currentPage}&sort_by=${inputSortType()}`
   );
   const result = await data.json();
-  console.log(result);
+  // console.log(result);
   return result;
 };
 

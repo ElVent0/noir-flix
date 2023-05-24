@@ -49,10 +49,8 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
       alert("Rate the movie first");
     }
     // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
-    console.log("Sending data", movieData.id, stars);
+    // console.log("Sending data", movieData.id, stars);
   };
-
-  console.log(console.log(process.env.REACT_APP_DB_PASSWORD));
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>

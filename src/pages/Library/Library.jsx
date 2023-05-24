@@ -3,6 +3,7 @@ import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import MovieModal from "../../components/MovieModal/MovieModal";
+import AuthProvider from "../../components/AuthProvider/AuthProvider";
 import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
@@ -22,9 +23,9 @@ const Library = () => {
   const location = useLocation();
 
   // "Список id фільмів з бібліотеки"
-  console.log(
-    backendTamplate.user_data.rating_list.map((item) => item.movie_id)
-  );
+  // console.log(
+  //   backendTamplate.user_data.rating_list.map((item) => item.movie_id)
+  // );
 
   const getData = async () => {
     const data = await getMovies(searchParams.get("page"), inputSort);
@@ -41,7 +42,7 @@ const Library = () => {
   useEffect(() => {
     if (searchParams.get("id") !== null) {
       const getDataForMovie = async () => {
-        console.log("id", searchParams.get("id"));
+        // console.log("id", searchParams.get("id"));
         const data = await getMovieById(searchParams.get("id"));
         setMovieData(data);
       };
@@ -118,7 +119,7 @@ const Library = () => {
     setForLater((prev) => !prev);
   };
 
-  console.log("stars", stars, "forLater", forLater);
+  // console.log("stars", stars, "forLater", forLater);
 
   useEffect(
     () => {
@@ -131,32 +132,34 @@ const Library = () => {
 
   return (
     <>
-      <LibraryStyled>
-        <MoviesFilters
-          setInputSort={setInputSort}
-          inputSort={inputSort}
-          searchInput={searchInput}
-          changeSearchInput={changeSearchInput}
-          stars={stars}
-          onStars={onStars}
-          forLater={forLater}
-          onForLater={onForLater}
-        />
-        {moviesList ? (
-          <MoviesList
-            moviesList={moviesList}
-            genres={genres}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
+      <AuthProvider>
+        <LibraryStyled>
+          <MoviesFilters
+            setInputSort={setInputSort}
+            inputSort={inputSort}
+            searchInput={searchInput}
+            changeSearchInput={changeSearchInput}
             stars={stars}
+            onStars={onStars}
             forLater={forLater}
+            onForLater={onForLater}
           />
-        ) : (
-          <p>Loading...</p>
-        )}
-        {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
-        <MoviesNavigation totalPages={totalPages} />
-      </LibraryStyled>
+          {moviesList ? (
+            <MoviesList
+              moviesList={moviesList}
+              genres={genres}
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+              stars={stars}
+              forLater={forLater}
+            />
+          ) : (
+            <p>Loading...</p>
+          )}
+          {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
+          <MoviesNavigation totalPages={totalPages} />
+        </LibraryStyled>
+      </AuthProvider>
       {movieData !== null && (
         <MovieModal
           movieData={movieData}
