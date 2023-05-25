@@ -8,7 +8,7 @@ export const HeaderStyled = styled.div`
 `;
 
 export const Logo = styled.img`
-  margin-left: 150px;
+  margin-left: 370px;
   position: relative;
   top: -6px;
 `;
