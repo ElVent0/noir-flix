@@ -20,7 +20,9 @@ export const getMovies = async (currentPage, inputSort) => {
   };
 
   const data = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=55f0b5ef3d71b89f5c992026821b4edc&page=${currentPage}&sort_by=${inputSortType()}`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${
+      process.env.REACT_APP_API_KEY
+    }&page=${currentPage}&sort_by=${inputSortType()}`
   );
   const result = await data.json();
   // console.log(result);
@@ -31,7 +33,7 @@ export const getMovieByTitle = async (title, currentPage) => {
   const resultPage = currentPage === null ? 1 : currentPage;
 
   const data = await fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=55f0b5ef3d71b89f5c992026821b4edc&query=${title}&page=${resultPage}`
+    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&query=${title}&page=${resultPage}`
   );
   const result = await data.json();
   return result;
@@ -39,7 +41,7 @@ export const getMovieByTitle = async (title, currentPage) => {
 
 export const getMovieById = async (id) => {
   const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=55f0b5ef3d71b89f5c992026821b4edc&&language=en-US
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&&language=en-US
 `
   );
   const result = await data.json();
@@ -48,7 +50,7 @@ export const getMovieById = async (id) => {
 
 // export const getMoviesByIds = async (id) => {
 //   const data = await fetch(
-//     `https://api.themoviedb.org/3/movie/${id}?api_key=55f0b5ef3d71b89f5c992026821b4edc&&language=en-US
+//     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&&language=en-US
 // `
 //   );
 //   const result = await data.json();
