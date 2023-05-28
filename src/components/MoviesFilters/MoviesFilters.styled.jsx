@@ -33,7 +33,7 @@ export const FiltersParagraph = styled.p`
 
 export const FilterInputSort = styled.div`
   width: 120px;
-  height: 30px;
+  height: 36px;
   position: relative;
 `;
 
@@ -61,7 +61,7 @@ export const BodySort = styled.ul`
   background-color: var(--pure-white);
   border-radius: 4px;
   overflow: hidden;
-  top: 30px;
+  top: 36px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 `;
 
@@ -101,7 +101,7 @@ export const Search = styled.div`
   display: block;
   margin-left: auto;
   border-radius: 8px;
-  height: 30px;
+  height: 36px;
   padding: 0 12px 0 8px;
   display: flex;
   align-items: center;

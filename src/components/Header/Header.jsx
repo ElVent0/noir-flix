@@ -13,7 +13,7 @@ import {
 } from "./Header.styled.jsx";
 import logo from "../../media/noirflix-3.png";
 import { TbLogin } from "react-icons/tb";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
@@ -26,9 +26,6 @@ const Header = () => {
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
   const [avatar, setAvatar] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [userMail, setUserMail] = useState(null);
-  const [userPassword, setUserPassword] = useState(null);
 
   const notifyOnMailSignUp = () =>
     toast.success(
@@ -52,6 +49,7 @@ const Header = () => {
       duration: 4000,
       style: {
         padding: "16px",
+        textAlign: "center",
         color: "#606770",
       },
       iconTheme: {
@@ -79,52 +77,6 @@ const Header = () => {
   // if (isLoading) {
   //   return <></>;
   // }
-
-  const loginWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-
-    if (error) {
-      errorToast();
-    }
-  };
-
-  const loginWithMail = async () => {
-    console.log("Login", userMail, userPassword);
-
-    // const { data, error } = await supabase.auth.signInWithPassword({
-    //   email: "vasylviter95@gmail.com",
-    //   password: "12345678",
-    // });
-
-    // setIsLoginModal(false);
-    // if (error) {
-    //   errorToast();
-    // }
-  };
-
-  const createUserWithMail = async () => {
-    console.log("Registration", userName, userMail, userPassword);
-
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: "vasylviter95@gmail.com",
-    //   password: "12345678",
-    //   options: { data: { name: "Vasyl1" } },
-    // });
-    // setIsLoginModal(false);
-    // notifyOnMailSignUp();
-  };
-
-  const sendLoginForm = (e) => {
-    e.preventDefault();
-
-    if (isLoginTypeModal === true) {
-      loginWithMail();
-    } else {
-      createUserWithMail();
-    }
-  };
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -208,10 +160,11 @@ const Header = () => {
       {isLoginModal && (
         <LoginModal
           onCloseLoginModal={onCloseLoginModal}
-          loginWithGoogle={loginWithGoogle}
-          sendLoginForm={sendLoginForm}
           isLoginTypeModal={isLoginTypeModal}
           setIsLoginTypeModal={setIsLoginTypeModal}
+          notifyOnMailSignUp={notifyOnMailSignUp}
+          errorToast={errorToast}
+          setIsLoginModal={setIsLoginModal}
         />
       )}
       <Toaster />

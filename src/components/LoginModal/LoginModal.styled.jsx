@@ -48,7 +48,34 @@ export const LoginForm = styled.form`
   align-items: center;
   width: 100%;
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--element-grey);
+  /* border-bottom: 1px solid var(--element-grey); */
+`;
+
+export const OrElement = styled.p`
+  font-size: 12px;
+  color: var(--element-grey);
+  /* color: var(--text-main-transparent); */
+  position: relative;
+  &::before {
+    content: "";
+    width: 121px;
+    height: 1px;
+    background-color: var(--element-grey);
+    /* background-color: var(--text-main-transparent); */
+    position: absolute;
+    top: 50%;
+    left: 20px;
+  }
+  &::after {
+    content: "";
+    width: 121px;
+    height: 1px;
+    background-color: var(--element-grey);
+    /* background-color: var(--text-main-transparent); */
+    position: absolute;
+    top: 50%;
+    right: 20px;
+  }
 `;
 
 export const Title = styled.p`
@@ -127,7 +154,7 @@ export const GoogleLogin = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 34px;
+  margin-top: 26px;
   transition: 0.3s;
   background-color: transparent;
   border: 1px solid var(--text-main-transparent);
