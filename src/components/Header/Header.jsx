@@ -9,21 +9,18 @@ import {
   Logintext,
   LoginMenu,
   Profile,
+  UserImage,
 } from "./Header.styled.jsx";
 import logo from "../../media/noirflix-3.png";
-import { FcGoogle } from "react-icons/fc";
-// import { ImFacebook } from "react-icons/im";
-import { MdAccountCircle } from "react-icons/md";
+import { TbLogin } from "react-icons/tb";
 import { useState } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
-import {
-  useSession,
-  useSupabaseClient,
-  useSessionContext,
-} from "@supabase/auth-helpers-react";
+import LoginModal from "../LoginModal/LoginModal";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Header = () => {
   const [isProfileModal, setIsProfileModal] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState(false);
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -57,6 +54,10 @@ const Header = () => {
     setIsProfileModal(true);
   };
 
+  const onOpenLoginModal = () => {
+    setIsLoginModal(true);
+  };
+
   const onCloseProfileModal = (e) => {
     if (e.target === e.currentTarget) {
       setIsProfileModal(false);
@@ -66,12 +67,16 @@ const Header = () => {
     }
   };
 
-  // const onLoginWithFacebook = () => {
-  //   console.log("In progress");
-  // };
+  const onCloseLoginModal = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsLoginModal(false);
+    }
+    if (e.currentTarget.id === "button-close") {
+      setIsLoginModal(false);
+    }
+  };
 
   const onLogout = () => {
-    // setIsLogin(false);
     logout();
     setIsProfileModal(false);
   };
@@ -99,18 +104,22 @@ const Header = () => {
         {session ? (
           <>
             <Profile onClick={onOpenProfileModal}>
-              <MdAccountCircle />
+              <UserImage
+                src={session.user.identities[0].identity_data.avatar_url}
+                alt="User image"
+              />
               <p>Profile</p>
             </Profile>
           </>
         ) : (
           <>
-            <Logintext>Login</Logintext>
-            {/* <Login onClick={onLoginWithFacebook()}>
-              <ImFacebook />
-            </Login> */}
-            <Login onClick={() => loginWithGoogle()}>
+            {/* <Logintext>Login</Logintext> */}
+            {/* <Login onClick={() => loginWithGoogle()}>
               <FcGoogle />
+            </Login> */}
+            <Login onClick={onOpenLoginModal}>
+              <TbLogin />
+              <Logintext>Login</Logintext>
             </Login>
           </>
         )}
@@ -119,6 +128,12 @@ const Header = () => {
         <ProfileModal
           onCloseProfileModal={onCloseProfileModal}
           onLogout={onLogout}
+        />
+      )}
+      {isLoginModal && (
+        <LoginModal
+          onCloseLoginModal={onCloseLoginModal}
+          loginWithGoogle={loginWithGoogle}
         />
       )}
     </HeaderStyled>

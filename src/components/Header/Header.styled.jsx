@@ -53,36 +53,20 @@ export const LoginMenu = styled.div`
 `;
 
 export const Login = styled.button`
-  background: var(--pure-white);
-  height: 36px;
-  align-items: center;
-  border-radius: 10px;
-  padding: 0px 12px;
-  display: flex;
-  transition: 0.3s;
-  & > svg {
-    font-size: 18px;
-  }
-  &:hover,
-  &:active {
-    background-color: var(--hover-grey);
-  }
-  &:first-of-type {
-    color: #1778f2;
-  }
-`;
-
-export const Logout = styled.button`
   background-color: var(--pure-white);
-  color: var(--accent);
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--nav-black-transparent);
   height: 36px;
-  align-items: center;
+  align-items: flex-end;
   border-radius: 10px;
-  padding: 0px 12px;
+  padding: 6px 16px 6px 8px;
   display: flex;
   transition: 0.3s;
   & > svg {
-    font-size: 18px;
+    font-size: 23px;
+    margin-right: 6px;
+    color: var(--accent);
   }
   &:hover,
   &:active {
@@ -107,13 +91,15 @@ export const Profile = styled.button`
   padding: 6px 16px 6px 8px;
   display: flex;
   transition: 0.3s;
-  & > svg {
-    font-size: 23px;
-    margin-right: 7px;
-    color: var(--accent);
-  }
   &:hover,
   &:active {
     background-color: var(--hover-grey);
   }
+`;
+
+export const UserImage = styled.img`
+  margin-right: 7px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
 `;
