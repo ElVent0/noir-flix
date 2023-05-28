@@ -13,19 +13,67 @@ import {
 } from "./Header.styled.jsx";
 import logo from "../../media/noirflix-3.png";
 import { TbLogin } from "react-icons/tb";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { createAvatar } from "@dicebear/core";
+import { funEmoji } from "@dicebear/collection";
+import toast, { Toaster } from "react-hot-toast";
 
 const Header = () => {
   const [isProfileModal, setIsProfileModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
+  const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
+  const [avatar, setAvatar] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const [userMail, setUserMail] = useState(null);
+  const [userPassword, setUserPassword] = useState(null);
+
+  const notifyOnMailSignUp = () =>
+    toast.success(
+      "If this mail is free, you will receive a confirmation by email",
+      {
+        duration: 5000,
+        style: {
+          padding: "16px",
+          textAlign: "center",
+          color: "#606770",
+        },
+        iconTheme: {
+          primary: "#fb6d00",
+          secondary: "#FFFAEE",
+        },
+      }
+    );
+
+  const errorToast = () =>
+    toast.error("Bad login, try again", {
+      duration: 4000,
+      style: {
+        padding: "16px",
+        color: "#606770",
+      },
+      iconTheme: {
+        primary: "#fa4b34",
+        secondary: "#ffffff",
+      },
+    });
 
   const session = useSession();
   const supabase = useSupabaseClient();
 
   console.log("session", session);
+
+  useEffect(() => {
+    if (session) {
+      setAvatar(
+        createAvatar(funEmoji, {
+          seed: session.user.identities[0].id,
+        }).toDataUriSync()
+      );
+    }
+  }, [session]);
 
   // const { isLoading } = useSessionContext();
   // if (isLoading) {
@@ -38,16 +86,48 @@ const Header = () => {
     });
 
     if (error) {
-      alert("Login with Google error");
+      errorToast();
+    }
+  };
+
+  const loginWithMail = async () => {
+    console.log("Login", userMail, userPassword);
+
+    // const { data, error } = await supabase.auth.signInWithPassword({
+    //   email: "vasylviter95@gmail.com",
+    //   password: "12345678",
+    // });
+
+    // setIsLoginModal(false);
+    // if (error) {
+    //   errorToast();
+    // }
+  };
+
+  const createUserWithMail = async () => {
+    console.log("Registration", userName, userMail, userPassword);
+
+    // const { data, error } = await supabase.auth.signUp({
+    //   email: "vasylviter95@gmail.com",
+    //   password: "12345678",
+    //   options: { data: { name: "Vasyl1" } },
+    // });
+    // setIsLoginModal(false);
+    // notifyOnMailSignUp();
+  };
+
+  const sendLoginForm = (e) => {
+    e.preventDefault();
+
+    if (isLoginTypeModal === true) {
+      loginWithMail();
+    } else {
+      createUserWithMail();
     }
   };
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      alert("Logout error");
-    }
   };
 
   const onOpenProfileModal = () => {
@@ -55,6 +135,7 @@ const Header = () => {
   };
 
   const onOpenLoginModal = () => {
+    setIsLoginTypeModal(true);
     setIsLoginModal(true);
   };
 
@@ -104,19 +185,12 @@ const Header = () => {
         {session ? (
           <>
             <Profile onClick={onOpenProfileModal}>
-              <UserImage
-                src={session.user.identities[0].identity_data.avatar_url}
-                alt="User image"
-              />
+              <UserImage src={avatar} alt="User image" />
               <p>Profile</p>
             </Profile>
           </>
         ) : (
           <>
-            {/* <Logintext>Login</Logintext> */}
-            {/* <Login onClick={() => loginWithGoogle()}>
-              <FcGoogle />
-            </Login> */}
             <Login onClick={onOpenLoginModal}>
               <TbLogin />
               <Logintext>Login</Logintext>
@@ -128,14 +202,19 @@ const Header = () => {
         <ProfileModal
           onCloseProfileModal={onCloseProfileModal}
           onLogout={onLogout}
+          avatar={avatar}
         />
       )}
       {isLoginModal && (
         <LoginModal
           onCloseLoginModal={onCloseLoginModal}
           loginWithGoogle={loginWithGoogle}
+          sendLoginForm={sendLoginForm}
+          isLoginTypeModal={isLoginTypeModal}
+          setIsLoginTypeModal={setIsLoginTypeModal}
         />
       )}
+      <Toaster />
     </HeaderStyled>
   );
 };

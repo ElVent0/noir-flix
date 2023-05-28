@@ -54,7 +54,7 @@ export const LoginForm = styled.form`
 export const Title = styled.p`
   text-align: center;
   margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 22px;
   color: var(--text-main-transparent);
 `;
 

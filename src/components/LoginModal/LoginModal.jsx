@@ -14,40 +14,44 @@ import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 
-const ProfileModal = ({ onCloseLoginModal, loginWithGoogle }) => {
-  const [isLoginModal, setIsLoginModal] = useState(true);
-
+const ProfileModal = ({
+  onCloseLoginModal,
+  loginWithGoogle,
+  sendLoginForm,
+  isLoginTypeModal,
+  setIsLoginTypeModal,
+}) => {
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseLoginModal}>
       <Modal>
         <CloseButton id="button-close" onClick={onCloseLoginModal}>
           <RiCloseLine />
         </CloseButton>
-        {isLoginModal && (
-          <LoginForm>
+        {isLoginTypeModal && (
+          <LoginForm onSubmit={sendLoginForm}>
             <Title>Login</Title>
             <MailInput placeholder="Mail"></MailInput>
             <MailInput placeholder="Password"></MailInput>
-            <ButtonSubmit>Login</ButtonSubmit>
+            <ButtonSubmit type="submit">Login</ButtonSubmit>
             <RegisterButton
               onClick={() => {
-                setIsLoginModal((prev) => !prev);
+                setIsLoginTypeModal((prev) => !prev);
               }}
             >
               Register
             </RegisterButton>
           </LoginForm>
         )}
-        {!isLoginModal && (
-          <LoginForm>
+        {!isLoginTypeModal && (
+          <LoginForm onSubmit={sendLoginForm}>
             <Title>New user</Title>
             <MailInput placeholder="Username"></MailInput>
             <MailInput placeholder="Mail"></MailInput>
             <MailInput placeholder="Create password"></MailInput>
-            <ButtonSubmit>Create</ButtonSubmit>
+            <ButtonSubmit type="submit">Create</ButtonSubmit>
             <RegisterButton
               onClick={() => {
-                setIsLoginModal((prev) => !prev);
+                setIsLoginTypeModal((prev) => !prev);
               }}
             >
               Login
