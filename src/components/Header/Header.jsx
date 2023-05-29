@@ -11,7 +11,7 @@ import {
   Profile,
   UserImage,
 } from "./Header.styled.jsx";
-import logo from "../../media/noirflix-3.png";
+import logo from "../../media/noirflix-3-3.png";
 import { TbLogin } from "react-icons/tb";
 import { useState, useEffect } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";

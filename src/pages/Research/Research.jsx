@@ -1,4 +1,4 @@
-import { ResearchStyled } from "./Research.styled.jsx";
+import { ResearchStyled, RecentMovies } from "./Research.styled.jsx";
 import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
@@ -123,6 +123,8 @@ const Research = () => {
         {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
         <MoviesNavigation totalPages={totalPages} />
       </ResearchStyled>
+
+      <RecentMovies></RecentMovies>
       {movieData !== null && (
         <MovieModal
           movieData={movieData}

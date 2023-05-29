@@ -32,6 +32,7 @@ export const CloseButton = styled.button`
   & > svg {
     font-size: 20px;
     color: var(--text-main);
+    transition: 0.3s;
     &:hover,
     &:focus {
       color: var(--text-main-transparent);

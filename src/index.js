@@ -13,9 +13,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const GlobalStyle = createGlobalStyle`
 :root {
-  --accent: #fb6d00;
-  --accent-hover: #c76010;
-  /* --accent: #11b3ff; */
+  /* --accent: #fb6d00; */
+  /* --accent-hover: #c76010; */
+  --accent: #11b3ff;
+  --accent-hover: #179bd9;
   --bg-grey: #f7f7f7;
   --element-grey: #DADDE1;
   --hover-grey: #efefef;

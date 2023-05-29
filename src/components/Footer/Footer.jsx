@@ -1,7 +1,7 @@
 import { FooterStyled } from "./Footer.styled.jsx";
 
 const Footer = () => {
-  return <FooterStyled>тут буде лінк на гітхаб</FooterStyled>;
+  return <FooterStyled>Movie library in your pocket :)</FooterStyled>;
 };
 
 export default Footer;
