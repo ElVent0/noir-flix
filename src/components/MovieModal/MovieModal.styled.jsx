@@ -161,3 +161,41 @@ export const ConfirmButton = styled.button`
     background-color: var(--accent-hover);
   }
 `;
+
+export const MoreCheck = styled.div`
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+
+  &:hover,
+  &:focus {
+    & > button > svg {
+      transition: 0.3s;
+      transform: scale(1.1);
+    }
+  }
+`;
+
+export const MoreCheckButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: var(--pure-white);
+  transition: 0.3s;
+  & > svg {
+    font-size: 22px;
+  }
+  /* background-color: ${({ forLater }) =>
+    forLater === true ? "var(--accent)" : "var(--pure-white)"}; */
+  color: ${({ forLater }) =>
+    forLater === true ? "var(--accent)" : "var(--text-main)"};
+  border: ${({ forLater }) =>
+    forLater === true ? "1px solid var(--accent)" : "transparent"};
+`;

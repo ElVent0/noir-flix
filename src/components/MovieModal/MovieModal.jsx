@@ -16,18 +16,37 @@ import {
   StarItem,
   StarButton,
   ConfirmButton,
+  MoreCheck,
+  MoreCheckButton,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { useState } from "react";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
+import { MdMoreTime } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
   const [stars, setStars] = useState(0);
+  const [forLater, setForLater] = useState(false);
   const [isConfirmForm, setIsConfirmForm] = useState(false);
   const posterPath = `https://image.tmdb.org/t/p/original/${movieData.poster_path}`;
 
   // console.log("movieData", movieData);
+
+  const errorToast = () =>
+    toast.error("Rate the movie first", {
+      duration: 4000,
+      style: {
+        padding: "16px",
+        textAlign: "center",
+        color: "#606770",
+      },
+      iconTheme: {
+        primary: "#fa4b34",
+        secondary: "#ffffff",
+      },
+    });
 
   const getRatingList = () => {
     const ratingList = [];
@@ -46,10 +65,10 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
 
   const onConfirmForm = () => {
     if (stars === 0) {
-      alert("Rate the movie first");
+      errorToast();
     }
     // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
-    // console.log("Sending data", movieData.id, stars);
+    console.log("Sending data", movieData.id, stars, forLater);
   };
 
   return ReactDOM.createPortal(
@@ -120,6 +139,14 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
                     </StarItem>
                   ))}
                 </StarsList>
+                <MoreCheck>
+                  <MoreCheckButton
+                    forLater={forLater}
+                    onClick={() => setForLater((prev) => !prev)}
+                  >
+                    <MdMoreTime />
+                  </MoreCheckButton>
+                </MoreCheck>
                 <ConfirmButton onClick={onConfirmForm}>Confirm</ConfirmButton>
               </>
             )}

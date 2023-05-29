@@ -121,14 +121,14 @@ const Library = () => {
 
   // console.log("stars", stars, "forLater", forLater);
 
-  useEffect(
-    () => {
-      // Тут змінюємо фінальний список фільмів для рендеру в
-      // MoviesList для /library  в залежності від фільтрів
-    },
-    stars,
-    forLater
-  );
+  // useEffect(
+  //   () => {
+  //     // Тут змінюємо фінальний список фільмів для рендеру в
+  //     // MoviesList для /library  в залежності від фільтрів
+  //   },
+  //   stars,
+  //   forLater
+  // );
 
   return (
     <>
