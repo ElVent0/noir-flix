@@ -2,7 +2,7 @@ import styled from "styled-components";
 import background from "../../media/research-poster.jpg";
 
 export const RecentMoviesStyled = styled.div`
-  margin-top: 20px;
+  margin-top: 12px;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
@@ -58,9 +58,6 @@ export const MoviesHeaderContent = styled.div`
 `;
 
 export const ReadMore = styled.button`
-  /* color: var(--text-main); */
-  /* color: var(--accent);
-  background-color: var(--pure-white); */
   color: var(--pure-white);
   background-color: var(--accent);
   transition: 0.3s;
@@ -135,6 +132,7 @@ export const RecentNothing = styled.div`
   display: flex;
   position: relative;
   left: -24px;
+  padding-bottom: 24px;
 `;
 
 export const DialogElement = styled.div`
@@ -147,7 +145,7 @@ export const DialogElement = styled.div`
 
 export const RecentNothingContent = styled.div`
   width: 420px;
-  height: 134px;
+  height: 110px;
   padding: 16px 232px 16px 16px;
   background-color: var(--bg-grey);
   border-radius: 10px 0 0 10px;
@@ -155,19 +153,29 @@ export const RecentNothingContent = styled.div`
   flex-direction: column;
   -webkit-mask-image: linear-gradient(
     to right,
-    rgba(0, 0, 0, 1) 40%,
-    rgba(0, 0, 0, 0) 100%
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 0.9) 40%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.4) 70%,
+    rgba(0, 0, 0, 0.2) 80%,
+    rgba(0, 0, 0, 0) 90%
   );
   mask-image: linear-gradient(
     to right,
-    rgba(0, 0, 0, 1) 40%,
-    rgba(0, 0, 0, 0) 100%
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 0.9) 40%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.4) 70%,
+    rgba(0, 0, 0, 0.2) 80%,
+    rgba(0, 0, 0, 0) 90%
   );
 `;
 
 export const RecentNothingParagraph = styled.p`
   font-size: 15px;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 `;
 
 export const RecentNothingButton = styled.button`

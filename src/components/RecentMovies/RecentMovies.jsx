@@ -16,19 +16,62 @@ import {
   RecentNothingButton,
   DialogElement,
 } from "./RecentMovies.styled";
+import { useState, useEffect } from "react";
 
 const RecentMovies = ({
   genres,
   poster,
   recentList,
-  recentMoviesData,
+  setRecentList,
   searchParams,
   setSearchParams,
   onAddToRecentMovies,
+  getMovieById,
 }) => {
+  const [recentMoviesData, setRecentMoviesData] = useState([]);
+
+  useEffect(() => {
+    const newRecentList = [];
+    if (!JSON.parse(localStorage.getItem("RecentListForNoirflix"))) {
+      localStorage.setItem(
+        "RecentListForNoirflix",
+        JSON.stringify(newRecentList)
+      );
+      setRecentList([]);
+    } else {
+      const recentMoviesList = JSON.parse(
+        localStorage.getItem("RecentListForNoirflix")
+      );
+      setRecentList(recentMoviesList);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const getDataForMovie = async (item) => {
+      const data = await getMovieById(item);
+      return data;
+    };
+
+    const fetchRecentMoviesData = async () => {
+      if (recentList && recentList.length === 0) {
+        return;
+      }
+
+      if (recentList) {
+        const promises = recentList.map((item) => getDataForMovie(item));
+        const resolvedData = await Promise.all(promises);
+        setRecentMoviesData(resolvedData);
+      }
+    };
+
+    fetchRecentMoviesData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recentList]);
+
   return (
     <RecentMoviesStyled>
-      <RecentParagraph>Recently watched</RecentParagraph>
+      <RecentParagraph>Recently explored</RecentParagraph>
       {recentList && recentList.length > 0 ? (
         <RecentList>
           {recentMoviesData &&

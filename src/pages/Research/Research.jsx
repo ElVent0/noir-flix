@@ -4,6 +4,7 @@ import MoviesList from "../../components/MoviesList/MoviesList";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import MovieModal from "../../components/MovieModal/MovieModal";
 import RecentMovies from "../../components/RecentMovies/RecentMovies";
+import MainPoster from "../../components/MainPoster/MainPoster";
 import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
@@ -19,7 +20,7 @@ const Research = () => {
   const [recentList, setRecentList] = useState(
     JSON.parse(localStorage.getItem("RecentListForNoirflix"))
   );
-  const [recentMoviesData, setRecentMoviesData] = useState([]);
+  const [trendingList, setTrendingList] = useState([]);
 
   const location = useLocation();
 
@@ -34,6 +35,14 @@ const Research = () => {
     setMoviesList(data.results);
     setTotalPages(data.total_pages);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getMovies(1, "Popularity");
+      setTrendingList(data.results);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
@@ -106,44 +115,6 @@ const Research = () => {
     }
   };
 
-  useEffect(() => {
-    const newRecentList = [];
-    if (!JSON.parse(localStorage.getItem("RecentListForNoirflix"))) {
-      localStorage.setItem(
-        "RecentListForNoirflix",
-        JSON.stringify(newRecentList)
-      );
-      setRecentList([]);
-    } else {
-      const recentMoviesList = JSON.parse(
-        localStorage.getItem("RecentListForNoirflix")
-      );
-      setRecentList(recentMoviesList);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const getDataForMovie = async (item) => {
-      const data = await getMovieById(item);
-      return data;
-    };
-
-    const fetchRecentMoviesData = async () => {
-      if (recentList && recentList.length === 0) {
-        return;
-      }
-
-      if (recentList) {
-        const promises = recentList.map((item) => getDataForMovie(item));
-        const resolvedData = await Promise.all(promises);
-        setRecentMoviesData(resolvedData);
-      }
-    };
-
-    fetchRecentMoviesData();
-  }, [recentList]);
-
   const onAddToRecentMovies = (id) => {
     let newRecentList = JSON.parse(
       localStorage.getItem("RecentListForNoirflix")
@@ -167,6 +138,7 @@ const Research = () => {
 
   return (
     <>
+      <MainPoster trendingList={trendingList} />
       <ResearchStyled>
         <MoviesFilters
           setInputSort={setInputSort}
@@ -188,15 +160,15 @@ const Research = () => {
         {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
         <MoviesNavigation totalPages={totalPages} />
       </ResearchStyled>
-
       <RecentMovies
         genres={genres}
         poster={poster}
         recentList={recentList}
-        recentMoviesData={recentMoviesData}
+        setRecentList={setRecentList}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
         onAddToRecentMovies={onAddToRecentMovies}
+        getMovieById={getMovieById}
       />
       {movieData !== null && (
         <MovieModal
