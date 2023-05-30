@@ -50,9 +50,10 @@ export const MoviesBody = styled.div`
 `;
 
 export const ReadMore = styled.button`
-  color: var(--text-main);
-  transition: 0.3s;
+  /* color: var(--text-main); */
+  color: var(--accent);
   background-color: var(--pure-white);
+  transition: 0.3s;
   padding: 6px 13px;
   width: 100%;
   border-radius: 8px;
@@ -61,7 +62,7 @@ export const ReadMore = styled.button`
   &:hover,
   &:focus {
     background-color: var(--hover-grey);
-    color: var(--text-main);
+    color: var(--accent-hover);
   }
 `;
 

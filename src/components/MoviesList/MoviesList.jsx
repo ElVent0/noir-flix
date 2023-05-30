@@ -20,6 +20,7 @@ const MoviesList = ({
   setSearchParams,
   stars,
   forLater,
+  onAddToRecentMovies,
 }) => {
   const genreIds = (item) => {
     return item.genre_ids.map((item) => genres[item]).join(", ");
@@ -39,6 +40,7 @@ const MoviesList = ({
           }
           params.id = id;
           setSearchParams(params);
+          onAddToRecentMovies(id);
         };
 
         return (

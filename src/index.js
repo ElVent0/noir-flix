@@ -17,12 +17,10 @@ const GlobalStyle = createGlobalStyle`
   /* --accent-hover: #c76010; */
   --accent: #11b3ff;
   --accent-hover: #179bd9;
-  --bg-grey: #f7f7f7;
+  --bg-grey: #f4f7f9;
   --element-grey: #DADDE1;
   --hover-grey: #efefef;
   --text-main: #606770;
-  /* --element-grey: #e1deda;
-  --text-main: #706c60; */
   --text-main-transparent: #60677099;
   --nav-black: #242424;
   --nav-black-transparent: #24242490;
