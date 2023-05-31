@@ -138,7 +138,12 @@ const Research = () => {
 
   return (
     <>
-      <MainPoster trendingList={trendingList} />
+      <MainPoster
+        trendingList={trendingList}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        onAddToRecentMovies={onAddToRecentMovies}
+      />
       <ResearchStyled>
         <MoviesFilters
           setInputSort={setInputSort}

@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
   /* --accent: #fb6d00; */
   /* --accent-hover: #c76010; */
   --accent: #11b3ff;
-  --accent-transparent: #11b4ffaf;
+  --accent-transparent: #11b4ffc3;
   --accent-hover: #179bd9;
   --bg-grey: #f4f7f9;
   --element-grey: #DADDE1;
