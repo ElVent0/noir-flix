@@ -85,7 +85,8 @@ export const ModalParagraph = styled.p`
   line-height: 15px;
   color: var(--text-main-transparent);
   &:last-child {
-    margin-bottom: 0;
+    max-height: 114px;
+    overflow-y: scroll;
   }
   & > span {
     font-weight: 400;
@@ -101,6 +102,57 @@ export const ModalContentFooter = styled.div`
   gap: 10px;
   margin-top: auto;
   padding-bottom: 10px;
+`;
+
+export const TrailerList = styled.ul`
+  display: flex;
+  gap: 10px;
+`;
+
+export const TrailerItem = styled.li`
+  width: 112px;
+  height: 70px;
+  border-radius: 10px;
+  background-image: url(${(props) => props.path});
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+`;
+
+export const TrailerButton = styled.a`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  background: #00000090;
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    background: red;
+    & > img {
+      width: 82%;
+    }
+  }
+`;
+
+export const YoutubeLogo = styled.img`
+  width: 44px;
+  height: auto;
+  transition: 0.3s;
+  animation: scaling 2s ease-in-out infinite;
+  @keyframes scaling {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const AddButton = styled.button`

@@ -18,19 +18,28 @@ import {
   ConfirmButton,
   MoreCheck,
   MoreCheckButton,
+  TrailerList,
+  TrailerItem,
+  TrailerButton,
+  YoutubeLogo,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
+import youtubeLogo from "../../media/youtube-logo.png";
 import toast from "react-hot-toast";
+import { getVideoByIds } from "../../api/movies.jsx";
 
 const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
   const [isConfirmForm, setIsConfirmForm] = useState(false);
+  const [movieTrailer, setMovieTrailer] = useState(null);
+
   const posterPath = `https://image.tmdb.org/t/p/original/${movieData.poster_path}`;
+  const bgPath = `https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`;
 
   // console.log("movieData", movieData);
 
@@ -70,6 +79,32 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
     // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
     console.log("Sending data", movieData.id, stars, forLater);
   };
+
+  useEffect(() => {
+    const getTrailer = async () => {
+      const data = await getVideoByIds(movieData.id);
+
+      const arrayItem = data.results.filter(
+        (item) => item.name === "Final Trailer"
+      );
+
+      let trailer;
+      if (data.results.length > 0 && arrayItem[0] !== undefined) {
+        trailer = `https://www.youtube.com/watch?v=${arrayItem[0].key}`;
+      } else if (data.results.length > 0 && arrayItem[0] === undefined) {
+        trailer = `https://www.youtube.com/watch?v=${
+          data.results[data.results.length - 1].key
+        }`;
+      } else {
+        return;
+      }
+
+      setMovieTrailer(trailer);
+    };
+
+    getTrailer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
@@ -115,6 +150,15 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
               <span>{movieData.overview}</span>
             </ModalParagraph>
           </ModalContentBody>
+          {movieTrailer && (
+            <TrailerList>
+              <TrailerItem path={bgPath}>
+                <TrailerButton href={movieTrailer} target="_blank">
+                  <YoutubeLogo src={youtubeLogo} alt="youtube logo" />
+                </TrailerButton>
+              </TrailerItem>
+            </TrailerList>
+          )}
           <ModalContentFooter>
             {!isConfirmForm && (
               <AddButton

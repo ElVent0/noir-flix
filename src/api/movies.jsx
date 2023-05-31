@@ -45,15 +45,15 @@ export const getMovieById = async (id) => {
 `
   );
   const result = await data.json();
-  console.log(result);
   return result;
 };
 
-// export const getMoviesByIds = async (id) => {
-//   const data = await fetch(
-//     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&&language=en-US
-// `
-//   );
-//   const result = await data.json();
-//   return result;
-// };
+export const getVideoByIds = async (id) => {
+  const data = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US
+`
+  );
+  const result = await data.json();
+  console.log("dasfsdfsdf", result);
+  return result;
+};

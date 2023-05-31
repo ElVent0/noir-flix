@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const MainPosters = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 12px;
 `;
 
 export const MainPosterStyled = styled.div`
   margin-bottom: 12px;
   border-radius: 10px;
-  width: 49%;
+  width: 1188px;
   height: 220px;
   background-color: var(--pure-white);
   overflow: hidden;
@@ -35,10 +35,10 @@ export const Poster = styled.img`
     20% {
       opacity: 1;
     }
-    75% {
+    80% {
       opacity: 1;
     }
-    85% {
+    90% {
       opacity: 0;
     }
     100% {
@@ -76,10 +76,10 @@ export const MainPosterElementLeft = styled.div`
     20% {
       opacity: 1;
     }
-    75% {
+    80% {
       opacity: 1;
     }
-    85% {
+    90% {
       opacity: 0;
     }
     100% {
@@ -123,7 +123,6 @@ export const MainPosterContent = styled.div`
 export const MainPosterRating = styled.p`
   position: absolute;
   color: var(--pure-white);
-  height: 100%;
   left: 12px;
   top: 12px;
   z-index: 1001;
@@ -140,10 +139,10 @@ export const MainPosterRating = styled.p`
     20% {
       opacity: 1;
     }
-    75% {
+    80% {
       opacity: 1;
     }
-    85% {
+    90% {
       opacity: 0;
     }
     100% {
@@ -177,10 +176,10 @@ export const MainPosterName = styled.p`
     20% {
       opacity: 1;
     }
-    75% {
+    80% {
       opacity: 1;
     }
-    85% {
+    90% {
       opacity: 0;
     }
     100% {
@@ -212,10 +211,10 @@ export const MainPosterAbout = styled.p`
     20% {
       opacity: 1;
     }
-    75% {
+    80% {
       opacity: 1;
     }
-    85% {
+    90% {
       opacity: 0;
     }
     100% {
@@ -252,10 +251,10 @@ export const MainPosterMore = styled.button`
     20% {
       opacity: 1;
     }
-    75% {
+    80% {
       opacity: 1;
     }
-    85% {
+    90% {
       opacity: 0;
     }
     100% {
