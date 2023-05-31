@@ -18,35 +18,32 @@ const MainPoster = ({
   setSearchParams,
   onAddToRecentMovies,
 }) => {
-  const [currentTrendOne, setCurrentTrendOne] = useState(
-    Math.round(Math.random() * (9 - 0) + 0)
-  );
-  const [currentTrendTwo, setCurrentTrendTwo] = useState(
-    Math.round(Math.random() * (18 - 10) + 10)
-  );
+  const [currentTrendOne, setCurrentTrendOne] = useState(0);
+  const [currentTrendTwo, setCurrentTrendTwo] = useState(10);
 
   console.log("trendingList", trendingList);
 
   const updateCount = () => {
     setInterval(() => {
-      let randomNumberOne = Math.random() * (9 - 0) + 0;
-      let randomNumberTwo = Math.random() * (18 - 10) + 10;
+      // let randomNumberOne = Math.random() * (9 - 0) + 0;
+      // let randomNumberTwo = Math.random() * (18 - 10) + 10;
 
-      if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
-        randomNumberTwo -= 1;
-      } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
-        randomNumberTwo += 1;
-      }
-      if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
-        randomNumberTwo -= 1;
-      } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
-        randomNumberTwo += 1;
-      }
+      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
+      //   randomNumberTwo -= 1;
+      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
+      //   randomNumberTwo += 1;
+      // }
+      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
+      //   randomNumberTwo -= 1;
+      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
+      //   randomNumberTwo += 1;
+      // }
 
-      setCurrentTrendOne(Math.round(randomNumberOne));
-      setCurrentTrendTwo(Math.round(randomNumberTwo));
+      setCurrentTrendOne((prev) => (prev + 1) % 20);
+      setCurrentTrendTwo((prev) => (prev + 1) % 20);
     }, 8000);
   };
+  console.log(currentTrendOne, currentTrendTwo, "===============");
 
   useEffect(() => {
     updateCount();
