@@ -8,13 +8,12 @@ import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { backendTamplate } from "../../api/backend-tamplate";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Library = ({ onAddToRecentMovies }) => {
-  const [moviesList, setMoviesList] = useState(null);
+  const [moviesList, setMoviesList] = useState([]);
+  const [moviesListIds, setMoviesListIds] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [totalPages, setTotalPages] = useState(null);
-  const [searchInput, setSearchInput] = useState("");
-  const [inputSort, setInputSort] = useState("Popularity");
   const [movieData, setMovieData] = useState(null);
 
   const [stars, setStars] = useState(0);
@@ -22,28 +21,66 @@ const Library = ({ onAddToRecentMovies }) => {
 
   const location = useLocation();
 
+  const session = useSession();
+  const supabase = useSupabaseClient();
+
   // "Список id фільмів з бібліотеки"
   // console.log(
   //   backendTamplate.user_data.rating_list.map((item) => item.movie_id)
   // );
 
-  const getData = async () => {
-    const data = await getMovies(searchParams.get("page"), inputSort);
-    setMoviesList(data.results);
-    setTotalPages(data.total_pages);
-  };
+  useEffect(() => {
+    const getMoviesFromLibarary = async (id) => {
+      const { data, error } = await supabase.from("library").select("*");
 
-  const getDataByTitle = async () => {
-    const data = await getMovieByTitle(searchInput, searchParams.get("page"));
-    setMoviesList(data.results);
-    setTotalPages(data.total_pages);
-  };
+      if (session) {
+        let result = data
+          .filter((item) => item.user_id === session.user.id)
+          .sort(
+            (a, b) =>
+              new Date(b.creation_date).getTime() -
+              new Date(a.creation_date).getTime()
+          );
+
+        result = result.filter((obj, index, self) => {
+          return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+        });
+
+        setMoviesListIds(result);
+
+        setMoviesList([]);
+
+        for (let item of result) {
+          const getDataForSingleMovie = async () => {
+            const newData = await getMovieById(item.movie_id);
+            setMoviesList((prev) => [...prev, newData]);
+          };
+
+          getDataForSingleMovie();
+        }
+      }
+    };
+
+    getMoviesFromLibarary();
+
+    // setMoviesList([]);
+  }, [session]);
+
+  // console.log("1---------", moviesListIds, moviesList);
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
       const getDataForMovie = async () => {
-        // console.log("id", searchParams.get("id"));
         const data = await getMovieById(searchParams.get("id"));
+
+        const result =
+          moviesListIds &&
+          moviesListIds.filter((item) => item.movie_id === data.id);
+
+        data.creation_date = result[0].creation_date;
+        data.stars = result[0].movie_rating;
+        data.for_later = result[0].movie_for_future;
+
         setMovieData(data);
       };
       getDataForMovie();
@@ -53,20 +90,8 @@ const Library = ({ onAddToRecentMovies }) => {
         behavior: "smooth",
       });
     }
-    if (searchInput === "") {
-      getData();
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
-
-  useEffect(() => {
-    if (searchInput !== "") {
-      getDataByTitle();
-    } else if (searchInput === "") {
-      getData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput, location]);
 
   const genres = {
     28: "Action",
@@ -88,11 +113,6 @@ const Library = ({ onAddToRecentMovies }) => {
     53: "Thriller",
     10752: "War",
     37: "Western",
-  };
-
-  const changeSearchInput = (e) => {
-    setSearchInput(e.currentTarget.value);
-    setSearchParams({ page: 1 });
   };
 
   const onCloseReadMore = (e) => {
@@ -119,16 +139,11 @@ const Library = ({ onAddToRecentMovies }) => {
     setForLater((prev) => !prev);
   };
 
-  // console.log("stars", stars, "forLater", forLater);
+  const onAllStarsButton = () => {
+    setStars(0);
+  };
 
-  // useEffect(
-  //   () => {
-  //     // Тут змінюємо фінальний список фільмів для рендеру в
-  //     // MoviesList для /library  в залежності від фільтрів
-  //   },
-  //   stars,
-  //   forLater
-  // );
+  // console.log("stars", stars, "forLater", forLater);
 
   return (
     <>
@@ -136,27 +151,27 @@ const Library = ({ onAddToRecentMovies }) => {
         {moviesList ? (
           <LibraryStyled>
             <MoviesFilters
-              setInputSort={setInputSort}
-              inputSort={inputSort}
-              searchInput={searchInput}
-              changeSearchInput={changeSearchInput}
               stars={stars}
               onStars={onStars}
               forLater={forLater}
               onForLater={onForLater}
+              onAllStarsButton={onAllStarsButton}
             />
 
             <MoviesList
               moviesList={moviesList}
+              moviesListIds={moviesListIds}
               genres={genres}
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               stars={stars}
+              setStars={setStars}
               forLater={forLater}
+              setForLater={setForLater}
               onAddToRecentMovies={onAddToRecentMovies}
+              page="library"
             />
             {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
-            <MoviesNavigation totalPages={totalPages} />
           </LibraryStyled>
         ) : (
           <p>Loading...</p>
@@ -168,6 +183,7 @@ const Library = ({ onAddToRecentMovies }) => {
           onCloseReadMore={onCloseReadMore}
           genresInEnglish={genres}
           page="library"
+          moviesListIds={moviesListIds}
         />
       )}
     </>

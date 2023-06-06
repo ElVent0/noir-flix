@@ -19,8 +19,8 @@ export const Modal = styled.div`
   background: #f7f7f7;
   border-radius: 10px;
   display: flex;
-  padding: 18px 12px;
   position: relative;
+  overflow: hidden;
 `;
 
 export const CloseButton = styled.button`
@@ -68,8 +68,11 @@ export const Logout = styled.button`
 
 export const Profile = styled.div`
   width: 50%;
-  border-right: 1px solid var(--element-grey);
   padding-top: 60px;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const UserImage = styled.img`
@@ -95,4 +98,11 @@ export const UserMail = styled.p`
   font-size: 14px;
 `;
 
-export const Statistics = styled.div``;
+export const Statistics = styled.div`
+  width: 50%;
+  background-image: linear-gradient(transparent, var(--accent-transparent)),
+    url(${(props) => props.path});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+`;

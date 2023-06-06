@@ -93,6 +93,27 @@ const ProfileModal = ({
       provider: "google",
     });
 
+    // console.log(0, user);
+
+    // try {
+    //   const { error } = await supabase
+    //     .from("users")
+    //     .insert({
+    //       user_id: user.id,
+    //       user_name: userName,
+    //       user_mail: userMail,
+    //     })
+    //     .single();
+
+    //   // window.location.reload();
+    //   if (error) {
+    //     console.error(error);
+    //     return;
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
     if (error) {
       errorToast();
     }
@@ -112,7 +133,7 @@ const ProfileModal = ({
       return;
     }
 
-    console.log("Login", userMail, userPassword);
+    // console.log("Login", userMail, userPassword);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: userMail,
@@ -139,7 +160,34 @@ const ProfileModal = ({
       errorPassword();
       return;
     }
-    console.log("Registration", userName, userMail, userPassword);
+    // console.log("Registration", userName, userMail, userPassword);
+
+    const { data, error } = await supabase.auth.signUp({
+      email: userMail,
+      password: userPassword,
+      options: { data: { name: userName } },
+    });
+
+    // console.log(1, data);
+
+    // try {
+    //   const { error } = await supabase
+    //     .from("users")
+    //     .insert({
+    //       user_id: data.user.id,
+    //       user_name: userName,
+    //       user_mail: userMail,
+    //     })
+    //     .single();
+
+    //   // window.location.reload();
+    //   if (error) {
+    //     console.error(error);
+    //     return;
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
 
     setIsLoginModal(false);
     notifyOnMailSignUp();

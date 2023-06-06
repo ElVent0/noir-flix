@@ -24,12 +24,12 @@ export const Modal = styled.div`
 `;
 
 export const ModalPoster = styled.img`
-  border-radius: 10px 0 10px 10px;
+  border-radius: ${(props) =>
+    props.page === "library" ? "10px 0 10px 10px" : "10px"};
   display: block;
 `;
 
 export const PosterContainer = styled.div`
-  border-radius: 10px 0 10px 10px;
   width: 300px;
   height: 430px;
   position: relative;
@@ -363,9 +363,34 @@ export const DeleteFromLibraryButton = styled.button`
   color: var(--text-main);
   background-color: transparent;
   text-decoration: underline;
+  margin-top: auto;
+  width: 140px;
+  text-align: left;
+  position: relative;
+  bottom: 10px;
   transition: 0.3s;
   &:hover,
   &:focus {
     color: var(--text-main-transparent);
+  }
+`;
+
+export const InLibraryBlock = styled.div`
+  margin-top: auto;
+  position: relative;
+  bottom: 10px;
+  background-color: transparent;
+  width: 112px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-hover);
+  color: var(--pure-white);
+  border-radius: 10px;
+  /* padding: 0px 16px; */
+  & > svg {
+    font-size: 18px;
+    margin-right: 6px;
   }
 `;

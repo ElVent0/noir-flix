@@ -12,6 +12,7 @@ import {
   CloseSerachButton,
   StarsList,
   StarItem,
+  ButtonAll,
   StarButton,
   MoreCheck,
   MoreCheckButton,
@@ -33,6 +34,7 @@ const ResearchFilters = ({
   onStars,
   forLater,
   onForLater,
+  onAllStarsButton,
 }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
@@ -101,6 +103,9 @@ const ResearchFilters = ({
               </StarItem>
             ))}
           </StarsList>
+          <ButtonAll stars={stars} onClick={onAllStarsButton}>
+            All
+          </ButtonAll>
           <FiltersParagraph>Watch again</FiltersParagraph>
           <MoreCheck>
             <MoreCheckButton forLater={forLater} onClick={onForLater}>

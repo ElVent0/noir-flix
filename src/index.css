@@ -54,7 +54,8 @@ button {
 }
 
 img,
-svg {
+svg,
+button {
   user-select: none;
 }
 

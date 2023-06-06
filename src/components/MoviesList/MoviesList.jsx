@@ -9,26 +9,101 @@ import {
   MoviesName,
   MoviesYear,
   MoviesParagraph,
+  StarsList,
+  StarItem,
+  MoreCheck,
+  MoreCheckButton,
 } from "./MoviesList.styled";
-import { MdOutlineAutoGraph } from "react-icons/md";
 import poster from "../../media/poster.jpg";
+import { TbStar } from "react-icons/tb";
+import { TbStarFilled } from "react-icons/tb";
+import { MdMoreTime } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 const MoviesList = ({
   moviesList,
-  genres,
+  moviesListIds,
+  genres: genresNames,
   searchParams,
   setSearchParams,
   stars,
+  setStars,
   forLater,
+  setForLater,
   onAddToRecentMovies,
+  page,
 }) => {
+  const [finalList, setFinalList] = useState([]);
+
   const genreIds = (item) => {
-    return item.genre_ids.map((item) => genres[item]).join(", ");
+    if (page === "research") {
+      return item.genre_ids.map((item) => genresNames[item]).join(", ");
+    } else if (page === "library") {
+      return item.genres.map((item) => genresNames[item.id]).join(", ");
+    }
   };
+
+  useEffect(() => {
+    if (page === "library") {
+      // setForLater(false);
+      const resultList = moviesList.map((item, index) => {
+        item.creation_date = moviesListIds[index].creation_date;
+        item.stars = moviesListIds[index].movie_rating;
+        item.for_later = moviesListIds[index].movie_for_future;
+        return item;
+      });
+
+      if (stars === 0) {
+        setFinalList(resultList);
+
+        return;
+      } else {
+        const result = finalList
+          ? resultList.filter((item) => item.stars === stars)
+          : finalList.filter((item) => item.stars === stars);
+
+        setFinalList(result);
+      }
+
+      // setFinalList(resultList);
+    } else {
+      setFinalList(moviesList);
+      return;
+    }
+  }, [moviesList, stars]);
+
+  useEffect(() => {
+    if (page === "library") {
+      const resultList = moviesList.map((item, index) => {
+        item.creation_date = moviesListIds[index].creation_date;
+        item.stars = moviesListIds[index].movie_rating;
+        item.for_later = moviesListIds[index].movie_for_future;
+        return item;
+      });
+
+      if (forLater === false) {
+        setFinalList(resultList);
+
+        return;
+      } else {
+        const result = finalList
+          ? resultList.filter((item) => item.for_later === forLater)
+          : finalList.filter((item) => item.for_later === forLater);
+
+        setFinalList(result);
+      }
+      // setStars(0);
+
+      // setFinalList(resultList);
+    } else {
+      setFinalList(moviesList);
+      return;
+    }
+  }, [moviesList, forLater]);
 
   return (
     <MoviesListStyled>
-      {moviesList.map((item) => {
+      {finalList.map((item, index) => {
         const path = item.poster_path
           ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
           : poster;
@@ -43,6 +118,19 @@ const MoviesList = ({
           onAddToRecentMovies(id);
         };
 
+        const getRatingList = () => {
+          const stars = finalList[index].stars;
+
+          const ratingList = [];
+          for (let i = 1; i <= stars; i += 1) {
+            ratingList.push(true);
+          }
+          for (let i = 1; i <= 5 - stars; i += 1) {
+            ratingList.push(false);
+          }
+          return ratingList;
+        };
+
         return (
           <MoviesItem key={item.id}>
             <MoviesHeader>
@@ -52,15 +140,29 @@ const MoviesList = ({
                 <MoviesYear>
                   {new Date(item.release_date).getFullYear()}
                 </MoviesYear>
-                <MoviesParagraph>
+                {/* <MoviesParagraph>
                   <MdOutlineAutoGraph />
                   <b>{item.vote_average}</b> / 10
-                </MoviesParagraph>
+                </MoviesParagraph> */}
+                {page === "library" && (
+                  <StarsList>
+                    {getRatingList().map((item, index) => (
+                      <StarItem key={index}>
+                        {item ? <TbStarFilled /> : <TbStar />}
+                      </StarItem>
+                    ))}
+                  </StarsList>
+                )}
                 <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
               </MoviesHeaderContent>
             </MoviesHeader>
             <MoviesBody>{item.overview}</MoviesBody>
             <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
+            {page === "library" && (
+              <MoreCheck forLater={moviesListIds[index].movie_for_future}>
+                <MdMoreTime />
+              </MoreCheck>
+            )}
           </MoviesItem>
         );
       })}

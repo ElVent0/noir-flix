@@ -61,7 +61,7 @@ const Header = () => {
   const session = useSession();
   const supabase = useSupabaseClient();
 
-  console.log("session", session);
+  // console.log("session", session);
 
   useEffect(() => {
     if (session) {

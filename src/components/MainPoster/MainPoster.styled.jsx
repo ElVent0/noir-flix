@@ -29,16 +29,16 @@ export const Poster = styled.img`
     0% {
       opacity: 0;
     }
-    10% {
+    5% {
       opacity: 0;
     }
-    20% {
-      opacity: 1;
-    }
-    80% {
+    10% {
       opacity: 1;
     }
     90% {
+      opacity: 1;
+    }
+    95% {
       opacity: 0;
     }
     100% {

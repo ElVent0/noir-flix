@@ -14,6 +14,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
+import path from "../../media/profile.jpg";
 
 const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
   const session = useSession();
@@ -22,10 +23,10 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
 
   const userName = () => {
     if (session.user.app_metadata.provider === "google") {
-      console.log("google");
+      // console.log("google");
       return userData.full_name;
     } else if (session.user.app_metadata.provider === "email") {
-      console.log("email");
+      // console.log("email");
       return session.user.user_metadata.name;
     }
   };
@@ -33,6 +34,7 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseProfileModal}>
       <Modal>
+        <Statistics path={path}></Statistics>
         <Profile>
           <UserImage src={avatar} alt="User image" />
           <UserName>{userName()}</UserName>
@@ -42,7 +44,7 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
             <p>Logout</p>
           </Logout>
         </Profile>
-        <Statistics>Тут накидаю статистику</Statistics>
+
         <CloseButton id="button-close" onClick={onCloseProfileModal}>
           <RiCloseLine />
         </CloseButton>

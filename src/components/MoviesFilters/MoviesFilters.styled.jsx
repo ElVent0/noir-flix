@@ -193,6 +193,30 @@ export const StarButton = styled.button`
   color: var(--accent);
 `;
 
+export const ButtonAll = styled.button`
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  padding: 0 10px;
+  transition: 0.3s;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: ${(props) =>
+    props.stars === 0 ? "var(--accent)" : "var(--pure-white)"};
+  color: ${(props) =>
+    props.stars === 0 ? "var(--pure-white)" : "var(--accent)"};
+  border: ${(props) =>
+    props.stars === 0
+      ? "1px solid var(--pure-white)"
+      : "1px solid var(--accent)"};
+  &:hover,
+  &:focus {
+    transform: scale(1.05);
+  }
+`;
+
 export const MoreCheck = styled.div`
   width: 26px;
   height: 26px;

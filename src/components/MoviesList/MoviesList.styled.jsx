@@ -122,3 +122,41 @@ export const MoviesParagraph = styled.p`
     margin-bottom: 0;
   }
 `;
+
+export const StarsList = styled.ul`
+  display: flex;
+  gap: 3px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+`;
+
+export const StarItem = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-size: 18px;
+  color: var(--accent);
+`;
+
+export const MoreCheck = styled.div`
+  width: 24px;
+  height: 24px;
+  display: ${({ forLater }) => (forLater === true ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: var(--pure-white);
+  color: var(--accent);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  & > svg {
+    position: relative;
+    top: -1px;
+    left: 1px;
+  }
+`;

@@ -9,9 +9,11 @@ import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import poster from "../../media/poster.jpg";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [moviesList, setMoviesList] = useState(null);
+  const [moviesListIds, setMoviesListIds] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(null);
   const [searchInput, setSearchInput] = useState("");
@@ -21,6 +23,9 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [trendingList, setTrendingList] = useState([]);
 
   const location = useLocation();
+
+  const session = useSession();
+  const supabase = useSupabaseClient();
 
   const getData = async () => {
     const data = await getMovies(searchParams.get("page"), inputSort);
@@ -113,6 +118,31 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     }
   };
 
+  useEffect(() => {
+    const getMoviesFromLibarary = async (id) => {
+      const { data, error } = await supabase.from("library").select("*");
+
+      if (session) {
+        let result = data
+          .filter((item) => item.user_id === session.user.id)
+          .sort(
+            (a, b) =>
+              new Date(b.creation_date).getTime() -
+              new Date(a.creation_date).getTime()
+          );
+
+        result = result.filter((obj, index, self) => {
+          return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+        });
+
+        setMoviesListIds(result);
+      }
+    };
+
+    getMoviesFromLibarary();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
   return (
     <>
       {moviesList ? (
@@ -136,6 +166,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               onAddToRecentMovies={onAddToRecentMovies}
+              page="research"
             />
             <MoviesNavigation totalPages={totalPages} />
           </ResearchStyled>
@@ -155,6 +186,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               onCloseReadMore={onCloseReadMore}
               genresInEnglish={genres}
               page="research"
+              moviesListIds={moviesListIds}
             />
           )}
         </>

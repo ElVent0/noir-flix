@@ -54,6 +54,6 @@ export const getVideoByIds = async (id) => {
 `
   );
   const result = await data.json();
-  console.log("dasfsdfsdf", result);
+  // console.log("dasfsdfsdf", result);
   return result;
 };

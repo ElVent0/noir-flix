@@ -29,26 +29,48 @@ import {
   CornerElementLeft,
   CornerElementBottom,
   DeleteFromLibraryButton,
+  InLibraryBlock,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
+import { MdOutlineDone } from "react-icons/md";
 import youtubeLogo from "../../media/youtube-logo.png";
 import toast from "react-hot-toast";
 import { getVideoByIds } from "../../api/movies.jsx";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
-const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
+const MovieModal = ({
+  movieData,
+  onCloseReadMore,
+  genresInEnglish,
+  page,
+  moviesListIds,
+}) => {
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
   const [isConfirmForm, setIsConfirmForm] = useState(false);
   const [movieTrailer, setMovieTrailer] = useState(null);
+  const [isInLibrary, setIsInLibrary] = useState(false);
 
   const posterPath = `https://image.tmdb.org/t/p/original/${movieData.poster_path}`;
   const bgPath = `https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`;
 
+  const session = useSession();
+  const supabase = useSupabaseClient();
+
   // console.log("movieData", movieData);
+
+  useEffect(() => {
+    if (moviesListIds) {
+      const fragmentData = moviesListIds.filter(
+        (item) => item.movie_id === movieData.id
+      );
+      setIsInLibrary(fragmentData.length === 0 ? false : true);
+    }
+  }, [moviesListIds]);
 
   const errorToast = () =>
     toast.error("Rate the movie first", {
@@ -60,6 +82,20 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
       },
       iconTheme: {
         primary: "#fa4b34",
+        secondary: "#ffffff",
+      },
+    });
+
+  const successToast = () =>
+    toast.success("The movie has been added to the library", {
+      duration: 4000,
+      style: {
+        padding: "16px",
+        textAlign: "center",
+        color: "#606770",
+      },
+      iconTheme: {
+        primary: "#11b3ff",
         secondary: "#ffffff",
       },
     });
@@ -86,12 +122,48 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
     }
     if (page === "research") {
       // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
-      console.log(
-        "Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)",
-        movieData.id,
-        stars,
-        forLater
-      );
+
+      const sendMovie = async () => {
+        try {
+          const { error } = await supabase
+            .from("library")
+            .insert({
+              user_id: session.user.id,
+              movie_id: movieData.id,
+              movie_rating: stars,
+              movie_for_future: forLater,
+              creation_date: new Date(),
+            })
+            .single();
+
+          // const { errorSecond } = await supabase
+          //   .from("users_movies")
+          //   .insert({
+          //     user_id: session.user.id,
+          //     movie_id: movieData.id,
+          //   })
+          //   .single();
+
+          // window.location.reload();
+          if (error) {
+            console.error(1, error);
+            return;
+          } else {
+            successToast();
+          }
+        } catch (error) {
+          console.error(2, error);
+        }
+      };
+
+      sendMovie();
+
+      // console.log(
+      //   "Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)",
+      //   movieData.id,
+      //   stars,
+      //   forLater
+      // );
     } else if (page === "library") {
       // Тут змінюю stars на сервері
       console.log("Тут змінюю stars на сервері", movieData.id, stars);
@@ -135,6 +207,13 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
 
     getTrailer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // console.log("================", movieData);
+
+    if (page === "library") {
+      setStars(movieData.stars);
+      setForLater(movieData.for_later);
+    }
   }, []);
 
   return ReactDOM.createPortal(
@@ -151,7 +230,7 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
             <>
               <CornerElementLeft></CornerElementLeft>
               <CornerElementBottom></CornerElementBottom>
-              <MoreCheckPoster>
+              <MoreCheckPoster page={page}>
                 <MoreCheckButtonPoster
                   forLater={forLater}
                   onClick={() => setForLater((prev) => !prev)}
@@ -225,53 +304,64 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
             </TrailerList>
           )}
 
-          <ModalContentFooter>
-            {page === "research" && (
-              <>
-                {!isConfirmForm && (
-                  <AddButton
-                    onClick={() => {
-                      setIsConfirmForm((prev) => !prev);
-                    }}
-                  >
-                    Add to library
-                  </AddButton>
-                )}
-                {isConfirmForm && (
-                  <>
-                    <StarsList>
-                      {getRatingList().map((item, index) => (
-                        <StarItem key={index}>
-                          <StarButton
-                            item={item}
-                            onClick={() => onStars(index + 1)}
-                          >
-                            {item ? <TbStarFilled /> : <TbStar />}
-                          </StarButton>
-                        </StarItem>
-                      ))}
-                    </StarsList>
-                    <MoreCheck>
-                      <MoreCheckButton
-                        forLater={forLater}
-                        onClick={() => setForLater((prev) => !prev)}
-                      >
-                        <MdMoreTime />
-                      </MoreCheckButton>
-                    </MoreCheck>
-                    <ConfirmButton onClick={onConfirmForm}>
-                      Confirm
-                    </ConfirmButton>
-                  </>
-                )}
-              </>
-            )}
-            {page === "library" && (
-              <DeleteFromLibraryButton onClick={onDeleteMovie}>
-                Delete from library
-              </DeleteFromLibraryButton>
-            )}
-          </ModalContentFooter>
+          {!isInLibrary && page === "research" ? (
+            <ModalContentFooter>
+              {page === "research" && (
+                <>
+                  {!isConfirmForm && (
+                    <AddButton
+                      onClick={() => {
+                        setIsConfirmForm((prev) => !prev);
+                      }}
+                    >
+                      Add to library
+                    </AddButton>
+                  )}
+                  {isConfirmForm && (
+                    <>
+                      <StarsList>
+                        {getRatingList().map((item, index) => (
+                          <StarItem key={index}>
+                            <StarButton
+                              item={item}
+                              onClick={() => onStars(index + 1)}
+                            >
+                              {item ? <TbStarFilled /> : <TbStar />}
+                            </StarButton>
+                          </StarItem>
+                        ))}
+                      </StarsList>
+                      <MoreCheck>
+                        <MoreCheckButton
+                          forLater={forLater}
+                          onClick={() => setForLater((prev) => !prev)}
+                        >
+                          <MdMoreTime />
+                        </MoreCheckButton>
+                      </MoreCheck>
+                      <ConfirmButton onClick={onConfirmForm}>
+                        Confirm
+                      </ConfirmButton>
+                    </>
+                  )}
+                </>
+              )}
+            </ModalContentFooter>
+          ) : (
+            <>
+              {page === "research" && (
+                <InLibraryBlock>
+                  <MdOutlineDone />
+                  In library
+                </InLibraryBlock>
+              )}
+            </>
+          )}
+          {page === "library" && (
+            <DeleteFromLibraryButton onClick={onDeleteMovie}>
+              Delete from library
+            </DeleteFromLibraryButton>
+          )}
         </ModalContent>
       </Modal>
     </ModalBackdrop>,
