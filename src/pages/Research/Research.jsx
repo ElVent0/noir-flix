@@ -10,16 +10,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import poster from "../../media/poster.jpg";
 
-const Research = () => {
+const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [moviesList, setMoviesList] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [inputSort, setInputSort] = useState("Popularity");
   const [movieData, setMovieData] = useState(null);
-  const [recentList, setRecentList] = useState(
-    JSON.parse(localStorage.getItem("RecentListForNoirflix"))
-  );
+
   const [trendingList, setTrendingList] = useState([]);
 
   const location = useLocation();
@@ -115,73 +113,55 @@ const Research = () => {
     }
   };
 
-  const onAddToRecentMovies = (id) => {
-    let newRecentList = JSON.parse(
-      localStorage.getItem("RecentListForNoirflix")
-    );
-
-    newRecentList = newRecentList.filter((item) => item !== id);
-
-    newRecentList.unshift(id);
-
-    if (newRecentList.length >= 7) {
-      newRecentList.pop();
-    }
-
-    localStorage.setItem(
-      "RecentListForNoirflix",
-      JSON.stringify(newRecentList)
-    );
-
-    setRecentList(newRecentList);
-  };
-
   return (
     <>
-      <MainPoster
-        trendingList={trendingList}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-        onAddToRecentMovies={onAddToRecentMovies}
-      />
-      <ResearchStyled>
-        <MoviesFilters
-          setInputSort={setInputSort}
-          inputSort={inputSort}
-          searchInput={searchInput}
-          changeSearchInput={changeSearchInput}
-        />
-        {moviesList ? (
-          <MoviesList
-            moviesList={moviesList}
-            genres={genres}
+      {moviesList ? (
+        <>
+          <MainPoster
+            trendingList={trendingList}
             searchParams={searchParams}
             setSearchParams={setSearchParams}
             onAddToRecentMovies={onAddToRecentMovies}
           />
-        ) : (
-          <p>Loading...</p>
-        )}
-        {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
-        <MoviesNavigation totalPages={totalPages} />
-      </ResearchStyled>
-      <RecentMovies
-        genres={genres}
-        poster={poster}
-        recentList={recentList}
-        setRecentList={setRecentList}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-        onAddToRecentMovies={onAddToRecentMovies}
-        getMovieById={getMovieById}
-      />
-      {movieData !== null && (
-        <MovieModal
-          movieData={movieData}
-          onCloseReadMore={onCloseReadMore}
-          genresInEnglish={genres}
-        />
+          <ResearchStyled>
+            <MoviesFilters
+              setInputSort={setInputSort}
+              inputSort={inputSort}
+              searchInput={searchInput}
+              changeSearchInput={changeSearchInput}
+            />
+            <MoviesList
+              moviesList={moviesList}
+              genres={genres}
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+              onAddToRecentMovies={onAddToRecentMovies}
+            />
+            <MoviesNavigation totalPages={totalPages} />
+          </ResearchStyled>
+          <RecentMovies
+            genres={genres}
+            poster={poster}
+            recentList={recentList}
+            setRecentList={setRecentList}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+            onAddToRecentMovies={onAddToRecentMovies}
+            getMovieById={getMovieById}
+          />
+          {movieData !== null && (
+            <MovieModal
+              movieData={movieData}
+              onCloseReadMore={onCloseReadMore}
+              genresInEnglish={genres}
+              page="research"
+            />
+          )}
+        </>
+      ) : (
+        <p>Loading...</p>
       )}
+      {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
     </>
   );
 };

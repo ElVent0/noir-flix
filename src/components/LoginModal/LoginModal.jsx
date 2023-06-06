@@ -141,12 +141,6 @@ const ProfileModal = ({
     }
     console.log("Registration", userName, userMail, userPassword);
 
-    const { data, error } = await supabase.auth.signUp({
-      email: userMail,
-      password: userPassword,
-      options: { data: { name: userName } },
-    });
-
     setIsLoginModal(false);
     notifyOnMailSignUp();
   };

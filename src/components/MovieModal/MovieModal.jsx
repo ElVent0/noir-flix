@@ -3,6 +3,9 @@ import {
   ModalBackdrop,
   Modal,
   ModalPoster,
+  PosterContainer,
+  MoreCheckPoster,
+  MoreCheckButtonPoster,
   ModalContent,
   ModalContentHeader,
   ModalContentBody,
@@ -22,6 +25,10 @@ import {
   TrailerItem,
   TrailerButton,
   YoutubeLogo,
+  Rating,
+  CornerElementLeft,
+  CornerElementBottom,
+  DeleteFromLibraryButton,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
@@ -32,7 +39,7 @@ import youtubeLogo from "../../media/youtube-logo.png";
 import toast from "react-hot-toast";
 import { getVideoByIds } from "../../api/movies.jsx";
 
-const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
+const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish, page }) => {
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
   const [isConfirmForm, setIsConfirmForm] = useState(false);
@@ -75,10 +82,34 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
   const onConfirmForm = () => {
     if (stars === 0) {
       errorToast();
+      return;
     }
-    // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
-    console.log("Sending data", movieData.id, stars, forLater);
+    if (page === "research") {
+      // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
+      console.log(
+        "Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)",
+        movieData.id,
+        stars,
+        forLater
+      );
+    } else if (page === "library") {
+      // Тут змінюю stars на сервері
+      console.log("Тут змінюю stars на сервері", movieData.id, stars);
+    }
   };
+
+  const onDeleteMovie = () => {
+    // Тут видаляю фільм з бібліотеки
+    console.log("Тут видаляю фільм з бібліотеки", movieData.id);
+  };
+
+  useEffect(() => {
+    if (page === "library") {
+      // Тут змінюю forLater на сервері
+      console.log("Тут змінюю forLater на сервері", movieData.id, forLater);
+    }
+    // console.log("Changing forLater", movieData.id, forLater);
+  }, [forLater]);
 
   useEffect(() => {
     const getTrailer = async () => {
@@ -109,23 +140,57 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
       <Modal>
-        <ModalPoster
-          width="300"
-          height="430"
-          src={posterPath}
-          alt="Movie poster"
-        />
+        <PosterContainer>
+          <ModalPoster
+            width="300"
+            height="430"
+            src={posterPath}
+            alt="Movie poster"
+          />
+          {page === "library" && (
+            <>
+              <CornerElementLeft></CornerElementLeft>
+              <CornerElementBottom></CornerElementBottom>
+              <MoreCheckPoster>
+                <MoreCheckButtonPoster
+                  forLater={forLater}
+                  onClick={() => setForLater((prev) => !prev)}
+                >
+                  <MdMoreTime />
+                </MoreCheckButtonPoster>
+              </MoreCheckPoster>
+            </>
+          )}
+        </PosterContainer>
         <ModalContent>
           <ModalContentHeader>
             <div>
               <Title>{movieData.original_title}</Title>
               <Year>{new Date(movieData.release_date).getFullYear()}</Year>
             </div>
+
             <CloseButton id="button-close" onClick={onCloseReadMore}>
               <RiCloseLine />
             </CloseButton>
           </ModalContentHeader>
           <ModalContentBody>
+            {page === "library" && (
+              <Rating>
+                <StarsList>
+                  {getRatingList().map((item, index) => (
+                    <StarItem key={index}>
+                      <StarButton
+                        item={item}
+                        onClick={() => onStars(index + 1)}
+                      >
+                        {item ? <TbStarFilled /> : <TbStar />}
+                      </StarButton>
+                    </StarItem>
+                  ))}
+                </StarsList>
+                <ConfirmButton onClick={onConfirmForm}>Confirm</ConfirmButton>
+              </Rating>
+            )}
             <ModalParagraph>
               <span>Tagline:</span> {movieData.tagline}
             </ModalParagraph>
@@ -146,7 +211,7 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
                 .map((item) => item.name)
                 .join(", ")}
             </ModalParagraph>
-            <ModalParagraph>
+            <ModalParagraph page={page}>
               <span>{movieData.overview}</span>
             </ModalParagraph>
           </ModalContentBody>
@@ -159,40 +224,52 @@ const MovieModal = ({ movieData, onCloseReadMore, genresInEnglish }) => {
               </TrailerItem>
             </TrailerList>
           )}
+
           <ModalContentFooter>
-            {!isConfirmForm && (
-              <AddButton
-                onClick={() => {
-                  setIsConfirmForm((prev) => !prev);
-                }}
-              >
-                Add to library
-              </AddButton>
-            )}
-            {isConfirmForm && (
+            {page === "research" && (
               <>
-                <StarsList>
-                  {getRatingList().map((item, index) => (
-                    <StarItem key={index}>
-                      <StarButton
-                        item={item}
-                        onClick={() => onStars(index + 1)}
-                      >
-                        {item ? <TbStarFilled /> : <TbStar />}
-                      </StarButton>
-                    </StarItem>
-                  ))}
-                </StarsList>
-                <MoreCheck>
-                  <MoreCheckButton
-                    forLater={forLater}
-                    onClick={() => setForLater((prev) => !prev)}
+                {!isConfirmForm && (
+                  <AddButton
+                    onClick={() => {
+                      setIsConfirmForm((prev) => !prev);
+                    }}
                   >
-                    <MdMoreTime />
-                  </MoreCheckButton>
-                </MoreCheck>
-                <ConfirmButton onClick={onConfirmForm}>Confirm</ConfirmButton>
+                    Add to library
+                  </AddButton>
+                )}
+                {isConfirmForm && (
+                  <>
+                    <StarsList>
+                      {getRatingList().map((item, index) => (
+                        <StarItem key={index}>
+                          <StarButton
+                            item={item}
+                            onClick={() => onStars(index + 1)}
+                          >
+                            {item ? <TbStarFilled /> : <TbStar />}
+                          </StarButton>
+                        </StarItem>
+                      ))}
+                    </StarsList>
+                    <MoreCheck>
+                      <MoreCheckButton
+                        forLater={forLater}
+                        onClick={() => setForLater((prev) => !prev)}
+                      >
+                        <MdMoreTime />
+                      </MoreCheckButton>
+                    </MoreCheck>
+                    <ConfirmButton onClick={onConfirmForm}>
+                      Confirm
+                    </ConfirmButton>
+                  </>
+                )}
               </>
+            )}
+            {page === "library" && (
+              <DeleteFromLibraryButton onClick={onDeleteMovie}>
+                Delete from library
+              </DeleteFromLibraryButton>
             )}
           </ModalContentFooter>
         </ModalContent>

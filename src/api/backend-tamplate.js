@@ -23,3 +23,14 @@ export const backendTamplate = {
     ],
   },
 };
+
+export const backendTamplate2 = {
+  user_id: 1,
+  user_data: {
+    rating_list: [
+      { movie_id: 502356, movie_rating: 3, movie_for_future: false },
+      { movie_id: 640146, movie_rating: 4, movie_for_future: true },
+      { movie_id: 447365, movie_rating: 5, movie_for_future: true },
+    ],
+  },
+};

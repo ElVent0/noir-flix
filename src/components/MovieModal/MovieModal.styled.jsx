@@ -16,7 +16,7 @@ export const ModalBackdrop = styled.div`
 export const Modal = styled.div`
   /* width: 540;
   height: 381; */
-  background: #f7f7f7;
+  background: var(--bg-grey);
   border-radius: 10px;
   display: flex;
   padding: 6px 0 6px 6px;
@@ -24,8 +24,16 @@ export const Modal = styled.div`
 `;
 
 export const ModalPoster = styled.img`
-  border-radius: 10px;
+  border-radius: 10px 0 10px 10px;
   display: block;
+`;
+
+export const PosterContainer = styled.div`
+  border-radius: 10px 0 10px 10px;
+  width: 300px;
+  height: 430px;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const ModalContent = styled.div`
@@ -69,6 +77,7 @@ export const CloseButton = styled.button`
   & > svg {
     font-size: 20px;
     color: var(--text-main);
+    transition: 0.3s;
     &:hover,
     &:focus {
       color: var(--text-main-transparent);
@@ -85,7 +94,9 @@ export const ModalParagraph = styled.p`
   line-height: 15px;
   color: var(--text-main-transparent);
   &:last-child {
-    max-height: 114px;
+    /* max-height: 114px; */
+    max-height: ${(props) => props.page === "research" && "114px"};
+    max-height: ${(props) => props.page === "library" && "84px"};
     overflow-y: scroll;
   }
   & > span {
@@ -251,4 +262,110 @@ export const MoreCheckButton = styled.button`
     forLater === true ? "var(--accent)" : "var(--text-main)"};
   border: ${({ forLater }) =>
     forLater === true ? "1px solid var(--accent)" : "transparent"};
+`;
+
+export const MoreCheckPoster = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  background-color: var(--bg-grey);
+  border-radius: 0 0 0 12px;
+`;
+
+export const MoreCheckButtonPoster = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  top: 0;
+  right: 0;
+  transition: 0.3s;
+  border-radius: 10px;
+  & > svg {
+    font-size: 22px;
+  }
+  color: ${({ forLater }) =>
+    forLater === true ? "var(--pure-white)" : "var(--text-main)"};
+  background-color: ${({ forLater }) =>
+    forLater === true ? "var(--accent)" : "var(--bg-grey)"};
+  border: ${({ forLater }) =>
+    forLater === true ? "1px solid var(--accent)" : "transparent"};
+  &:hover,
+  &:focus {
+    & > svg {
+      transition: 0.3s;
+      transform: scale(1.1);
+    }
+  }
+`;
+
+export const Rating = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+`;
+
+export const CornerElementLeft = styled.div`
+  position: absolute;
+  z-index: 1000;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  transform: rotate(90deg);
+  right: 42px;
+  top: 0px;
+  &:before {
+    content: "";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 20%;
+    top: 0;
+    left: 0;
+    box-shadow: -50px -50px 0 0 var(--bg-grey);
+  }
+`;
+
+export const CornerElementBottom = styled.div`
+  position: absolute;
+  z-index: 1000;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  transform: rotate(90deg);
+  right: 0;
+  top: 42px;
+  &:before {
+    content: "";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 20%;
+    top: 0;
+    left: 0;
+    box-shadow: -50px -50px 0 0 var(--bg-grey);
+  }
+`;
+
+export const DeleteFromLibraryButton = styled.button`
+  font-size: 16px;
+  color: var(--text-main);
+  background-color: transparent;
+  text-decoration: underline;
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    color: var(--text-main-transparent);
+  }
 `;

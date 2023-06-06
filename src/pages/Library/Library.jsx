@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { backendTamplate } from "../../api/backend-tamplate";
 
-const Library = () => {
+const Library = ({ onAddToRecentMovies }) => {
   const [moviesList, setMoviesList] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(null);
@@ -133,18 +133,19 @@ const Library = () => {
   return (
     <>
       <AuthProvider>
-        <LibraryStyled>
-          <MoviesFilters
-            setInputSort={setInputSort}
-            inputSort={inputSort}
-            searchInput={searchInput}
-            changeSearchInput={changeSearchInput}
-            stars={stars}
-            onStars={onStars}
-            forLater={forLater}
-            onForLater={onForLater}
-          />
-          {moviesList ? (
+        {moviesList ? (
+          <LibraryStyled>
+            <MoviesFilters
+              setInputSort={setInputSort}
+              inputSort={inputSort}
+              searchInput={searchInput}
+              changeSearchInput={changeSearchInput}
+              stars={stars}
+              onStars={onStars}
+              forLater={forLater}
+              onForLater={onForLater}
+            />
+
             <MoviesList
               moviesList={moviesList}
               genres={genres}
@@ -152,19 +153,21 @@ const Library = () => {
               setSearchParams={setSearchParams}
               stars={stars}
               forLater={forLater}
+              onAddToRecentMovies={onAddToRecentMovies}
             />
-          ) : (
-            <p>Loading...</p>
-          )}
-          {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
-          <MoviesNavigation totalPages={totalPages} />
-        </LibraryStyled>
+            {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
+            <MoviesNavigation totalPages={totalPages} />
+          </LibraryStyled>
+        ) : (
+          <p>Loading...</p>
+        )}
       </AuthProvider>
       {movieData !== null && (
         <MovieModal
           movieData={movieData}
           onCloseReadMore={onCloseReadMore}
           genresInEnglish={genres}
+          page="library"
         />
       )}
     </>
