@@ -14,16 +14,32 @@ export const ModalBackdrop = styled.div`
 `;
 
 export const Modal = styled.div`
-  width: 340px;
-  /* height: 381px; */
+  width: 640px;
+  height: 451px;
   background: #f7f7f7;
   border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+`;
+
+export const ModalContent = styled.div`
+  width: 340px;
   padding: 34px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const ModalPoster = styled.div`
+  width: 300px;
+  height: auto;
+  background-image: radial-gradient(#11b3ff33, #11b3ffaf),
+    url(${(props) => props.path});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 export const CloseButton = styled.button`

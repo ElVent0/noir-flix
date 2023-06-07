@@ -10,12 +10,15 @@ import {
   RegisterButton,
   GoogleLogin,
   OrElement,
+  ModalContent,
+  ModalPoster,
 } from "./LoginModal.styled";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast, { Toaster } from "react-hot-toast";
+import path from "../../media/login-2.jpg";
 
 const ProfileModal = ({
   onCloseLoginModal,
@@ -213,57 +216,60 @@ const ProfileModal = ({
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseLoginModal}>
       <Modal>
-        <CloseButton id="button-close" onClick={onCloseLoginModal}>
-          <RiCloseLine />
-        </CloseButton>
-        {isLoginTypeModal && (
-          <LoginForm onSubmit={sendLoginForm}>
-            <Title>Login</Title>
-            <MailInput
-              placeholder="Mail"
-              onChange={onMailChange}
-              value={userMail}
-            ></MailInput>
-            <MailInput
-              placeholder="Password"
-              onChange={onPasswordChange}
-              value={userPassword}
-            ></MailInput>
-            <ButtonSubmit type="submit">Login</ButtonSubmit>
-            <RegisterButton onClick={() => onRegisterButton()}>
-              Register
-            </RegisterButton>
-          </LoginForm>
-        )}
-        {!isLoginTypeModal && (
-          <LoginForm onSubmit={sendLoginForm}>
-            <Title>New user</Title>
-            <MailInput
-              placeholder="Username"
-              onChange={onNameChange}
-              value={userName}
-            ></MailInput>
-            <MailInput
-              placeholder="Mail"
-              onChange={onMailChange}
-              value={userMail}
-            ></MailInput>
-            <MailInput
-              placeholder="Create password"
-              onChange={onPasswordChange}
-              value={userPassword}
-            ></MailInput>
-            <ButtonSubmit type="submit">Create</ButtonSubmit>
-            <RegisterButton onClick={() => onRegisterButton()}>
-              Login
-            </RegisterButton>
-          </LoginForm>
-        )}
-        <OrElement>or</OrElement>
-        <GoogleLogin onClick={() => loginWithGoogle()}>
-          <FcGoogle />
-          <p>Continue with Google</p>
-        </GoogleLogin>
+        <ModalPoster path={path}></ModalPoster>
+        <ModalContent>
+          <CloseButton id="button-close" onClick={onCloseLoginModal}>
+            <RiCloseLine />
+          </CloseButton>
+          {isLoginTypeModal && (
+            <LoginForm onSubmit={sendLoginForm}>
+              <Title>Login</Title>
+              <MailInput
+                placeholder="Mail"
+                onChange={onMailChange}
+                value={userMail}
+              ></MailInput>
+              <MailInput
+                placeholder="Password"
+                onChange={onPasswordChange}
+                value={userPassword}
+              ></MailInput>
+              <ButtonSubmit type="submit">Login</ButtonSubmit>
+              <RegisterButton onClick={() => onRegisterButton()}>
+                Register
+              </RegisterButton>
+            </LoginForm>
+          )}
+          {!isLoginTypeModal && (
+            <LoginForm onSubmit={sendLoginForm}>
+              <Title>New user</Title>
+              <MailInput
+                placeholder="Username"
+                onChange={onNameChange}
+                value={userName}
+              ></MailInput>
+              <MailInput
+                placeholder="Mail"
+                onChange={onMailChange}
+                value={userMail}
+              ></MailInput>
+              <MailInput
+                placeholder="Create password"
+                onChange={onPasswordChange}
+                value={userPassword}
+              ></MailInput>
+              <ButtonSubmit type="submit">Create</ButtonSubmit>
+              <RegisterButton onClick={() => onRegisterButton()}>
+                Login
+              </RegisterButton>
+            </LoginForm>
+          )}
+          <OrElement>or</OrElement>
+          <GoogleLogin onClick={() => loginWithGoogle()}>
+            <FcGoogle />
+            <p>Continue with Google</p>
+          </GoogleLogin>
+        </ModalContent>
       </Modal>
     </ModalBackdrop>,
     document.body
