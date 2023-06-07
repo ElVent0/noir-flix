@@ -100,6 +100,34 @@ const MovieModal = ({
       },
     });
 
+  const successEditToast = () =>
+    toast.success("The movie has been changed in your library", {
+      duration: 4000,
+      style: {
+        padding: "16px",
+        textAlign: "center",
+        color: "#606770",
+      },
+      iconTheme: {
+        primary: "#11b3ff",
+        secondary: "#ffffff",
+      },
+    });
+
+  const successDeleteToast = () =>
+    toast.success("The movie has been removed from your library", {
+      duration: 4000,
+      style: {
+        padding: "16px",
+        textAlign: "center",
+        color: "#606770",
+      },
+      iconTheme: {
+        primary: "#11b3ff",
+        secondary: "#ffffff",
+      },
+    });
+
   const getRatingList = () => {
     const ratingList = [];
     for (let i = 1; i <= stars; i += 1) {
@@ -157,13 +185,6 @@ const MovieModal = ({
       };
 
       sendMovie();
-
-      // console.log(
-      //   "Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)",
-      //   movieData.id,
-      //   stars,
-      //   forLater
-      // );
     } else if (page === "library") {
       // Тут змінюю stars на сервері
       console.log("Тут змінюю stars на сервері", movieData.id, stars);
@@ -172,7 +193,26 @@ const MovieModal = ({
 
   const onDeleteMovie = () => {
     // Тут видаляю фільм з бібліотеки
-    console.log("Тут видаляю фільм з бібліотеки", movieData.id);
+    supabase
+      .from("library")
+      .delete()
+      .match({
+        user_id: session.user.id,
+        movie_id: movieData.id,
+      })
+      .then((response) => {
+        // onCloseReadMore();
+        successDeleteToast();
+        console.log("Рядок успішно видалено:", response);
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.delete("id");
+        const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+        window.history.replaceState({}, "", newUrl);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Помилка видалення рядка:", error);
+      });
   };
 
   useEffect(() => {
