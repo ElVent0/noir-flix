@@ -47,7 +47,13 @@ const ResearchFilters = ({
     setSearchParams({ sort: item });
   };
 
+  const onSortInLibrary = (item) => {
+    setInputSort(item);
+    setIsOpenSort((prev) => !prev);
+  };
+
   const sortItems = ["Popularity", "Vote", "Title", "New", "Future"];
+  const sortItemsInLibrary = ["Favorite", "New"];
 
   const onFocusInput = () => {
     setOnFocus((prev) => !prev);
@@ -79,13 +85,27 @@ const ResearchFilters = ({
             </HeaderSort>
             {isOpenSort && (
               <BodySort isOpenSort={isOpenSort}>
-                {sortItems
-                  .filter((item) => item !== inputSort)
-                  .map((item) => (
-                    <ItemSort key={item} onClick={() => onSort(item)}>
-                      <ButtonSort>{item}</ButtonSort>
-                    </ItemSort>
-                  ))}
+                {
+                  // window.location.pathname === "/"
+                  //   ?
+                  sortItems
+                    .filter((item) => item !== inputSort)
+                    .map((item) => (
+                      <ItemSort key={item} onClick={() => onSort(item)}>
+                        <ButtonSort>{item}</ButtonSort>
+                      </ItemSort>
+                    ))
+                  // : sortItemsInLibrary
+                  //     .filter((item) => item !== inputSort)
+                  //     .map((item) => (
+                  //       <ItemSort
+                  //         key={item}
+                  //         onClick={() => onSortInLibrary(item)}
+                  //       >
+                  //         <ButtonSort>{item}</ButtonSort>
+                  //       </ItemSort>
+                  //     ))
+                }
               </BodySort>
             )}
           </FilterInputSort>

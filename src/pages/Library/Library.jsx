@@ -15,6 +15,7 @@ const Library = ({ onAddToRecentMovies }) => {
   const [movieData, setMovieData] = useState(null);
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
+  const [inputSort, setInputSort] = useState("New");
 
   const location = useLocation();
   const session = useSession();
@@ -54,6 +55,52 @@ const Library = ({ onAddToRecentMovies }) => {
 
     getMoviesFromLibarary();
   }, [session]);
+
+  useEffect(() => {
+    const getMoviesFromLibarary = async (id) => {
+      const { data, error } = await supabase.from("library").select("*");
+
+      console.log(data);
+
+      if (session) {
+        let result;
+        if (inputSort === "New") {
+          result = data
+            .filter((item) => item.user_id === session.user.id)
+            .sort(
+              (a, b) =>
+                new Date(b.creation_date).getTime() -
+                new Date(a.creation_date).getTime()
+            );
+        } else if (inputSort === "Favorite") {
+          result = data
+            .filter((item) => item.user_id === session.user.id)
+            .sort(
+              (a, b) => new Date(b.movie_rating) - new Date(a.movie_rating)
+            );
+        }
+
+        result = result.filter((obj, index, self) => {
+          return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+        });
+
+        setMoviesListIds(result);
+
+        setMoviesList([]);
+
+        for (let item of result) {
+          const getDataForSingleMovie = async () => {
+            const newData = await getMovieById(item.movie_id);
+            setMoviesList((prev) => [...prev, newData]);
+          };
+
+          getDataForSingleMovie();
+        }
+      }
+    };
+
+    getMoviesFromLibarary();
+  }, [inputSort]);
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
@@ -141,6 +188,8 @@ const Library = ({ onAddToRecentMovies }) => {
               forLater={forLater}
               onForLater={onForLater}
               onAllStarsButton={onAllStarsButton}
+              setInputSort={setInputSort}
+              inputSort={inputSort}
             />
 
             <MoviesList

@@ -14,7 +14,8 @@ import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
-import path from "../../media/profile.jpg";
+import path from "../../media/profile-2.jpg";
+import logo from "../../media/noirflix-3-3.png";
 
 const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
   const session = useSession();
@@ -34,7 +35,9 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseProfileModal}>
       <Modal>
-        <Statistics path={path}></Statistics>
+        <Statistics path={path}>
+          <img src={logo} alt="logo" width="140px" />
+        </Statistics>
         <Profile>
           <UserImage src={avatar} alt="User image" />
           <UserName>{userName()}</UserName>

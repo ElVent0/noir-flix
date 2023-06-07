@@ -100,9 +100,15 @@ export const UserMail = styled.p`
 
 export const Statistics = styled.div`
   width: 50%;
-  background-image: linear-gradient(transparent, var(--accent-transparent)),
+  background-image: radial-gradient(
+      var(--bg-grey) 10%,
+      var(--accent-transparent)
+    ),
     url(${(props) => props.path});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -107,7 +107,7 @@ export const MoviesParagraph = styled.p`
 
   color: var(--text-main-transparent);
   margin-bottom: 6px;
-  max-height: 60px;
+  max-height: 45px;
   overflow: hidden;
   & > span {
     color: var(--text-main);
