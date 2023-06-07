@@ -12,7 +12,6 @@ import {
   StarsList,
   StarItem,
   MoreCheck,
-  MoreCheckButton,
 } from "./MoviesList.styled";
 import poster from "../../media/poster.jpg";
 import { TbStar } from "react-icons/tb";
@@ -27,9 +26,7 @@ const MoviesList = ({
   searchParams,
   setSearchParams,
   stars,
-  setStars,
   forLater,
-  setForLater,
   onAddToRecentMovies,
   page,
 }) => {
@@ -45,7 +42,8 @@ const MoviesList = ({
 
   useEffect(() => {
     if (page === "library") {
-      // setForLater(false);
+      // onResetForLater();
+
       const resultList = moviesList.map((item, index) => {
         item.creation_date = moviesListIds[index].creation_date;
         item.stars = moviesListIds[index].movie_rating;
@@ -55,17 +53,13 @@ const MoviesList = ({
 
       if (stars === 0) {
         setFinalList(resultList);
-
         return;
       } else {
         const result = finalList
           ? resultList.filter((item) => item.stars === stars)
           : finalList.filter((item) => item.stars === stars);
-
         setFinalList(result);
       }
-
-      // setFinalList(resultList);
     } else {
       setFinalList(moviesList);
       return;
@@ -74,6 +68,8 @@ const MoviesList = ({
 
   useEffect(() => {
     if (page === "library") {
+      // onResetStars();
+
       const resultList = moviesList.map((item, index) => {
         item.creation_date = moviesListIds[index].creation_date;
         item.stars = moviesListIds[index].movie_rating;
@@ -83,7 +79,6 @@ const MoviesList = ({
 
       if (forLater === false) {
         setFinalList(resultList);
-
         return;
       } else {
         const result = finalList
@@ -92,9 +87,6 @@ const MoviesList = ({
 
         setFinalList(result);
       }
-      // setStars(0);
-
-      // setFinalList(resultList);
     } else {
       setFinalList(moviesList);
       return;
@@ -140,10 +132,6 @@ const MoviesList = ({
                 <MoviesYear>
                   {new Date(item.release_date).getFullYear()}
                 </MoviesYear>
-                {/* <MoviesParagraph>
-                  <MdOutlineAutoGraph />
-                  <b>{item.vote_average}</b> / 10
-                </MoviesParagraph> */}
                 {page === "library" && (
                   <StarsList>
                     {getRatingList().map((item, index) => (
@@ -159,7 +147,7 @@ const MoviesList = ({
             <MoviesBody>{item.overview}</MoviesBody>
             <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
             {page === "library" && (
-              <MoreCheck forLater={moviesListIds[index].movie_for_future}>
+              <MoreCheck forLater={finalList[index].for_later}>
                 <MdMoreTime />
               </MoreCheck>
             )}

@@ -1,13 +1,11 @@
 import { LibraryStyled } from "./Library.styled.jsx";
 import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
-import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import MovieModal from "../../components/MovieModal/MovieModal";
 import AuthProvider from "../../components/AuthProvider/AuthProvider";
-import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
+import { getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
-import { backendTamplate } from "../../api/backend-tamplate";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Library = ({ onAddToRecentMovies }) => {
@@ -15,19 +13,12 @@ const Library = ({ onAddToRecentMovies }) => {
   const [moviesListIds, setMoviesListIds] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [movieData, setMovieData] = useState(null);
-
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
 
   const location = useLocation();
-
   const session = useSession();
   const supabase = useSupabaseClient();
-
-  // "Список id фільмів з бібліотеки"
-  // console.log(
-  //   backendTamplate.user_data.rating_list.map((item) => item.movie_id)
-  // );
 
   useEffect(() => {
     const getMoviesFromLibarary = async (id) => {
@@ -62,11 +53,7 @@ const Library = ({ onAddToRecentMovies }) => {
     };
 
     getMoviesFromLibarary();
-
-    // setMoviesList([]);
   }, [session]);
-
-  // console.log("1---------", moviesListIds, moviesList);
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
@@ -142,8 +129,6 @@ const Library = ({ onAddToRecentMovies }) => {
   const onAllStarsButton = () => {
     setStars(0);
   };
-
-  // console.log("stars", stars, "forLater", forLater);
 
   return (
     <>
