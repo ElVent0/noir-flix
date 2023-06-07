@@ -21,86 +21,40 @@ const Library = ({ onAddToRecentMovies }) => {
   const session = useSession();
   const supabase = useSupabaseClient();
 
-  useEffect(() => {
-    const getMoviesFromLibarary = async (id) => {
-      const { data, error } = await supabase.from("library").select("*");
+  const getMoviesFromLibarary = async (id) => {
+    const { data, error } = await supabase.from("library").select("*");
 
-      if (session) {
-        let result = data
-          .filter((item) => item.user_id === session.user.id)
-          .sort(
-            (a, b) =>
-              new Date(b.creation_date).getTime() -
-              new Date(a.creation_date).getTime()
-          );
+    if (session) {
+      let result = data
+        .filter((item) => item.user_id === session.user.id)
+        .sort(
+          (a, b) =>
+            new Date(b.creation_date).getTime() -
+            new Date(a.creation_date).getTime()
+        );
 
-        result = result.filter((obj, index, self) => {
-          return index === self.findIndex((o) => o.movie_id === obj.movie_id);
-        });
+      result = result.filter((obj, index, self) => {
+        return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+      });
 
-        setMoviesListIds(result);
+      setMoviesListIds(result);
 
-        setMoviesList([]);
+      setMoviesList([]);
 
-        for (let item of result) {
-          const getDataForSingleMovie = async () => {
-            const newData = await getMovieById(item.movie_id);
-            setMoviesList((prev) => [...prev, newData]);
-          };
+      for (let item of result) {
+        const getDataForSingleMovie = async () => {
+          const newData = await getMovieById(item.movie_id);
+          setMoviesList((prev) => [...prev, newData]);
+        };
 
-          getDataForSingleMovie();
-        }
+        getDataForSingleMovie();
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     getMoviesFromLibarary();
   }, [session]);
-
-  useEffect(() => {
-    const getMoviesFromLibarary = async (id) => {
-      const { data, error } = await supabase.from("library").select("*");
-
-      console.log(data);
-
-      if (session) {
-        let result;
-        if (inputSort === "New") {
-          result = data
-            .filter((item) => item.user_id === session.user.id)
-            .sort(
-              (a, b) =>
-                new Date(b.creation_date).getTime() -
-                new Date(a.creation_date).getTime()
-            );
-        } else if (inputSort === "Favorite") {
-          result = data
-            .filter((item) => item.user_id === session.user.id)
-            .sort(
-              (a, b) => new Date(b.movie_rating) - new Date(a.movie_rating)
-            );
-        }
-
-        result = result.filter((obj, index, self) => {
-          return index === self.findIndex((o) => o.movie_id === obj.movie_id);
-        });
-
-        setMoviesListIds(result);
-
-        setMoviesList([]);
-
-        for (let item of result) {
-          const getDataForSingleMovie = async () => {
-            const newData = await getMovieById(item.movie_id);
-            setMoviesList((prev) => [...prev, newData]);
-          };
-
-          getDataForSingleMovie();
-        }
-      }
-    };
-
-    getMoviesFromLibarary();
-  }, [inputSort]);
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
@@ -123,6 +77,8 @@ const Library = ({ onAddToRecentMovies }) => {
         top: 0,
         behavior: "smooth",
       });
+
+      // getMoviesFromLibarary();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
@@ -149,14 +105,15 @@ const Library = ({ onAddToRecentMovies }) => {
     37: "Western",
   };
 
+  const onclose = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.delete("id");
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    window.history.replaceState({}, "", newUrl);
+    setMovieData(null);
+  };
+
   const onCloseReadMore = (e) => {
-    const onclose = () => {
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.delete("id");
-      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-      window.history.replaceState({}, "", newUrl);
-      setMovieData(null);
-    };
     if (e.target === e.currentTarget) {
       onclose();
     }
@@ -218,6 +175,7 @@ const Library = ({ onAddToRecentMovies }) => {
           genresInEnglish={genres}
           page="library"
           moviesListIds={moviesListIds}
+          onclose={onclose}
         />
       )}
     </>

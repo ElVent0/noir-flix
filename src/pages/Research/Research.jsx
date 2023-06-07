@@ -41,7 +41,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getMovies(1, "Popularity");
+      const data = await getMovies(1, "New");
       setTrendingList(data.results);
     };
     getData();

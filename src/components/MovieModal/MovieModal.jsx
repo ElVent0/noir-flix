@@ -48,6 +48,7 @@ const MovieModal = ({
   genresInEnglish,
   page,
   moviesListIds,
+  onclose,
 }) => {
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
@@ -101,7 +102,7 @@ const MovieModal = ({
     });
 
   const successEditToast = () =>
-    toast.success("The movie has been changed in your library", {
+    toast.success("The movie data have been changed in your library", {
       duration: 4000,
       style: {
         padding: "16px",
@@ -186,8 +187,20 @@ const MovieModal = ({
 
       sendMovie();
     } else if (page === "library") {
-      // Тут змінюю stars на сервері
-      console.log("Тут змінюю stars на сервері", movieData.id, stars);
+      supabase
+        .from("library")
+        .update({ movie_rating: stars })
+        .match({
+          user_id: session.user.id,
+          movie_id: movieData.id,
+        })
+        .then((response) => {
+          console.log("Рядок успішно оновлено:", response);
+          successEditToast();
+        })
+        .catch((error) => {
+          console.error("Помилка оновлення рядка:", error);
+        });
     }
   };
 
@@ -201,14 +214,10 @@ const MovieModal = ({
         movie_id: movieData.id,
       })
       .then((response) => {
-        // onCloseReadMore();
         successDeleteToast();
+        onclose();
         console.log("Рядок успішно видалено:", response);
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.delete("id");
-        const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-        window.history.replaceState({}, "", newUrl);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         console.error("Помилка видалення рядка:", error);
@@ -217,8 +226,19 @@ const MovieModal = ({
 
   useEffect(() => {
     if (page === "library") {
-      // Тут змінюю forLater на сервері
-      console.log("Тут змінюю forLater на сервері", movieData.id, forLater);
+      supabase
+        .from("library")
+        .update({ movie_for_future: forLater })
+        .match({
+          user_id: session.user.id,
+          movie_id: movieData.id,
+        })
+        .then((response) => {
+          console.log("Рядок успішно оновлено:", response);
+        })
+        .catch((error) => {
+          console.error("Помилка оновлення рядка:", error);
+        });
     }
     // console.log("Changing forLater", movieData.id, forLater);
   }, [forLater]);
