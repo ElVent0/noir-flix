@@ -1,6 +1,7 @@
 import { ResearchStyled } from "./Research.styled.jsx";
 import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
+import Loader from "../../components/Loader/Loader";
 import MoviesNavigation from "../../components/MoviesNavigation/MoviesNavigation";
 import MovieModal from "../../components/MovieModal/MovieModal";
 import RecentMovies from "../../components/RecentMovies/RecentMovies";
@@ -56,7 +57,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       getDataForMovie();
     } else if (searchParams.get("page") !== null) {
       window.scrollTo({
-        top: 117,
+        top: 262,
         behavior: "smooth",
       });
     }
@@ -191,7 +192,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
           )}
         </>
       ) : (
-        <p>Loading...</p>
+        <Loader />
       )}
       {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
     </>

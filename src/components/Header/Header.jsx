@@ -114,6 +114,7 @@ const Header = () => {
     logout();
     setIsProfileModal(false);
   };
+
   window.onscroll = function () {
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;

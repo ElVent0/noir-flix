@@ -44,7 +44,7 @@ const ProfileModal = ({
         color: "#606770",
       },
       iconTheme: {
-        primary: "#fa4b34",
+        primary: "#11b3ff",
         secondary: "#ffffff",
       },
     });
@@ -58,7 +58,7 @@ const ProfileModal = ({
         color: "#606770",
       },
       iconTheme: {
-        primary: "#fa4b34",
+        primary: "#11b3ff",
         secondary: "#ffffff",
       },
     });
@@ -72,7 +72,7 @@ const ProfileModal = ({
         color: "#606770",
       },
       iconTheme: {
-        primary: "#fa4b34",
+        primary: "#11b3ff",
         secondary: "#ffffff",
       },
     });

@@ -127,7 +127,7 @@ const RecentMovies = ({
             <RecentNothingButton
               onClick={() => {
                 window.scrollTo({
-                  top: 117,
+                  top: 262,
                   behavior: "smooth",
                 });
               }}

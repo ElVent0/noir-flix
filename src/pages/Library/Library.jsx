@@ -1,8 +1,14 @@
-import { LibraryStyled } from "./Library.styled.jsx";
+import {
+  LibraryStyled,
+  NothingBlock,
+  NavigationLink,
+} from "./Library.styled.jsx";
 import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import MovieModal from "../../components/MovieModal/MovieModal";
 import AuthProvider from "../../components/AuthProvider/AuthProvider";
+import Loader from "../../components/Loader/Loader";
+import nothing from "../../media/nothing.png";
 import { getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
@@ -77,8 +83,6 @@ const Library = ({ onAddToRecentMovies }) => {
         top: 0,
         behavior: "smooth",
       });
-
-      // getMoviesFromLibarary();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
@@ -162,10 +166,19 @@ const Library = ({ onAddToRecentMovies }) => {
               onAddToRecentMovies={onAddToRecentMovies}
               page="library"
             />
-            {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
+            {moviesList && moviesList.length === 0 && (
+              <NothingBlock>
+                <img src={nothing} width="160" alt="Nothing illustration" />
+                <p>
+                  There are no entries in your library yet. <br />
+                  Add your first movie
+                </p>
+                <NavigationLink to="/">Research</NavigationLink>
+              </NothingBlock>
+            )}
           </LibraryStyled>
         ) : (
-          <p>Loading...</p>
+          <Loader />
         )}
       </AuthProvider>
       {movieData !== null && (
