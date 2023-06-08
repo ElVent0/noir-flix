@@ -19,41 +19,55 @@ export const getMovies = async (currentPage, inputSort) => {
     }
   };
 
-  const data = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${
-      process.env.REACT_APP_API_KEY
-    }&page=${currentPage}&sort_by=${inputSortType()}`
-  );
-  const result = await data.json();
-  // console.log(result);
-  return result;
+  try {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${
+        process.env.REACT_APP_API_KEY
+      }&page=${currentPage}&sort_by=${inputSortType()}`
+    );
+    const result = await data.json();
+    return result;
+  } catch (e) {
+    console.error("getMovies error");
+  }
 };
 
 export const getMovieByTitle = async (title, currentPage) => {
   const resultPage = currentPage === null ? 1 : currentPage;
 
-  const data = await fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&query=${title}&page=${resultPage}`
-  );
-  const result = await data.json();
-  return result;
+  try {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&query=${title}&page=${resultPage}`
+    );
+    const result = await data.json();
+    return result;
+  } catch (e) {
+    console.error("getMovieByTitle error");
+  }
 };
 
 export const getMovieById = async (id) => {
-  const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&&language=en-US
+  try {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&&language=en-US
 `
-  );
-  const result = await data.json();
-  return result;
+    );
+    const result = await data.json();
+    return result;
+  } catch (e) {
+    console.error("getMovieById error");
+  }
 };
 
 export const getVideoByIds = async (id) => {
-  const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US
+  try {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US
 `
-  );
-  const result = await data.json();
-  // console.log("dasfsdfsdf", result);
-  return result;
+    );
+    const result = await data.json();
+    return result;
+  } catch (e) {
+    console.error("getVideoByIds error");
+  }
 };

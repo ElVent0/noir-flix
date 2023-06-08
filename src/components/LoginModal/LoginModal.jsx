@@ -225,11 +225,15 @@ const ProfileModal = ({
             <LoginForm onSubmit={sendLoginForm}>
               <Title>Login</Title>
               <MailInput
+                type="email"
+                name="email"
                 placeholder="Mail"
                 onChange={onMailChange}
                 value={userMail}
               ></MailInput>
               <MailInput
+                type="password"
+                name="password"
                 placeholder="Password"
                 onChange={onPasswordChange}
                 value={userPassword}

@@ -138,6 +138,8 @@ const ResearchFilters = ({
         <Search focusEvent={onFocus}>
           <AiOutlineSearch />
           <SearchInput
+            type="text"
+            name="search"
             placeholder="Search"
             value={searchInput}
             onChange={changeSearchInput}

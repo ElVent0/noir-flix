@@ -26,6 +26,7 @@ const Header = () => {
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
   const [avatar, setAvatar] = useState(null);
+  const [isFixed, setIsFixed] = useState(false);
 
   const notifyOnMailSignUp = () =>
     toast.success(
@@ -113,9 +114,18 @@ const Header = () => {
     logout();
     setIsProfileModal(false);
   };
+  window.onscroll = function () {
+    const scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollPosition > 90) {
+      setIsFixed(true);
+    } else if (0 < scrollPosition < 90) {
+      setIsFixed(false);
+    }
+  };
 
   return (
-    <HeaderStyled>
+    <HeaderStyled isFixed={isFixed}>
       <Navigation>
         <NavigationList>
           <NavigationItem>
@@ -132,7 +142,7 @@ const Header = () => {
           </NavigationItem> */}
         </NavigationList>
       </Navigation>
-      <Logo src={logo} alt="Logo" width="96" />
+      <Logo src={logo} alt="Logo" width="96" height="auto" isFixed={isFixed} />
       <LoginMenu>
         {session ? (
           <>
