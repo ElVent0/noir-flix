@@ -80,6 +80,7 @@ const MovieModal = ({
         padding: "16px",
         textAlign: "center",
         color: "#606770",
+        zIndex: "2001",
       },
       iconTheme: {
         primary: "#fa4b34",
@@ -94,6 +95,7 @@ const MovieModal = ({
         padding: "16px",
         textAlign: "center",
         color: "#606770",
+        zIndex: "2001",
       },
       iconTheme: {
         primary: "#11b3ff",
@@ -108,6 +110,7 @@ const MovieModal = ({
         padding: "16px",
         textAlign: "center",
         color: "#606770",
+        zIndex: "2001",
       },
       iconTheme: {
         primary: "#11b3ff",
@@ -122,6 +125,7 @@ const MovieModal = ({
         padding: "16px",
         textAlign: "center",
         color: "#606770",
+        zIndex: "2001",
       },
       iconTheme: {
         primary: "#11b3ff",
@@ -368,7 +372,7 @@ const MovieModal = ({
             <ModalContentFooter>
               {page === "research" && (
                 <>
-                  {!isConfirmForm && (
+                  {!isConfirmForm && session && (
                     <AddButton
                       onClick={() => {
                         setIsConfirmForm((prev) => !prev);

@@ -15,7 +15,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Library = ({ onAddToRecentMovies }) => {
-  const [moviesList, setMoviesList] = useState([]);
+  const [moviesList, setMoviesList] = useState(null);
   const [moviesListIds, setMoviesListIds] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [movieData, setMovieData] = useState(null);
@@ -30,36 +30,37 @@ const Library = ({ onAddToRecentMovies }) => {
   const getMoviesFromLibarary = async (id) => {
     const { data, error } = await supabase.from("library").select("*");
 
-    if (session) {
-      let result = data
-        .filter((item) => item.user_id === session.user.id)
-        .sort(
-          (a, b) =>
-            new Date(b.creation_date).getTime() -
-            new Date(a.creation_date).getTime()
-        );
+    let result = data
+      .filter((item) => item.user_id === session.user.id)
+      .sort(
+        (a, b) =>
+          new Date(b.creation_date).getTime() -
+          new Date(a.creation_date).getTime()
+      );
 
-      result = result.filter((obj, index, self) => {
-        return index === self.findIndex((o) => o.movie_id === obj.movie_id);
-      });
+    result = result.filter((obj, index, self) => {
+      return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+    });
 
-      setMoviesListIds(result);
+    setMoviesListIds(result);
 
-      setMoviesList([]);
+    setMoviesList([]);
 
-      for (let item of result) {
-        const getDataForSingleMovie = async () => {
-          const newData = await getMovieById(item.movie_id);
-          setMoviesList((prev) => [...prev, newData]);
-        };
+    for (let item of result) {
+      const getDataForSingleMovie = async () => {
+        const newData = await getMovieById(item.movie_id);
+        setMoviesList((prev) => [...prev, newData]);
+      };
 
-        getDataForSingleMovie();
-      }
+      getDataForSingleMovie();
     }
   };
 
   useEffect(() => {
-    getMoviesFromLibarary();
+    if (session) {
+      console.log(1, session);
+      getMoviesFromLibarary();
+    }
   }, [session]);
 
   useEffect(() => {
@@ -71,18 +72,16 @@ const Library = ({ onAddToRecentMovies }) => {
           moviesListIds &&
           moviesListIds.filter((item) => item.movie_id === data.id);
 
-        data.creation_date = result[0].creation_date;
-        data.stars = result[0].movie_rating;
-        data.for_later = result[0].movie_for_future;
+        if (result) {
+          data.creation_date = result[0].creation_date;
+          data.stars = result[0].movie_rating;
+          data.for_later = result[0].movie_for_future;
 
-        setMovieData(data);
+          setMovieData(data);
+        }
       };
+
       getDataForMovie();
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
@@ -143,30 +142,33 @@ const Library = ({ onAddToRecentMovies }) => {
       <AuthProvider>
         {moviesList ? (
           <LibraryStyled>
-            <MoviesFilters
-              stars={stars}
-              onStars={onStars}
-              forLater={forLater}
-              onForLater={onForLater}
-              onAllStarsButton={onAllStarsButton}
-              setInputSort={setInputSort}
-              inputSort={inputSort}
-            />
+            {moviesList.length !== 0 ? (
+              <>
+                <MoviesFilters
+                  stars={stars}
+                  onStars={onStars}
+                  forLater={forLater}
+                  onForLater={onForLater}
+                  onAllStarsButton={onAllStarsButton}
+                  setInputSort={setInputSort}
+                  inputSort={inputSort}
+                />
 
-            <MoviesList
-              moviesList={moviesList}
-              moviesListIds={moviesListIds}
-              genres={genres}
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-              stars={stars}
-              setStars={setStars}
-              forLater={forLater}
-              setForLater={setForLater}
-              onAddToRecentMovies={onAddToRecentMovies}
-              page="library"
-            />
-            {moviesList && moviesList.length === 0 && (
+                <MoviesList
+                  moviesList={moviesList}
+                  moviesListIds={moviesListIds}
+                  genres={genres}
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                  stars={stars}
+                  setStars={setStars}
+                  forLater={forLater}
+                  setForLater={setForLater}
+                  onAddToRecentMovies={onAddToRecentMovies}
+                  page="library"
+                />
+              </>
+            ) : (
               <NothingBlock>
                 <img src={nothing} width="160" alt="Nothing illustration" />
                 <p>

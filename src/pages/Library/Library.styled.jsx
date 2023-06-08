@@ -3,10 +3,20 @@ import { NavLink } from "react-router-dom";
 
 export const LibraryStyled = styled.div`
   background-color: var(--pure-white);
-  min-height: calc(100vh - 194px);
+  min-height: calc(100vh - 217px);
   padding: 0 20px 40px 20px;
   border-radius: 10px;
   position: relative;
+  animation: anumationOn 0.6s linear;
+  @keyframes anumationOn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 100%;
+    }
+  }
 `;
 
 export const NothingBlock = styled.div`
@@ -21,6 +31,19 @@ export const NothingBlock = styled.div`
   & > p {
     text-align: center;
   }
+  /* animation: anumationOn 10s linear;
+  @keyframes anumationOn {
+    0% {
+      opacity: 0;
+    }
+    0% {
+      opacity: 50%;
+    }
+
+    100% {
+      opacity: 100%;
+    }
+  } */
 `;
 
 export const NavigationLink = styled(NavLink)`

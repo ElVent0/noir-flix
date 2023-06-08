@@ -3,6 +3,16 @@ import styled from "styled-components";
 export const MainPosters = styled.div`
   display: flex;
   gap: 12px;
+  animation: anumationOn 0.6s linear;
+  @keyframes anumationOn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 100%;
+    }
+  }
 `;
 
 export const MainPosterStyled = styled.div`

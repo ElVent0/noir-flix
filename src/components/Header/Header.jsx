@@ -37,6 +37,7 @@ const Header = () => {
           padding: "16px",
           textAlign: "center",
           color: "#606770",
+          zIndex: "2001",
         },
         iconTheme: {
           primary: "#fb6d00",
@@ -52,6 +53,7 @@ const Header = () => {
         padding: "16px",
         textAlign: "center",
         color: "#606770",
+        zIndex: "2001",
       },
       iconTheme: {
         primary: "#fa4b34",

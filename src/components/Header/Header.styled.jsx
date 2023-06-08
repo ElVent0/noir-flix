@@ -17,7 +17,7 @@ export const HeaderStyled = styled.div`
   box-shadow: ${(prop) =>
     prop.isFixed ? "0px 10px 24px -14px rgba(0,0,0,0.4)" : "none"};
   animation: ${({ isFixed }) =>
-    isFixed ? "headerAnumationOn .3s linear" : "headerAnumationOff .3s linear"};
+    isFixed ? "headerAnumationOn .3s linear" : "none"};
 
   @keyframes headerAnumationOn {
     0% {
@@ -30,15 +30,6 @@ export const HeaderStyled = styled.div`
       background-color: var(--pure-white);
       box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.4);
       padding: 0 20px;
-    }
-  }
-  @keyframes headerAnumationOff {
-    0% {
-      padding: 0 20px;
-    }
-
-    100% {
-      padding: 0;
     }
   }
 `;
