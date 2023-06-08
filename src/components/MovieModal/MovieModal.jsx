@@ -38,7 +38,7 @@ import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
 import { MdOutlineDone } from "react-icons/md";
 import youtubeLogo from "../../media/youtube-logo.png";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { getVideoByIds } from "../../api/movies.jsx";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
@@ -427,6 +427,13 @@ const MovieModal = ({
             </DeleteFromLibraryButton>
           )}
         </ModalContent>
+        <Toaster
+          toastOptions={{
+            style: {
+              zIndex: 9999,
+            },
+          }}
+        />
       </Modal>
     </ModalBackdrop>,
     document.body

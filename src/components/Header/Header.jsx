@@ -10,9 +10,14 @@ import {
   LoginMenu,
   Profile,
   UserImage,
+  ThemeButton,
+  ThemeButtonDotLight,
+  ThemeButtonDotDark,
 } from "./Header.styled.jsx";
 import logo from "../../media/noirflix-3-3.png";
 import { TbLogin } from "react-icons/tb";
+import { RiSunFill } from "react-icons/ri";
+import { BsFillMoonStarsFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
@@ -21,7 +26,7 @@ import { createAvatar } from "@dicebear/core";
 import { funEmoji } from "@dicebear/collection";
 import toast, { Toaster } from "react-hot-toast";
 
-const Header = () => {
+const Header = ({ themeToggle, themeType }) => {
   const [isProfileModal, setIsProfileModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
@@ -147,6 +152,17 @@ const Header = () => {
       </Navigation>
       <Logo src={logo} alt="Logo" width="96" height="auto" isFixed={isFixed} />
       <LoginMenu>
+        <ThemeButton onClick={themeToggle}>
+          {themeType ? (
+            <ThemeButtonDotLight themeType={themeType}>
+              <RiSunFill />
+            </ThemeButtonDotLight>
+          ) : (
+            <ThemeButtonDotDark themeType={themeType}>
+              <BsFillMoonStarsFill />
+            </ThemeButtonDotDark>
+          )}
+        </ThemeButton>
         {session ? (
           <>
             <Profile onClick={onOpenProfileModal}>
@@ -180,7 +196,13 @@ const Header = () => {
           setIsLoginModal={setIsLoginModal}
         />
       )}
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: {
+            zIndex: 9999,
+          },
+        }}
+      />
     </HeaderStyled>
   );
 };

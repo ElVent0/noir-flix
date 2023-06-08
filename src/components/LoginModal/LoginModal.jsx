@@ -12,10 +12,13 @@ import {
   OrElement,
   ModalContent,
   ModalPoster,
+  PasswordContainer,
 } from "./LoginModal.styled";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { RiEyeFill } from "react-icons/ri";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast, { Toaster } from "react-hot-toast";
 import path from "../../media/login-2.jpg";
@@ -31,6 +34,7 @@ const ProfileModal = ({
   const [userName, setUserName] = useState("");
   const [userMail, setUserMail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("");
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -213,6 +217,11 @@ const ProfileModal = ({
     setUserPassword("");
   };
 
+  function handleInvalid(event) {
+    event.preventDefault();
+    errorMail();
+  }
+
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseLoginModal}>
       <Modal>
@@ -230,14 +239,24 @@ const ProfileModal = ({
                 placeholder="Mail"
                 onChange={onMailChange}
                 value={userMail}
+                onInvalid={handleInvalid}
               ></MailInput>
-              <MailInput
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={onPasswordChange}
-                value={userPassword}
-              ></MailInput>
+              <PasswordContainer>
+                <MailInput
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  onChange={onPasswordChange}
+                  value={userPassword}
+                  autocomplete="off"
+                ></MailInput>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <RiEyeFill /> : <RiEyeCloseLine />}
+                </button>
+              </PasswordContainer>
               <ButtonSubmit type="submit">Login</ButtonSubmit>
               <RegisterButton onClick={() => onRegisterButton()}>
                 Register
@@ -248,20 +267,37 @@ const ProfileModal = ({
             <LoginForm onSubmit={sendLoginForm}>
               <Title>New user</Title>
               <MailInput
+                type="text"
+                name="name"
                 placeholder="Username"
                 onChange={onNameChange}
                 value={userName}
+                autocomplete="off"
               ></MailInput>
               <MailInput
+                type="email"
+                name="email"
                 placeholder="Mail"
                 onChange={onMailChange}
                 value={userMail}
+                onInvalid={handleInvalid}
               ></MailInput>
-              <MailInput
-                placeholder="Create password"
-                onChange={onPasswordChange}
-                value={userPassword}
-              ></MailInput>
+              <PasswordContainer>
+                <MailInput
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Create password"
+                  onChange={onPasswordChange}
+                  value={userPassword}
+                  autocomplete="off"
+                ></MailInput>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <RiEyeFill /> : <RiEyeCloseLine />}
+                </button>
+              </PasswordContainer>
               <ButtonSubmit type="submit">Create</ButtonSubmit>
               <RegisterButton onClick={() => onRegisterButton()}>
                 Login
@@ -275,6 +311,13 @@ const ProfileModal = ({
           </GoogleLogin>
         </ModalContent>
       </Modal>
+      <Toaster
+        toastOptions={{
+          style: {
+            zIndex: 9999,
+          },
+        }}
+      />
     </ModalBackdrop>,
     document.body
   );

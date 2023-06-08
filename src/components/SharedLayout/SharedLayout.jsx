@@ -4,10 +4,10 @@ import Footer from "../Footer/Footer.jsx";
 import { Outlet } from "react-router-dom";
 import ContentContainer from "../ContentContainer/ContentContainer";
 
-const SharedLayout = () => {
+const SharedLayout = ({ themeToggle, themeType }) => {
   return (
     <SharedLayoutStyled>
-      <Header />
+      <Header themeToggle={themeToggle} themeType={themeType} />
       <ContentContainer>
         <Outlet />
       </ContentContainer>

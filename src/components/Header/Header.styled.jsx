@@ -9,7 +9,7 @@ export const HeaderStyled = styled.div`
   position: sticky;
   justify-content: space-between;
   top: 0px;
-  z-index: 1002;
+  z-index: 1000;
   border-radius: 0 0 10px 10px;
   background-color: ${(prop) =>
     prop.isFixed ? "var(--pure-white)" : "transparent"};
@@ -17,9 +17,9 @@ export const HeaderStyled = styled.div`
   box-shadow: ${(prop) =>
     prop.isFixed ? "0px 10px 24px -14px rgba(0,0,0,0.4)" : "none"};
   animation: ${({ isFixed }) =>
-    isFixed ? "headerAnumationOn .3s linear" : "none"};
+    isFixed ? "headerAnimationOn .3s linear" : "none"};
 
-  @keyframes headerAnumationOn {
+  @keyframes headerAnimationOn {
     0% {
       background-color: transparent;
       box-shadow: none;
@@ -38,6 +38,100 @@ export const Logo = styled.img`
   position: relative;
   top: ${(prop) => (prop.isFixed ? "0px" : "-6px")};
   display: block;
+`;
+
+export const ThemeButton = styled.button`
+  display: block;
+  background-color: var(--pure-white);
+  height: 36px;
+  width: 36px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: ${(prop) => (prop.themeType ? "flex-start" : "flex-end")};
+  align-items: center;
+  padding: 0 3px;
+  transition: 0.3s;
+  overflow: hidden;
+  & > svg {
+    font-size: 23px;
+    color: var(--accent);
+  }
+  &:hover,
+  &:active {
+    background-color: var(--hover-grey);
+  }
+`;
+
+export const ThemeButtonDotLight = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  color: var(--text-main);
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 0;
+  animation: ${({ themeType }) =>
+    themeType
+      ? "headerAnimationOn .6s linear"
+      : "headerAnimationOff .6s linear"};
+
+  @keyframes headerAnimationOn {
+    0% {
+      top: -30px;
+    }
+
+    100% {
+      top: 0;
+    }
+  }
+  @keyframes headerAnimationOff {
+    0% {
+      top: 0;
+    }
+
+    100% {
+      top: 30px;
+    }
+  }
+`;
+
+export const ThemeButtonDotDark = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  color: var(--text-main);
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 0;
+  animation: ${({ themeType }) =>
+    !themeType
+      ? "headerAnimationOn .6s linear"
+      : "headerAnimationOff .6s linear"};
+
+  @keyframes headerAnimationOn {
+    0% {
+      top: -30px;
+    }
+
+    100% {
+      top: 0;
+    }
+  }
+  @keyframes headerAnimationOff {
+    0% {
+      top: 0;
+    }
+
+    100% {
+      top: 30px;
+    }
+  }
 `;
 
 export const Navigation = styled.nav``;
@@ -75,7 +169,7 @@ export const NavigationLink = styled(NavLink)`
 export const LoginMenu = styled.div`
   /* margin-left: auto; */
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
 `;
 

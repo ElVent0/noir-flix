@@ -146,6 +146,7 @@ const ResearchFilters = ({
             onFocus={onFocusInput}
             onBlur={onFocusInput}
             focusEvent={onFocus}
+            autocomplete="off"
           ></SearchInput>
           {onFocus && (
             <CloseSerachButton>

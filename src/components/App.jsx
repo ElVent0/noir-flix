@@ -4,8 +4,10 @@ import SharedLayout from "./SharedLayout/SharedLayout.jsx";
 import Research from "../pages/Research/Research";
 import Library from "../pages/Library/Library";
 import { useState } from "react";
+import { createGlobalStyle } from "styled-components";
 
 const App = () => {
+  const [themeType, setThemeType] = useState(true);
   const [recentList, setRecentList] = useState(
     JSON.parse(localStorage.getItem("RecentListForNoirflix"))
   );
@@ -31,10 +33,60 @@ const App = () => {
     setRecentList(newRecentList);
   };
 
+  const LightTheme = createGlobalStyle`
+    :root {
+      --accent: #11b3ff;
+      --accent-hover: #179bd9;
+      --accent-transparent: #11b4ffc3;
+      --bg-grey: #f4f7f9;
+      --element-grey: #DADDE1;
+      --hover-grey: #efefef;
+      --text-main: #606770;
+      --text-main-transparent: #60677099;
+      --nav-black: #242424;
+      --nav-black-transparent: #24242490;
+      --pure-white: #fff;
+  }`;
+
+  const DarkTheme = createGlobalStyle`
+    :root {
+      --accent: #11b3ff;
+      --accent-hover: #179bd9;
+      --accent-transparent: #11b4ffc3;
+      --pure-white: #37373d;
+      --bg-grey: #252526;
+      --hover-grey: #303032;
+      --element-grey: #DADDE160;
+      --nav-black: #fff;
+      --nav-black-transparent: #f4f7f9;
+      --text-main: #efefef;
+      --text-main-transparent: #DADDE1;
+  }`;
+
+  //     --pure-white: #fff;
+  //     --bg-grey: #f4f7f9;
+  //     --hover-grey: #efefef;
+  //     --element-grey: #DADDE1;
+  //     --nav-black: #242424;
+  //     --nav-black-transparent: #24242490;
+  //     --text-main: #606770;
+  //     --text-main-transparent: #60677099;
+
+  let GlobalStyle = themeType ? LightTheme : DarkTheme;
+
+  const themeToggle = () => {
+    setThemeType((prev) => !prev);
+  };
+
   return (
     <AppStyled>
       <Routes>
-        <Route path="/" element={<SharedLayout />}>
+        <Route
+          path="/"
+          element={
+            <SharedLayout themeToggle={themeToggle} themeType={themeType} />
+          }
+        >
           <Route
             index
             element={
@@ -52,6 +104,8 @@ const App = () => {
           {/* <Route path="/сollection" element={<Collection />} /> */}
         </Route>
       </Routes>
+
+      <GlobalStyle />
     </AppStyled>
   );
 };

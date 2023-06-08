@@ -25,7 +25,7 @@ export const MainPosterStyled = styled.div`
   position: relative;
 `;
 
-export const Poster = styled.img`
+export const Poster = styled.div`
   position: relative;
   animation: fade 8s ease-in-out infinite;
   width: 66%;
@@ -59,7 +59,7 @@ export const Poster = styled.img`
 
 export const MainPosterElementLeft = styled.div`
   position: absolute;
-  z-index: 1000;
+  z-index: 998;
   opacity: 0.6;
   width: 140px;
   height: 140px;
@@ -102,7 +102,7 @@ export const MainPosterElementRight = styled.div`
   position: absolute;
   right: 34%;
   bottom: 0;
-  z-index: 1000;
+  z-index: 998;
   width: 170px;
   height: 170px;
   overflow: hidden;
@@ -126,7 +126,7 @@ export const MainPosterContent = styled.div`
   left: 66%;
   top: 0;
   background-color: var(--pure-white);
-  z-index: 1000;
+  z-index: 998;
   padding: 12px;
 `;
 
@@ -135,7 +135,7 @@ export const MainPosterRating = styled.p`
   color: var(--pure-white);
   left: 12px;
   top: 12px;
-  z-index: 1001;
+  z-index: 999;
   font-size: 20px;
   font-weight: 900;
   animation: fade 8s ease-in-out infinite;
@@ -165,7 +165,7 @@ export const MainPosterName = styled.p`
   position: absolute;
   bottom: 12px;
   left: 12px;
-  z-index: 1000;
+  z-index: 998;
   color: var(--pure-white);
   font-size: 22px;
   width: 280px;

@@ -132,6 +132,32 @@ export const MailInput = styled.input`
   }
 `;
 
+export const PasswordContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 8px;
+  & > input {
+    display: block;
+    width: calc(100% - 44px);
+    height: 100%;
+    margin-bottom: 0;
+  }
+  & > button {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    & > svg {
+      font-size: 22px;
+      color: var(--text-main-transparent);
+    }
+  }
+`;
+
 export const ButtonSubmit = styled.button`
   width: 100%;
   height: 46px;

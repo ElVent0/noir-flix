@@ -16,7 +16,7 @@ export const ModalBackdrop = styled.div`
 export const Modal = styled.div`
   width: 540px;
   height: 381px;
-  background: #f7f7f7;
+  background: var(--bg-grey);
   border-radius: 10px;
   display: flex;
   position: relative;
