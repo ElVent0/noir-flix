@@ -125,9 +125,9 @@ const Header = ({ themeToggle, themeType }) => {
   window.onscroll = function () {
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollPosition > 90) {
+    if (scrollPosition > 50) {
       setIsFixed(true);
-    } else if (0 < scrollPosition < 90) {
+    } else if (0 < scrollPosition < 50) {
       setIsFixed(false);
     }
   };

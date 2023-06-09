@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const MoviesListStyled = styled.ul`
-  min-height: calc(100vh - 257px);
   padding: 30px 0 0 0;
   display: flex;
   flex-wrap: wrap;

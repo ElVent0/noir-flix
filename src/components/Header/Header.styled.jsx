@@ -74,11 +74,9 @@ export const ThemeButtonDotLight = styled.div`
   position: relative;
   top: 0;
   animation: ${({ themeType }) =>
-    themeType
-      ? "headerAnimationOn .6s linear"
-      : "headerAnimationOff .6s linear"};
+    themeType ? "BottomThemeOn .6s linear" : "BottomThemeOff .6s linear"};
 
-  @keyframes headerAnimationOn {
+  @keyframes BottomThemeOn {
     0% {
       top: -30px;
     }
@@ -87,7 +85,7 @@ export const ThemeButtonDotLight = styled.div`
       top: 0;
     }
   }
-  @keyframes headerAnimationOff {
+  @keyframes BottomThemeOff {
     0% {
       top: 0;
     }
@@ -110,11 +108,9 @@ export const ThemeButtonDotDark = styled.div`
   position: relative;
   top: 0;
   animation: ${({ themeType }) =>
-    !themeType
-      ? "headerAnimationOn .6s linear"
-      : "headerAnimationOff .6s linear"};
+    !themeType ? "BottomThemeOn .6s linear" : "BottomThemeOff .6s linear"};
 
-  @keyframes headerAnimationOn {
+  @keyframes BottomThemeOn {
     0% {
       top: -30px;
     }
@@ -123,7 +119,7 @@ export const ThemeButtonDotDark = styled.div`
       top: 0;
     }
   }
-  @keyframes headerAnimationOff {
+  @keyframes BottomThemeOff {
     0% {
       top: 0;
     }
@@ -179,9 +175,11 @@ export const Login = styled.button`
   line-height: 19px;
   color: var(--nav-black-transparent);
   height: 36px;
-  align-items: flex-end;
+  height: 36px;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
-  padding: 6px 16px 6px 8px;
   display: flex;
   transition: 0.3s;
   & > svg {
@@ -199,6 +197,8 @@ export const Logintext = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: var(--nav-black-transparent);
+  position: relative;
+  top: 2px;
 `;
 
 export const Profile = styled.button`
@@ -207,11 +207,16 @@ export const Profile = styled.button`
   line-height: 19px;
   color: var(--nav-black-transparent);
   height: 36px;
-  align-items: flex-end;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
-  padding: 6px 16px 6px 8px;
   display: flex;
   transition: 0.3s;
+  & > p {
+    position: relative;
+    top: 2px;
+  }
   &:hover,
   &:active {
     background-color: var(--hover-grey);

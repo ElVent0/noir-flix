@@ -95,7 +95,7 @@ const MoviesList = ({
     if (page === "library") {
       // onResetStars();
 
-      if (moviesListIds) {
+      if (moviesListIds && moviesListIds.length > 0) {
         const resultList = moviesList.map((item, index) => {
           item.creation_date = moviesListIds[index].creation_date;
           item.stars = moviesListIds[index].movie_rating;
