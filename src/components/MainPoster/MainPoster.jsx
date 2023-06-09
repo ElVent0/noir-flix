@@ -21,26 +21,23 @@ const MainPoster = ({
   const [currentTrendOne, setCurrentTrendOne] = useState(0);
   const [currentTrendTwo, setCurrentTrendTwo] = useState(10);
 
-  // console.log("trendingList", trendingList);
-
   const updateCount = () => {
     setInterval(() => {
-      // let randomNumberOne = Math.random() * (9 - 0) + 0;
-      // let randomNumberTwo = Math.random() * (18 - 10) + 10;
-
-      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
-      //   randomNumberTwo -= 1;
-      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
-      //   randomNumberTwo += 1;
-      // }
-      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
-      //   randomNumberTwo -= 1;
-      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
-      //   randomNumberTwo += 1;
-      // }
-
       setCurrentTrendOne((prev) => (prev + 1) % 20);
       setCurrentTrendTwo((prev) => (prev + 1) % 20);
+
+      // let randomNumberOne = Math.random() * (9 - 0) + 0;
+      // let randomNumberTwo = Math.random() * (18 - 10) + 10;
+      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
+      //   randomNumberTwo -= 1;
+      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
+      //   randomNumberTwo += 1;
+      // }
+      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
+      //   randomNumberTwo -= 1;
+      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
+      //   randomNumberTwo += 1;
+      // }
     }, 8000);
   };
   // console.log(currentTrendOne, currentTrendTwo, "===============");
