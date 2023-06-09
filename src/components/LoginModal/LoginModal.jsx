@@ -273,6 +273,7 @@ const ProfileModal = ({
                 onChange={onMailChange}
                 value={userMail}
                 onInvalid={handleInvalid}
+                autoComplete="off"
               ></MailInput>
               <PasswordContainer>
                 <MailInput
@@ -281,7 +282,7 @@ const ProfileModal = ({
                   placeholder="Password"
                   onChange={onPasswordChange}
                   value={userPassword}
-                  autocomplete="off"
+                  autoComplete="off"
                 ></MailInput>
                 <button
                   type="button"
@@ -307,7 +308,7 @@ const ProfileModal = ({
                 placeholder="Username"
                 onChange={onNameChange}
                 value={userName}
-                autocomplete="off"
+                autoComplete="off"
               ></MailInput>
               <MailInput
                 type="email"
@@ -316,6 +317,7 @@ const ProfileModal = ({
                 onChange={onMailChange}
                 value={userMail}
                 onInvalid={handleInvalid}
+                autoComplete="off"
               ></MailInput>
               <PasswordContainer>
                 <MailInput
@@ -324,7 +326,7 @@ const ProfileModal = ({
                   placeholder="Create password"
                   onChange={onPasswordChange}
                   value={userPassword}
-                  autocomplete="off"
+                  autoComplete="off"
                 ></MailInput>
                 <button
                   type="button"

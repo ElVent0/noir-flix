@@ -9,7 +9,7 @@ import { createGlobalStyle } from "styled-components";
 export const ThemeContext = createContext();
 
 const App = () => {
-  const [themeType, setThemeType] = useState(true);
+  const [themeType, setThemeType] = useState(false);
   const [recentList, setRecentList] = useState(
     JSON.parse(localStorage.getItem("RecentListForNoirflix"))
   );

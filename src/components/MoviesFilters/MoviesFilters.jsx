@@ -145,12 +145,12 @@ const ResearchFilters = ({
             type="text"
             name="search"
             placeholder="Search"
+            autoComplete="off"
             value={searchInput}
             onChange={changeSearchInput}
             onFocus={onFocusInput}
             onBlur={onFocusInput}
             focusEvent={onFocus}
-            autocomplete="off"
             themeType={themeType}
           ></SearchInput>
           {onFocus && (
