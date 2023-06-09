@@ -12,7 +12,6 @@ import {
 } from "./ProfileModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
-import { useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
 import path from "../../media/profile.jpg";
 import logo from "../../media/noirflix-3-3.png";

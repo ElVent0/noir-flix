@@ -91,7 +91,7 @@ const Header = ({ themeToggle }) => {
   // }
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut();
+    await supabase.auth.signOut();
   };
 
   const onOpenProfileModal = () => {

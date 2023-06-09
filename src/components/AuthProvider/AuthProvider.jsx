@@ -8,7 +8,7 @@ import { useSession } from "@supabase/auth-helpers-react";
 import { TbLogin } from "react-icons/tb";
 import { useState, useContext } from "react";
 import LoginModal from "../LoginModal/LoginModal";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import fingerprint from "../../media/fingerprint.png";
 import fingerprintLight from "../../media/fingerprint-2.png";
 import { ThemeContext } from "../App";

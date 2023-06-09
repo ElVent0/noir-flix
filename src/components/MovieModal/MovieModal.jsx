@@ -74,6 +74,7 @@ const MovieModal = ({
       );
       setIsInLibrary(fragmentData.length === 0 ? false : true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moviesListIds]);
 
   const errorToast = () =>
@@ -172,82 +173,86 @@ const MovieModal = ({
             })
             .single();
 
-          // const { errorSecond } = await supabase
-          //   .from("users_movies")
-          //   .insert({
-          //     user_id: session.user.id,
-          //     movie_id: movieData.id,
-          //   })
-          //   .single();
-
-          // window.location.reload();
           if (error) {
             console.error(1, error);
             return;
           } else {
             successToast();
           }
-        } catch (error) {
-          console.error(2, error);
+        } catch (e) {
+          console.error("insert error", e);
         }
       };
 
       sendMovie();
     } else if (page === "library") {
-      supabase
-        .from("library")
-        .update({ movie_rating: stars })
-        .match({
-          user_id: session.user.id,
-          movie_id: movieData.id,
-        })
-        .then((response) => {
-          console.log("Рядок успішно оновлено:", response);
-          successEditToast();
-        })
-        .catch((error) => {
-          console.error("Помилка оновлення рядка:", error);
-        });
+      try {
+        supabase
+          .from("library")
+          .update({ movie_rating: stars })
+          .match({
+            user_id: session.user.id,
+            movie_id: movieData.id,
+          })
+          .then((response) => {
+            console.log("Рядок успішно оновлено:", response);
+            successEditToast();
+          })
+          .catch((error) => {
+            console.error("Помилка оновлення рядка:", error);
+          });
+      } catch (e) {
+        console.log("update error", e);
+      }
     }
   };
 
   const onDeleteMovie = () => {
     // Тут видаляю фільм з бібліотеки
-    supabase
-      .from("library")
-      .delete()
-      .match({
-        user_id: session.user.id,
-        movie_id: movieData.id,
-      })
-      .then((response) => {
-        successDeleteToast();
-        onclose();
-        console.log("Рядок успішно видалено:", response);
-        // window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Помилка видалення рядка:", error);
-      });
-  };
-
-  useEffect(() => {
-    if (page === "library") {
+    try {
       supabase
         .from("library")
-        .update({ movie_for_future: forLater })
+        .delete()
         .match({
           user_id: session.user.id,
           movie_id: movieData.id,
         })
         .then((response) => {
-          console.log("Рядок успішно оновлено:", response);
+          successDeleteToast();
+          onclose();
+          console.log("Рядок успішно видалено:", response);
+          // window.location.reload();
         })
         .catch((error) => {
-          console.error("Помилка оновлення рядка:", error);
+          console.error("Помилка видалення рядка:", error);
         });
+    } catch (e) {
+      console.log("delete error", e);
+    }
+  };
+
+  useEffect(() => {
+    if (page === "library") {
+      try {
+        supabase
+          .from("library")
+          .update({ movie_for_future: forLater })
+          .match({
+            user_id: session.user.id,
+            movie_id: movieData.id,
+          })
+          .then((response) => {
+            console.log("Рядок успішно оновлено:", response);
+          })
+          .catch((error) => {
+            console.error("Помилка оновлення рядка:", error);
+          });
+      } catch (e) {
+        console.log("update error", e);
+      }
     }
     // console.log("Changing forLater", movieData.id, forLater);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forLater]);
 
   useEffect(() => {
@@ -281,6 +286,7 @@ const MovieModal = ({
       setStars(movieData.stars);
       setForLater(movieData.for_later);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return ReactDOM.createPortal(

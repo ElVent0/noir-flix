@@ -121,7 +121,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
 
   useEffect(() => {
     const getMoviesFromLibarary = async (id) => {
-      const { data, error } = await supabase.from("library").select("*");
+      const { data } = await supabase.from("library").select("*");
 
       if (session) {
         let result = data

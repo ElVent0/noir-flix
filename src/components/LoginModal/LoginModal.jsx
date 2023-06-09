@@ -19,7 +19,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { RiEyeFill } from "react-icons/ri";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast, { Toaster } from "react-hot-toast";
 import path from "../../media/login-2.jpg";
 import { ThemeContext } from "../App";
@@ -38,9 +38,22 @@ const ProfileModal = ({
   const [userPassword, setUserPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
 
-  const session = useSession();
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
+
+  const errorToastCreation = () =>
+    toast.error("Cannot create new user now", {
+      duration: 4000,
+      style: {
+        padding: "16px",
+        textAlign: "center",
+        color: "#606770",
+      },
+      iconTheme: {
+        primary: "#11b3ff",
+        secondary: "#ffffff",
+      },
+    });
 
   const errorName = () =>
     toast.error("The name must consist of at least 3 characters", {
@@ -99,9 +112,17 @@ const ProfileModal = ({
   };
 
   const loginWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+      });
+
+      if (error) {
+        errorToast();
+      }
+    } catch (e) {
+      console.log("signInWithOAuth error", e);
+    }
 
     // console.log(0, user);
 
@@ -123,10 +144,6 @@ const ProfileModal = ({
     // } catch (error) {
     //   console.error(error);
     // }
-
-    if (error) {
-      errorToast();
-    }
   };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -145,14 +162,19 @@ const ProfileModal = ({
 
     // console.log("Login", userMail, userPassword);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: userMail,
-      password: userPassword,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: userMail,
+        password: userPassword,
+      });
 
-    setIsLoginModal(false);
-    if (error) {
-      errorToast();
+      setIsLoginModal(false);
+
+      if (error) {
+        errorToast();
+      }
+    } catch (e) {
+      console.log("signInWithPassword error", e);
     }
   };
 
@@ -172,11 +194,19 @@ const ProfileModal = ({
     }
     // console.log("Registration", userName, userMail, userPassword);
 
-    const { data, error } = await supabase.auth.signUp({
-      email: userMail,
-      password: userPassword,
-      options: { data: { name: userName } },
-    });
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: userMail,
+        password: userPassword,
+        options: { data: { name: userName } },
+      });
+
+      if (error) {
+        errorToastCreation();
+      }
+    } catch (e) {
+      console.log("signUp error", e);
+    }
 
     // console.log(1, data);
 

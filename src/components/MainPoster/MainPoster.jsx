@@ -113,13 +113,13 @@ const MainPoster = ({
       {trendingList.length > 0 && (
         <MainPosterStyled>
           {trendingList[currentTrendTwo].vote_average && (
-            <MainPosterRating>
+            <MainPosterRating themeType={themeType}>
               {trendingList[currentTrendTwo].vote_average.toFixed(1)}
             </MainPosterRating>
           )}
           {trendingList[currentTrendTwo].title &&
             trendingList[currentTrendTwo].release_date && (
-              <MainPosterName>
+              <MainPosterName themeType={themeType}>
                 {trendingList[currentTrendTwo].title}
                 <span>
                   (
@@ -140,6 +140,7 @@ const MainPoster = ({
             )}
             <MainPosterMore
               onClick={() => onReadMore(trendingList[currentTrendTwo].id)}
+              themeType={themeType}
             >
               More
             </MainPosterMore>

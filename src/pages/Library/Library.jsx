@@ -32,7 +32,7 @@ const Library = ({ onAddToRecentMovies }) => {
   const themeType = useContext(ThemeContext);
 
   const getMoviesFromLibarary = async (id) => {
-    const { data, error } = await supabase.from("library").select("*");
+    const { data } = await supabase.from("library").select("*");
 
     let result = data
       .filter((item) => item.user_id === session.user.id)
@@ -65,6 +65,7 @@ const Library = ({ onAddToRecentMovies }) => {
       console.log(1, session);
       getMoviesFromLibarary();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   useEffect(() => {
