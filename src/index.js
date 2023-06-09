@@ -20,3 +20,6 @@ root.render(
     </SessionContextProvider>
   </React.StrictMode>
 );
+
+// http://localhost:3000
+// https://noir-flix.netlify.app/

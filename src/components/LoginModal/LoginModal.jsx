@@ -20,7 +20,15 @@ import { FcGoogle } from "react-icons/fc";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { RiEyeFill } from "react-icons/ri";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import {
+  errorName,
+  errorMail,
+  errorPassword,
+  errorToastCreation,
+  notifyOnMailSignUp,
+  errorToast,
+} from "../../utils/toasters.js";
 import path from "../../media/login-2.jpg";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
@@ -29,8 +37,6 @@ const ProfileModal = ({
   onCloseLoginModal,
   isLoginTypeModal,
   setIsLoginTypeModal,
-  notifyOnMailSignUp,
-  errorToast,
   setIsLoginModal,
 }) => {
   const [userName, setUserName] = useState("");
@@ -40,62 +46,6 @@ const ProfileModal = ({
 
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
-
-  const errorToastCreation = () =>
-    toast.error("Cannot create new user now", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
-
-  const errorName = () =>
-    toast.error("The name must consist of at least 3 characters", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
-
-  const errorMail = () =>
-    toast.error("Write a valid email", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
-
-  const errorPassword = () =>
-    toast.error("The password must be at least 6 characters long", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
 
   const onNameChange = (e) => {
     if (e.target.value.length < 20) {

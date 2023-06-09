@@ -8,7 +8,6 @@ import { useSession } from "@supabase/auth-helpers-react";
 import { TbLogin } from "react-icons/tb";
 import { useState, useContext } from "react";
 import LoginModal from "../LoginModal/LoginModal";
-import toast from "react-hot-toast";
 import fingerprint from "../../media/fingerprint.png";
 import fingerprintLight from "../../media/fingerprint-2.png";
 import { ThemeContext } from "../App";
@@ -18,39 +17,6 @@ const AuthProvider = ({ children }) => {
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
 
   const themeType = useContext(ThemeContext);
-
-  const notifyOnMailSignUp = () =>
-    toast.success(
-      "If this mail is free, you will receive a confirmation by email",
-      {
-        duration: 5000,
-        style: {
-          padding: "16px",
-          textAlign: "center",
-          color: "#606770",
-          zIndex: "2001",
-        },
-        iconTheme: {
-          primary: "#fb6d00",
-          secondary: "#FFFAEE",
-        },
-      }
-    );
-
-  const errorToast = () =>
-    toast.error("Bad login, try again", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-        zIndex: "2001",
-      },
-      iconTheme: {
-        primary: "#fa4b34",
-        secondary: "#ffffff",
-      },
-    });
 
   const session = useSession();
 
@@ -92,8 +58,6 @@ const AuthProvider = ({ children }) => {
           onCloseLoginModal={onCloseLoginModal}
           isLoginTypeModal={isLoginTypeModal}
           setIsLoginTypeModal={setIsLoginTypeModal}
-          notifyOnMailSignUp={notifyOnMailSignUp}
-          errorToast={errorToast}
           setIsLoginModal={setIsLoginModal}
         />
       )}

@@ -38,7 +38,13 @@ import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
 import { MdOutlineDone } from "react-icons/md";
 import youtubeLogo from "../../media/youtube-logo.png";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import {
+  errorToast,
+  successToast,
+  successEditToast,
+  successDeleteToast,
+} from "../../utils/toasters.js";
 import { getVideoByIds } from "../../api/movies.jsx";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ThemeContext } from "../App";
@@ -73,66 +79,6 @@ const MovieModal = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moviesListIds]);
-
-  const errorToast = () =>
-    toast.error("Rate the movie first", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-        zIndex: "2001",
-      },
-      iconTheme: {
-        primary: "#fa4b34",
-        secondary: "#ffffff",
-      },
-    });
-
-  const successToast = () =>
-    toast.success("The movie has been added to the library", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-        zIndex: "2001",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
-
-  const successEditToast = () =>
-    toast.success("The movie data have been changed in your library", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-        zIndex: "2001",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
-
-  const successDeleteToast = () =>
-    toast.success("The movie has been removed from your library", {
-      duration: 4000,
-      style: {
-        padding: "16px",
-        textAlign: "center",
-        color: "#606770",
-        zIndex: "2001",
-      },
-      iconTheme: {
-        primary: "#11b3ff",
-        secondary: "#ffffff",
-      },
-    });
 
   const getRatingList = () => {
     const ratingList = [];
@@ -210,7 +156,7 @@ const MovieModal = ({
           user_id: session.user.id,
           movie_id: movieData.id,
         })
-        .then((response) => {
+        .then(() => {
           successDeleteToast();
           onclose();
         })
