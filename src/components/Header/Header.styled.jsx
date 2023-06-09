@@ -163,7 +163,6 @@ export const NavigationLink = styled(NavLink)`
 `;
 
 export const LoginMenu = styled.div`
-  /* margin-left: auto; */
   display: flex;
   align-items: center;
   gap: 10px;

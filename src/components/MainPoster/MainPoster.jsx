@@ -28,26 +28,11 @@ const MainPoster = ({
     setInterval(() => {
       setCurrentTrendOne((prev) => (prev + 1) % 20);
       setCurrentTrendTwo((prev) => (prev + 1) % 20);
-
-      // let randomNumberOne = Math.random() * (9 - 0) + 0;
-      // let randomNumberTwo = Math.random() * (18 - 10) + 10;
-      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
-      //   randomNumberTwo -= 1;
-      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
-      //   randomNumberTwo += 1;
-      // }
-      // if (currentTrendOne === currentTrendTwo && currentTrendTwo === 3) {
-      //   randomNumberTwo -= 1;
-      // } else if (currentTrendOne === currentTrendTwo && currentTrendTwo !== 3) {
-      //   randomNumberTwo += 1;
-      // }
     }, 8000);
   };
-  // console.log(currentTrendOne, currentTrendTwo, "===============");
 
   useEffect(() => {
     updateCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const path = (trend) => {
@@ -101,12 +86,6 @@ const MainPoster = ({
               More
             </MainPosterMore>
           </MainPosterContent>
-          {/* <Poster
-            height="220px"
-            src={`https://image.tmdb.org/t/p/original/${trendingList[currentTrendOne].backdrop_path}`}
-            alt="poster"
-            currentTrend={currentTrendOne}
-          /> */}
           <Poster path={path(currentTrendOne)}></Poster>
         </MainPosterStyled>
       )}
@@ -145,12 +124,6 @@ const MainPoster = ({
               More
             </MainPosterMore>
           </MainPosterContent>
-          {/* <Poster
-            height="220px"
-            src={`https://image.tmdb.org/t/p/original/${trendingList[currentTrendTwo].backdrop_path}`}
-            alt="poster"
-            currentTrend={currentTrendTwo}
-          /> */}
           <Poster path={path(currentTrendTwo)}></Poster>
         </MainPosterStyled>
       )}

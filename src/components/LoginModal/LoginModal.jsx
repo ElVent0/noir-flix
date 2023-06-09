@@ -123,27 +123,6 @@ const ProfileModal = ({
     } catch (e) {
       console.log("signInWithOAuth error", e);
     }
-
-    // console.log(0, user);
-
-    // try {
-    //   const { error } = await supabase
-    //     .from("users")
-    //     .insert({
-    //       user_id: user.id,
-    //       user_name: userName,
-    //       user_mail: userMail,
-    //     })
-    //     .single();
-
-    //   // window.location.reload();
-    //   if (error) {
-    //     console.error(error);
-    //     return;
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -159,8 +138,6 @@ const ProfileModal = ({
       errorPassword();
       return;
     }
-
-    // console.log("Login", userMail, userPassword);
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -192,7 +169,6 @@ const ProfileModal = ({
       errorPassword();
       return;
     }
-    // console.log("Registration", userName, userMail, userPassword);
 
     try {
       const { error } = await supabase.auth.signUp({
@@ -207,27 +183,6 @@ const ProfileModal = ({
     } catch (e) {
       console.log("signUp error", e);
     }
-
-    // console.log(1, data);
-
-    // try {
-    //   const { error } = await supabase
-    //     .from("users")
-    //     .insert({
-    //       user_id: data.user.id,
-    //       user_name: userName,
-    //       user_mail: userMail,
-    //     })
-    //     .single();
-
-    //   // window.location.reload();
-    //   if (error) {
-    //     console.error(error);
-    //     return;
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
 
     setIsLoginModal(false);
     notifyOnMailSignUp();

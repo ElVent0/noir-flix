@@ -50,7 +50,6 @@ export const MoviesBody = styled.div`
 `;
 
 export const ReadMore = styled.button`
-  /* color: var(--text-main); */
   color: var(--accent);
   background-color: var(--pure-white);
   transition: 0.3s;
@@ -150,7 +149,6 @@ export const MoreCheck = styled.div`
   font-size: 18px;
   border-radius: 8px;
   color: var(--pure-white);
-  /* background-color: var(--pure-white); */
   background-color: ${(prop) =>
     prop.themeType ? "var(--accent)" : "var(--text-main)"};
   position: absolute;

@@ -31,19 +31,6 @@ export const NothingBlock = styled.div`
   & > p {
     text-align: center;
   }
-  /* animation: anumationOn 10s linear;
-  @keyframes anumationOn {
-    0% {
-      opacity: 0;
-    }
-    0% {
-      opacity: 50%;
-    }
-
-    100% {
-      opacity: 100%;
-    }
-  } */
 `;
 
 export const NavigationLink = styled(NavLink)`

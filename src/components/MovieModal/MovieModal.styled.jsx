@@ -14,8 +14,6 @@ export const ModalBackdrop = styled.div`
 `;
 
 export const Modal = styled.div`
-  /* width: 540;
-  height: 381; */
   background: var(--bg-grey);
   border-radius: 10px;
   display: flex;
@@ -94,7 +92,6 @@ export const ModalParagraph = styled.p`
   line-height: 15px;
   color: var(--text-main-transparent);
   &:last-child {
-    /* max-height: 114px; */
     max-height: ${(props) => props.page === "research" && "114px"};
     max-height: ${(props) => props.page === "library" && "84px"};
     overflow-y: scroll;
@@ -231,7 +228,6 @@ export const StarButton = styled.button`
 
 export const ConfirmButton = styled.button`
   background-color: var(--accent);
-  /* color: var(--pure-white); */
   color: ${(prop) =>
     prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   height: 36px;
@@ -276,8 +272,6 @@ export const MoreCheckButton = styled.button`
   & > svg {
     font-size: 22px;
   }
-  /* background-color: ${({ forLater }) =>
-    forLater === true ? "var(--accent)" : "var(--pure-white)"}; */
   color: ${({ forLater }) =>
     forLater === true ? "var(--accent)" : "var(--text-main)"};
   border: ${({ forLater }) =>
@@ -409,7 +403,6 @@ export const InLibraryBlock = styled.div`
   color: ${(prop) =>
     prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   border-radius: 10px;
-  /* padding: 0px 16px; */
   & > svg {
     font-size: 18px;
     margin-right: 6px;

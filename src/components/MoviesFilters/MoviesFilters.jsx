@@ -89,27 +89,13 @@ const ResearchFilters = ({
             </HeaderSort>
             {isOpenSort && (
               <BodySort isOpenSort={isOpenSort}>
-                {
-                  // window.location.pathname === "/"
-                  //   ?
-                  sortItems
-                    .filter((item) => item !== inputSort)
-                    .map((item) => (
-                      <ItemSort key={item} onClick={() => onSort(item)}>
-                        <ButtonSort themeType={themeType}>{item}</ButtonSort>
-                      </ItemSort>
-                    ))
-                  // : sortItemsInLibrary
-                  //     .filter((item) => item !== inputSort)
-                  //     .map((item) => (
-                  //       <ItemSort
-                  //         key={item}
-                  //         onClick={() => onSortInLibrary(item)}
-                  //       >
-                  //         <ButtonSort>{item}</ButtonSort>
-                  //       </ItemSort>
-                  //     ))
-                }
+                {sortItems
+                  .filter((item) => item !== inputSort)
+                  .map((item) => (
+                    <ItemSort key={item} onClick={() => onSort(item)}>
+                      <ButtonSort themeType={themeType}>{item}</ButtonSort>
+                    </ItemSort>
+                  ))}
               </BodySort>
             )}
           </FilterInputSort>

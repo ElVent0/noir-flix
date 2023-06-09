@@ -73,8 +73,6 @@ const Header = ({ themeToggle }) => {
   const session = useSession();
   const supabase = useSupabaseClient();
 
-  // console.log("session", session);
-
   useEffect(() => {
     if (session) {
       setAvatar(
@@ -84,11 +82,6 @@ const Header = ({ themeToggle }) => {
       );
     }
   }, [session]);
-
-  // const { isLoading } = useSessionContext();
-  // if (isLoading) {
-  //   return <></>;
-  // }
 
   const logout = async () => {
     await supabase.auth.signOut();
@@ -148,9 +141,6 @@ const Header = ({ themeToggle }) => {
           </NavigationItem>
           {/* <NavigationItem>
             <NavigationLink to="сollection">Collection</NavigationLink>
-          </NavigationItem>
-          <NavigationItem>
-            <NavigationLink to="random">Surprise movie</NavigationLink>
           </NavigationItem> */}
         </NavigationList>
       </Navigation>

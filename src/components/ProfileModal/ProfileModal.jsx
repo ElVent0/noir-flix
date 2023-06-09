@@ -27,10 +27,8 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
 
   const userName = () => {
     if (session.user.app_metadata.provider === "google") {
-      // console.log("google");
       return userData.full_name;
     } else if (session.user.app_metadata.provider === "email") {
-      // console.log("email");
       return session.user.user_metadata.name;
     }
   };

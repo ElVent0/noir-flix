@@ -47,7 +47,6 @@ import { useContext } from "react";
 const MovieModal = ({
   movieData,
   onCloseReadMore,
-  genresInEnglish,
   page,
   moviesListIds,
   onclose,
@@ -64,8 +63,6 @@ const MovieModal = ({
   const session = useSession();
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
-
-  // console.log("movieData", movieData);
 
   useEffect(() => {
     if (moviesListIds) {
@@ -158,8 +155,6 @@ const MovieModal = ({
       return;
     }
     if (page === "research") {
-      // Тут відправляю ці дані на сервер (створюю новий фільм в бібліотеці)
-
       const sendMovie = async () => {
         try {
           const { error } = await supabase
@@ -194,8 +189,7 @@ const MovieModal = ({
             user_id: session.user.id,
             movie_id: movieData.id,
           })
-          .then((response) => {
-            console.log("Рядок успішно оновлено:", response);
+          .then(() => {
             successEditToast();
           })
           .catch((error) => {
@@ -208,7 +202,6 @@ const MovieModal = ({
   };
 
   const onDeleteMovie = () => {
-    // Тут видаляю фільм з бібліотеки
     try {
       supabase
         .from("library")
@@ -220,8 +213,6 @@ const MovieModal = ({
         .then((response) => {
           successDeleteToast();
           onclose();
-          console.log("Рядок успішно видалено:", response);
-          // window.location.reload();
         })
         .catch((error) => {
           console.error("Помилка видалення рядка:", error);
@@ -241,9 +232,6 @@ const MovieModal = ({
             user_id: session.user.id,
             movie_id: movieData.id,
           })
-          .then((response) => {
-            console.log("Рядок успішно оновлено:", response);
-          })
           .catch((error) => {
             console.error("Помилка оновлення рядка:", error);
           });
@@ -251,7 +239,6 @@ const MovieModal = ({
         console.log("update error", e);
       }
     }
-    // console.log("Changing forLater", movieData.id, forLater);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forLater]);
 
@@ -279,8 +266,6 @@ const MovieModal = ({
 
     getTrailer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    // console.log("================", movieData);
 
     if (page === "library") {
       setStars(movieData.stars);

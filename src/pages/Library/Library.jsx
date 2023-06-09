@@ -62,7 +62,6 @@ const Library = ({ onAddToRecentMovies }) => {
 
   useEffect(() => {
     if (session) {
-      console.log(1, session);
       getMoviesFromLibarary();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

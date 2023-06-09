@@ -11,7 +11,6 @@ const Footer = () => {
     <FooterStyled>
       <FooterLogo src={themeType ? logo : logoLight} alt="Logo" width="50px" />
       <InfoParagraph>Movie library in your pocket :)</InfoParagraph>
-      {/* <InfoParagraph>Student project</InfoParagraph> */}
     </FooterStyled>
   );
 };

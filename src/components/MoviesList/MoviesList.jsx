@@ -42,61 +42,8 @@ const MoviesList = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (page === "library") {
-
-  //     const resultList = moviesList.map((item, index) => {
-  //       item.creation_date = moviesListIds[index].creation_date;
-  //       item.stars = moviesListIds[index].movie_rating;
-  //       item.for_later = moviesListIds[index].movie_for_future;
-  //       return item;
-  //     });
-
-  //     if (stars === 0) {
-  //       setFinalList(resultList);
-  //       return;
-  //     } else {
-  //       const result = finalList
-  //         ? resultList.filter((item) => item.stars === stars)
-  //         : finalList.filter((item) => item.stars === stars);
-  //       setFinalList(result);
-  //     }
-  //   } else {
-  //     setFinalList(moviesList);
-  //     return;
-  //   }
-  // }, [moviesList, stars]);
-
-  // useEffect(() => {
-  //   if (page === "library") {
-
-  //     const resultList = moviesList.map((item, index) => {
-  //       item.creation_date = moviesListIds[index].creation_date;
-  //       item.stars = moviesListIds[index].movie_rating;
-  //       item.for_later = moviesListIds[index].movie_for_future;
-  //       return item;
-  //     });
-
-  //     if (forLater === false) {
-  //       setFinalList(resultList);
-  //       return;
-  //     } else {
-  //       const result = finalList
-  //         ? resultList.filter((item) => item.for_later === forLater)
-  //         : finalList.filter((item) => item.for_later === forLater);
-
-  //       setFinalList(result);
-  //     }
-  //   } else {
-  //     setFinalList(moviesList);
-  //     return;
-  //   }
-  // }, [moviesList, forLater]);
-
   useEffect(() => {
     if (page === "library") {
-      // onResetStars();
-
       if (moviesListIds && moviesListIds.length > 0) {
         const resultList = moviesList.map((item, index) => {
           item.creation_date = moviesListIds[index].creation_date;

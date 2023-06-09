@@ -66,20 +66,17 @@ export const LoginForm = styled.form`
   align-items: center;
   width: 100%;
   padding-bottom: 20px;
-  /* border-bottom: 1px solid var(--element-grey); */
 `;
 
 export const OrElement = styled.p`
   font-size: 12px;
   color: var(--element-grey);
-  /* color: var(--text-main-transparent); */
   position: relative;
   &::before {
     content: "";
     width: 121px;
     height: 1px;
     background-color: var(--element-grey);
-    /* background-color: var(--text-main-transparent); */
     position: absolute;
     top: 50%;
     left: 20px;
@@ -89,7 +86,6 @@ export const OrElement = styled.p`
     width: 121px;
     height: 1px;
     background-color: var(--element-grey);
-    /* background-color: var(--text-main-transparent); */
     position: absolute;
     top: 50%;
     right: 20px;
