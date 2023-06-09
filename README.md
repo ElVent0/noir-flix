@@ -1,5 +1,7 @@
 # NoirFlix
 
+This site gives you access to a large number of movies with the ability to add these movies to your library, create your own collections and ratings
+
 ## Main page #1
 
 ![ElVent0](./assets/1.jpg)
