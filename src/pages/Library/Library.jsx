@@ -9,10 +9,12 @@ import MovieModal from "../../components/MovieModal/MovieModal";
 import AuthProvider from "../../components/AuthProvider/AuthProvider";
 import Loader from "../../components/Loader/Loader";
 import nothing from "../../media/nothing.png";
+import nothingLight from "../../media/nothing-2.png";
 import { getMovieById } from "../../api/movies";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { ThemeContext } from "../../components/App";
 
 const Library = ({ onAddToRecentMovies }) => {
   const [moviesList, setMoviesList] = useState(null);
@@ -26,6 +28,8 @@ const Library = ({ onAddToRecentMovies }) => {
   const location = useLocation();
   const session = useSession();
   const supabase = useSupabaseClient();
+
+  const themeType = useContext(ThemeContext);
 
   const getMoviesFromLibarary = async (id) => {
     const { data, error } = await supabase.from("library").select("*");
@@ -170,12 +174,18 @@ const Library = ({ onAddToRecentMovies }) => {
               </>
             ) : (
               <NothingBlock>
-                <img src={nothing} width="160" alt="Nothing illustration" />
+                <img
+                  src={themeType ? nothing : nothingLight}
+                  width="160"
+                  alt="Nothing illustration"
+                />
                 <p>
                   There are no entries in your library yet. <br />
                   Add your first movie
                 </p>
-                <NavigationLink to="/">Research</NavigationLink>
+                <NavigationLink to="/" themeType={themeType}>
+                  Research
+                </NavigationLink>
               </NothingBlock>
             )}
           </LibraryStyled>

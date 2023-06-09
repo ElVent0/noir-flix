@@ -6,14 +6,18 @@ import {
 } from "./AuthProvider.styled";
 import { useSession } from "@supabase/auth-helpers-react";
 import { TbLogin } from "react-icons/tb";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import LoginModal from "../LoginModal/LoginModal";
 import toast, { Toaster } from "react-hot-toast";
 import fingerprint from "../../media/fingerprint.png";
+import fingerprintLight from "../../media/fingerprint-2.png";
+import { ThemeContext } from "../App";
 
 const AuthProvider = ({ children }) => {
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
+
+  const themeType = useContext(ThemeContext);
 
   const notifyOnMailSignUp = () =>
     toast.success(
@@ -69,13 +73,17 @@ const AuthProvider = ({ children }) => {
   ) : (
     <>
       <AuthContainer>
-        <img src={fingerprint} width="120" alt="fingerpring" />
+        <img
+          src={themeType ? fingerprint : fingerprintLight}
+          width="120"
+          alt="fingerpring"
+        />
         <AuthParagraph>
           The library is available only to <span>authorized</span> users
         </AuthParagraph>
-        <Login onClick={onOpenLoginModal}>
+        <Login onClick={onOpenLoginModal} themeType={themeType}>
           <TbLogin />
-          <Logintext>Login</Logintext>
+          <Logintext themeType={themeType}>Login</Logintext>
         </Login>
       </AuthContainer>
 

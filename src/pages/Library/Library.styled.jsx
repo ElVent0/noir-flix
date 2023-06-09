@@ -47,7 +47,8 @@ export const NothingBlock = styled.div`
 `;
 
 export const NavigationLink = styled(NavLink)`
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   background-color: var(--accent);
   display: flex;
   align-items: center;

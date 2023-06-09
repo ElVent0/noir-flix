@@ -16,7 +16,8 @@ import {
   RecentNothingButton,
   DialogElement,
 } from "./RecentMovies.styled";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../App";
 
 const RecentMovies = ({
   genres,
@@ -29,6 +30,7 @@ const RecentMovies = ({
   getMovieById,
 }) => {
   const [recentMoviesData, setRecentMoviesData] = useState([]);
+  const themeType = useContext(ThemeContext);
 
   useEffect(() => {
     const newRecentList = [];
@@ -71,7 +73,7 @@ const RecentMovies = ({
 
   return (
     <RecentMoviesStyled>
-      <RecentParagraph>Recently explored</RecentParagraph>
+      <RecentParagraph themeType={themeType}>Recently explored</RecentParagraph>
       {recentList && recentList.length > 0 ? (
         <RecentList>
           {recentMoviesData &&
@@ -112,7 +114,12 @@ const RecentMovies = ({
                       <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
                     </MoviesHeaderContent>
                   </MoviesHeader>
-                  <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
+                  <ReadMore
+                    onClick={() => onReadMore(item.id)}
+                    themeType={themeType}
+                  >
+                    More
+                  </ReadMore>
                 </RecentItem>
               );
             })}
@@ -131,6 +138,7 @@ const RecentMovies = ({
                   behavior: "smooth",
                 });
               }}
+              themeType={themeType}
             >
               Go
             </RecentNothingButton>

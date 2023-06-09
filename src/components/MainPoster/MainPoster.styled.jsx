@@ -132,7 +132,8 @@ export const MainPosterContent = styled.div`
 
 export const MainPosterRating = styled.p`
   position: absolute;
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   left: 12px;
   top: 12px;
   z-index: 999;
@@ -166,11 +167,13 @@ export const MainPosterName = styled.p`
   bottom: 12px;
   left: 12px;
   z-index: 998;
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   font-size: 22px;
   width: 280px;
   & > span {
-    color: var(--element-grey);
+    color: ${(prop) =>
+      prop.themeType ? "var(--pure-white)" : "var(--text-main-transparent)"};
     margin-left: 10px;
     font-weight: 400;
   }
@@ -234,7 +237,8 @@ export const MainPosterAbout = styled.p`
 `;
 
 export const MainPosterMore = styled.button`
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   background-color: var(--accent);
   transition: 0.3s;
   width: 100%;
@@ -248,7 +252,8 @@ export const MainPosterMore = styled.button`
   &:hover,
   &:focus {
     background-color: var(--accent-hover);
-    color: var(--hover-grey);
+    color: ${(prop) =>
+      prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   }
   animation: fade 8s ease-in-out infinite;
   @keyframes fade {

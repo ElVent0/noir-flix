@@ -149,8 +149,10 @@ export const MoreCheck = styled.div`
   align-items: center;
   font-size: 18px;
   border-radius: 8px;
-  background-color: var(--pure-white);
-  color: var(--accent);
+  color: var(--pure-white);
+  /* background-color: var(--pure-white); */
+  background-color: ${(prop) =>
+    prop.themeType ? "var(--accent)" : "var(--text-main)"};
   position: absolute;
   top: 10px;
   left: 10px;

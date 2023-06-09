@@ -16,9 +16,13 @@ import { useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
 import path from "../../media/profile.jpg";
 import logo from "../../media/noirflix-3-3.png";
+import logoLight from "../../media/noirflix-3-4.png";
+import { ThemeContext } from "../App";
+import { useContext } from "react";
 
 const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
   const session = useSession();
+  const themeType = useContext(ThemeContext);
 
   const userData = session.user.identities[0].identity_data;
 
@@ -36,7 +40,7 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
     <ModalBackdrop onClick={onCloseProfileModal}>
       <Modal>
         <Statistics path={path}>
-          <img src={logo} alt="logo" width="140px" />
+          <img src={themeType ? logo : logoLight} alt="logo" width="140px" />
         </Statistics>
         <Profile>
           <UserImage src={avatar} alt="User image" />

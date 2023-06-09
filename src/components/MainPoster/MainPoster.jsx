@@ -10,7 +10,8 @@ import {
   MainPosterAbout,
   MainPosterMore,
 } from "./MainPoster.styled";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../App";
 
 const MainPoster = ({
   trendingList,
@@ -20,6 +21,8 @@ const MainPoster = ({
 }) => {
   const [currentTrendOne, setCurrentTrendOne] = useState(0);
   const [currentTrendTwo, setCurrentTrendTwo] = useState(10);
+
+  const themeType = useContext(ThemeContext);
 
   const updateCount = () => {
     setInterval(() => {
@@ -66,13 +69,13 @@ const MainPoster = ({
       {trendingList.length > 0 && (
         <MainPosterStyled>
           {trendingList[currentTrendOne].vote_average && (
-            <MainPosterRating>
+            <MainPosterRating themeType={themeType}>
               {trendingList[currentTrendOne].vote_average.toFixed(1)}
             </MainPosterRating>
           )}
           {trendingList[currentTrendOne].title &&
             trendingList[currentTrendOne].release_date && (
-              <MainPosterName>
+              <MainPosterName themeType={themeType}>
                 {trendingList[currentTrendOne].title}
                 <span>
                   (
@@ -93,6 +96,7 @@ const MainPoster = ({
             )}
             <MainPosterMore
               onClick={() => onReadMore(trendingList[currentTrendOne].id)}
+              themeType={themeType}
             >
               More
             </MainPosterMore>

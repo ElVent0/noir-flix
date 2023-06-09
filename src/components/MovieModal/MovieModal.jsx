@@ -41,6 +41,8 @@ import youtubeLogo from "../../media/youtube-logo.png";
 import toast, { Toaster } from "react-hot-toast";
 import { getVideoByIds } from "../../api/movies.jsx";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { ThemeContext } from "../App";
+import { useContext } from "react";
 
 const MovieModal = ({
   movieData,
@@ -61,6 +63,7 @@ const MovieModal = ({
 
   const session = useSession();
   const supabase = useSupabaseClient();
+  const themeType = useContext(ThemeContext);
 
   // console.log("movieData", movieData);
 
@@ -298,6 +301,7 @@ const MovieModal = ({
                 <MoreCheckButtonPoster
                   forLater={forLater}
                   onClick={() => setForLater((prev) => !prev)}
+                  themeType={themeType}
                 >
                   <MdMoreTime />
                 </MoreCheckButtonPoster>
@@ -331,7 +335,9 @@ const MovieModal = ({
                     </StarItem>
                   ))}
                 </StarsList>
-                <ConfirmButton onClick={onConfirmForm}>Confirm</ConfirmButton>
+                <ConfirmButton onClick={onConfirmForm} themeType={themeType}>
+                  Confirm
+                </ConfirmButton>
               </Rating>
             )}
             <ModalParagraph>
@@ -403,7 +409,10 @@ const MovieModal = ({
                           <MdMoreTime />
                         </MoreCheckButton>
                       </MoreCheck>
-                      <ConfirmButton onClick={onConfirmForm}>
+                      <ConfirmButton
+                        onClick={onConfirmForm}
+                        themeType={themeType}
+                      >
                         Confirm
                       </ConfirmButton>
                     </>
@@ -414,7 +423,7 @@ const MovieModal = ({
           ) : (
             <>
               {page === "research" && (
-                <InLibraryBlock>
+                <InLibraryBlock themeType={themeType}>
                   <MdOutlineDone />
                   In library
                 </InLibraryBlock>

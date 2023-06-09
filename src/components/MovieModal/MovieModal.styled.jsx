@@ -98,6 +98,24 @@ export const ModalParagraph = styled.p`
     max-height: ${(props) => props.page === "research" && "114px"};
     max-height: ${(props) => props.page === "library" && "84px"};
     overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-grey);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--pure-white);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9d9d9d;
+      border-radius: 4px;
+    }
   }
   & > span {
     font-weight: 400;
@@ -213,7 +231,9 @@ export const StarButton = styled.button`
 
 export const ConfirmButton = styled.button`
   background-color: var(--accent);
-  color: var(--pure-white);
+  /* color: var(--pure-white); */
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   height: 36px;
   display: flex;
   align-items: center;
@@ -386,7 +406,8 @@ export const InLibraryBlock = styled.div`
   align-items: center;
   justify-content: center;
   background-color: var(--accent-hover);
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   border-radius: 10px;
   /* padding: 0px 16px; */
   & > svg {

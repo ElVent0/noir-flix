@@ -16,7 +16,8 @@ export const ModalBackdrop = styled.div`
 export const Modal = styled.div`
   width: 640px;
   height: 451px;
-  background: #f7f7f7;
+  background-color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--hover-grey)"};
   border-radius: 10px;
   display: flex;
   overflow: hidden;
@@ -113,6 +114,8 @@ export const MailInput = styled.input`
   padding: 0 12px;
   font-size: 16px;
   transition: 0.3s;
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   &:hover,
   &:focus {
     border: 1px solid var(--text-main);
@@ -170,7 +173,8 @@ export const ButtonSubmit = styled.button`
   margin-bottom: 20px;
   background-color: var(--accent);
   font-size: 18px;
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   transition: 0.3s;
   &:hover,
   &:focus {
@@ -213,6 +217,7 @@ export const GoogleLogin = styled.button`
   }
   &:hover,
   &:focus {
-    background-color: var(--hover-grey);
+    background-color: ${(prop) =>
+      prop.themeType ? "var(--hover-grey)" : "var(--bg-grey)"};
   }
 `;

@@ -37,7 +37,8 @@ export const MoviesNavigationButtonActive = styled.button`
   padding: 6px;
   min-width: 26px;
   background-color: var(--accent);
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   border-radius: 4px;
   display: flex;
   justify-content: center;

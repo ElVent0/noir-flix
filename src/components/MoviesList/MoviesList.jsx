@@ -17,7 +17,8 @@ import poster from "../../media/poster.jpg";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ThemeContext } from "../App";
 
 const MoviesList = ({
   moviesList,
@@ -31,6 +32,7 @@ const MoviesList = ({
   page,
 }) => {
   const [finalList, setFinalList] = useState([]);
+  const themeType = useContext(ThemeContext);
 
   const genreIds = (item) => {
     if (page === "research") {
@@ -190,7 +192,10 @@ const MoviesList = ({
             <MoviesBody>{item.overview}</MoviesBody>
             <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
             {page === "library" && (
-              <MoreCheck forLater={finalList[index].for_later}>
+              <MoreCheck
+                forLater={finalList[index].for_later}
+                themeType={themeType}
+              >
                 <MdMoreTime />
               </MoreCheck>
             )}

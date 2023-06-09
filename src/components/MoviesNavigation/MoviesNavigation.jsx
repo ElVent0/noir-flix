@@ -9,9 +9,14 @@ import {
 import { useSearchParams } from "react-router-dom";
 import { ImArrowLeft2 } from "react-icons/im";
 import { ImArrowRight2 } from "react-icons/im";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 
 const MoviesNavigation = ({ totalPages }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const themeType = useContext(ThemeContext);
+
   const currentPage =
     searchParams.get("page") !== null ? Number(searchParams.get("page")) : 1;
 
@@ -57,7 +62,7 @@ const MoviesNavigation = ({ totalPages }) => {
                 </MoviesNavigationButton>
               )}
               {currentPage === item && (
-                <MoviesNavigationButtonActive>
+                <MoviesNavigationButtonActive themeType={themeType}>
                   {item}
                 </MoviesNavigationButtonActive>
               )}

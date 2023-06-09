@@ -3,8 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./SharedLayout/SharedLayout.jsx";
 import Research from "../pages/Research/Research";
 import Library from "../pages/Library/Library";
-import { useState } from "react";
+import { useState, useEffect, createContext } from "react";
 import { createGlobalStyle } from "styled-components";
+
+export const ThemeContext = createContext();
 
 const App = () => {
   const [themeType, setThemeType] = useState(true);
@@ -63,50 +65,54 @@ const App = () => {
       --text-main-transparent: #DADDE1;
   }`;
 
-  //     --pure-white: #fff;
-  //     --bg-grey: #f4f7f9;
-  //     --hover-grey: #efefef;
-  //     --element-grey: #DADDE1;
-  //     --nav-black: #242424;
-  //     --nav-black-transparent: #24242490;
-  //     --text-main: #606770;
-  //     --text-main-transparent: #60677099;
+  useEffect(() => {
+    if (localStorage.getItem("noirflixCurrentTheme")) {
+      try {
+        const item = localStorage.getItem("noirflixCurrentTheme");
+        setThemeType(JSON.parse(item));
+      } catch (e) {
+        console.error("Error getting item from localStorage:", e);
+      }
+    }
+  }, []);
 
   let GlobalStyle = themeType ? LightTheme : DarkTheme;
 
   const themeToggle = () => {
     setThemeType((prev) => !prev);
+    try {
+      localStorage.setItem("noirflixCurrentTheme", JSON.stringify(!themeType));
+    } catch (e) {
+      console.error("Error setting item in localStorage:", e);
+    }
   };
 
   return (
-    <AppStyled>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <SharedLayout themeToggle={themeToggle} themeType={themeType} />
-          }
-        >
-          <Route
-            index
-            element={
-              <Research
-                onAddToRecentMovies={onAddToRecentMovies}
-                recentList={recentList}
-                setRecentList={setRecentList}
-              />
-            }
-          />
-          <Route
-            path="/library"
-            element={<Library onAddToRecentMovies={onAddToRecentMovies} />}
-          />
-          {/* <Route path="/сollection" element={<Collection />} /> */}
-        </Route>
-      </Routes>
+    <ThemeContext.Provider value={themeType}>
+      <AppStyled>
+        <Routes>
+          <Route path="/" element={<SharedLayout themeToggle={themeToggle} />}>
+            <Route
+              index
+              element={
+                <Research
+                  onAddToRecentMovies={onAddToRecentMovies}
+                  recentList={recentList}
+                  setRecentList={setRecentList}
+                />
+              }
+            />
+            <Route
+              path="/library"
+              element={<Library onAddToRecentMovies={onAddToRecentMovies} />}
+            />
+            {/* <Route path="/сollection" element={<Collection />} /> */}
+          </Route>
+        </Routes>
 
-      <GlobalStyle />
-    </AppStyled>
+        <GlobalStyle />
+      </AppStyled>
+    </ThemeContext.Provider>
   );
 };
 

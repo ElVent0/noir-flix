@@ -91,6 +91,8 @@ export const ButtonSort = styled.button`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   &:hover,
   &:focus {
     background-color: var(--hover-grey);
@@ -142,10 +144,12 @@ export const SearchInput = styled.input`
   height: 100%;
   border: none;
   outline: none;
-  color: var(---text-main);
+  background-color: var(--pure-white);
+  color: var(--text-main);
   font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "14px")};
   &::placeholder {
     font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "14px")};
+    color: var(--text-main);
   }
   &:focus {
     outline: none;

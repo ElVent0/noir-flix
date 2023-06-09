@@ -24,6 +24,8 @@ import { RiCloseLine } from "react-icons/ri";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 
 const ResearchFilters = ({
   setInputSort,
@@ -40,6 +42,8 @@ const ResearchFilters = ({
   const [onFocus, setOnFocus] = useState(false);
   const [, setSearchParams] = useSearchParams();
 
+  const themeType = useContext(ThemeContext);
+
   const onSort = (item) => {
     setInputSort(item);
     setIsOpenSort((prev) => !prev);
@@ -47,13 +51,13 @@ const ResearchFilters = ({
     setSearchParams({ sort: item });
   };
 
-  const onSortInLibrary = (item) => {
-    setInputSort(item);
-    setIsOpenSort((prev) => !prev);
-  };
+  // const onSortInLibrary = (item) => {
+  //   setInputSort(item);
+  //   setIsOpenSort((prev) => !prev);
+  // };
 
   const sortItems = ["Popularity", "Vote", "Title", "New", "Future"];
-  const sortItemsInLibrary = ["Favorite", "New"];
+  // const sortItemsInLibrary = ["Favorite", "New"];
 
   const onFocusInput = () => {
     setOnFocus((prev) => !prev);
@@ -92,7 +96,7 @@ const ResearchFilters = ({
                     .filter((item) => item !== inputSort)
                     .map((item) => (
                       <ItemSort key={item} onClick={() => onSort(item)}>
-                        <ButtonSort>{item}</ButtonSort>
+                        <ButtonSort themeType={themeType}>{item}</ButtonSort>
                       </ItemSort>
                     ))
                   // : sortItemsInLibrary
@@ -147,6 +151,7 @@ const ResearchFilters = ({
             onBlur={onFocusInput}
             focusEvent={onFocus}
             autocomplete="off"
+            themeType={themeType}
           ></SearchInput>
           {onFocus && (
             <CloseSerachButton>

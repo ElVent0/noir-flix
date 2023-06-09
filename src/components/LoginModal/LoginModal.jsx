@@ -22,6 +22,8 @@ import { RiEyeFill } from "react-icons/ri";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast, { Toaster } from "react-hot-toast";
 import path from "../../media/login-2.jpg";
+import { ThemeContext } from "../App";
+import { useContext } from "react";
 
 const ProfileModal = ({
   onCloseLoginModal,
@@ -38,6 +40,7 @@ const ProfileModal = ({
 
   const session = useSession();
   const supabase = useSupabaseClient();
+  const themeType = useContext(ThemeContext);
 
   const errorName = () =>
     toast.error("The name must consist of at least 3 characters", {
@@ -224,7 +227,7 @@ const ProfileModal = ({
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseLoginModal}>
-      <Modal>
+      <Modal themeType={themeType}>
         <ModalPoster path={path}></ModalPoster>
         <ModalContent>
           <CloseButton id="button-close" onClick={onCloseLoginModal}>
@@ -257,7 +260,9 @@ const ProfileModal = ({
                   {showPassword ? <RiEyeFill /> : <RiEyeCloseLine />}
                 </button>
               </PasswordContainer>
-              <ButtonSubmit type="submit">Login</ButtonSubmit>
+              <ButtonSubmit type="submit" themeType={themeType}>
+                Login
+              </ButtonSubmit>
               <RegisterButton onClick={() => onRegisterButton()}>
                 Register
               </RegisterButton>
@@ -298,7 +303,9 @@ const ProfileModal = ({
                   {showPassword ? <RiEyeFill /> : <RiEyeCloseLine />}
                 </button>
               </PasswordContainer>
-              <ButtonSubmit type="submit">Create</ButtonSubmit>
+              <ButtonSubmit type="submit" themeType={themeType}>
+                Create
+              </ButtonSubmit>
               <RegisterButton onClick={() => onRegisterButton()}>
                 Login
               </RegisterButton>

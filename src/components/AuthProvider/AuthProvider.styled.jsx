@@ -19,7 +19,8 @@ export const Login = styled.button`
   background-color: var(--accent);
   font-size: 18px;
   line-height: 20px;
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   height: 44px;
   width: 100px;
   justify-content: center;
@@ -30,6 +31,8 @@ export const Login = styled.button`
   margin-top: 20px;
   & > svg {
     font-size: 23px;
+    color: ${(prop) =>
+      prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
     margin-right: 6px;
   }
   &:hover,
@@ -41,5 +44,4 @@ export const Login = styled.button`
 export const Logintext = styled.p`
   font-size: 16px;
   line-height: 19px;
-  color: var(--pure-white);
 `;

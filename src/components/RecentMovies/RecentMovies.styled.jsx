@@ -18,7 +18,8 @@ export const RecentMoviesStyled = styled.div`
 `;
 
 export const RecentParagraph = styled.p`
-  color: var(--hover-grey);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   font-size: 18px;
   margin-bottom: 12px;
 `;
@@ -58,7 +59,8 @@ export const MoviesHeaderContent = styled.div`
 `;
 
 export const ReadMore = styled.button`
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   background-color: var(--accent);
   transition: 0.3s;
   padding: 6px 13px;
@@ -68,7 +70,8 @@ export const ReadMore = styled.button`
   &:hover,
   &:focus {
     background-color: var(--accent-hover);
-    color: var(--hover-grey);
+    color: ${(prop) =>
+      prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   }
 `;
 
@@ -183,11 +186,11 @@ export const RecentNothingButton = styled.button`
   height: 30px;
   border-radius: 10px;
   background-color: var(--accent);
-  color: var(--pure-white);
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   transition: 0.3s;
   &:hover,
   &:focus {
     background-color: var(--accent-hover);
-    color: var(--hover-grey);
   }
 `;
