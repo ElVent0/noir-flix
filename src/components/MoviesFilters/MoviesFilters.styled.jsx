@@ -91,8 +91,8 @@ export const ButtonSort = styled.button`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: ${(prop) =>
-    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
+  color: var(--text-main);
+  transition: 0.3s;
   &:hover,
   &:focus {
     background-color: var(--hover-grey);

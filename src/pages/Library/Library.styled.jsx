@@ -48,6 +48,7 @@ export const NavigationLink = styled(NavLink)`
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+  transition: 0.3s;
   &:first-child {
     margin-right: 4px;
   }
