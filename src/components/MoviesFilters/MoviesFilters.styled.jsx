@@ -244,8 +244,8 @@ export const MoreCheckButton = styled.button`
   font-size: 18px;
   transition: 0.3s;
   border-radius: 6px;
-  background-color: ${({ forLater }) =>
-    forLater === true ? "var(--accent)" : "var(--bg-grey)"};
+  background: ${({ forLater }) =>
+    forLater === true ? "var(--more-check)" : "var(--bg-grey)"};
   color: ${({ forLater }) =>
     forLater === true ? "var(--pure-white)" : "var(--text-main)"};
 `;

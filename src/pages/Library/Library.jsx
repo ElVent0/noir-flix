@@ -29,7 +29,7 @@ const Library = ({ onAddToRecentMovies }) => {
   const session = useSession();
   const supabase = useSupabaseClient();
 
-  const themeType = useContext(ThemeContext);
+  const themetype = useContext(ThemeContext);
 
   const getMoviesFromLibarary = async (id) => {
     const { data } = await supabase.from("library").select("*");
@@ -141,6 +141,10 @@ const Library = ({ onAddToRecentMovies }) => {
     setStars(0);
   };
 
+  console.log(themetype);
+
+  const themeBackground = themetype ? "var(--pure-white)" : "var(--text-main)";
+
   return (
     <>
       <AuthProvider>
@@ -175,7 +179,7 @@ const Library = ({ onAddToRecentMovies }) => {
             ) : (
               <NothingBlock>
                 <img
-                  src={themeType ? nothing : nothingLight}
+                  src={themetype ? nothing : nothingLight}
                   width="160"
                   alt="Nothing illustration"
                 />
@@ -183,7 +187,7 @@ const Library = ({ onAddToRecentMovies }) => {
                   There are no entries in your library yet. <br />
                   Add your first movie
                 </p>
-                <NavigationLink to="/" themeType={themeType}>
+                <NavigationLink to="/" themebackground={themeBackground}>
                   Research
                 </NavigationLink>
               </NothingBlock>

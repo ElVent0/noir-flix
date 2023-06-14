@@ -16,8 +16,11 @@ import {
   ModalParagraph,
   AddButton,
   StarsList,
+  StarsListBottom,
   StarItem,
+  StarItemBottom,
   StarButton,
+  StarButtonBottom,
   ConfirmButton,
   MoreCheck,
   MoreCheckButton,
@@ -30,6 +33,7 @@ import {
   CornerElementBottom,
   DeleteFromLibraryButton,
   InLibraryBlock,
+  EditButton,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
@@ -37,6 +41,7 @@ import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
 import { MdOutlineDone } from "react-icons/md";
+import { BiEditAlt } from "react-icons/bi";
 import youtubeLogo from "../../media/youtube-logo.png";
 import { Toaster } from "react-hot-toast";
 import {
@@ -57,6 +62,7 @@ const MovieModal = ({
   moviesListIds,
   onclose,
 }) => {
+  const [editStarsMode, setEditStarsMode] = useState(false);
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
   const [isConfirmForm, setIsConfirmForm] = useState(false);
@@ -147,6 +153,29 @@ const MovieModal = ({
     }
   };
 
+  const onClickForLater = () => {
+    setForLater((prev) => !prev);
+    try {
+      if (page === "library") {
+        supabase
+          .from("library")
+          .update({ movie_for_future: !forLater })
+          .match({
+            user_id: session.user.id,
+            movie_id: movieData.id,
+          })
+          .then(() => {
+            successEditToast();
+          })
+          .catch((error) => {
+            console.error("Помилка оновлення рядка:", error);
+          });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const onDeleteMovie = () => {
     try {
       supabase
@@ -167,26 +196,6 @@ const MovieModal = ({
       console.log("delete error", e);
     }
   };
-
-  useEffect(() => {
-    if (page === "library") {
-      try {
-        supabase
-          .from("library")
-          .update({ movie_for_future: forLater })
-          .match({
-            user_id: session.user.id,
-            movie_id: movieData.id,
-          })
-          .catch((error) => {
-            console.error("Помилка оновлення рядка:", error);
-          });
-      } catch (e) {
-        console.log("update error", e);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forLater]);
 
   useEffect(() => {
     const getTrailer = async () => {
@@ -220,6 +229,22 @@ const MovieModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const starsColor = () => {
+    if (stars === 1) {
+      return "#c2c2c2";
+    } else if (stars === 2) {
+      return "#85c7e6";
+    } else if (stars === 3) {
+      return "#6492ff";
+    } else if (stars === 4) {
+      return "#af4dff";
+    } else if (stars === 5) {
+      return "#e32fff";
+    } else if (stars === 0) {
+      return "--accent";
+    }
+  };
+
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
       <Modal>
@@ -237,7 +262,7 @@ const MovieModal = ({
               <MoreCheckPoster page={page}>
                 <MoreCheckButtonPoster
                   forLater={forLater}
-                  onClick={() => setForLater((prev) => !prev)}
+                  onClick={() => onClickForLater()}
                   themeType={themeType}
                 >
                   <MdMoreTime />
@@ -260,21 +285,37 @@ const MovieModal = ({
           <ModalContentBody>
             {page === "library" && (
               <Rating>
-                <StarsList>
+                <StarsList editStarsMode={editStarsMode}>
                   {getRatingList().map((item, index) => (
-                    <StarItem key={index}>
+                    <StarItem key={index} editStarsMode={editStarsMode}>
                       <StarButton
                         item={item}
-                        onClick={() => onStars(index + 1)}
+                        editStarsMode={editStarsMode}
+                        starsColor={starsColor()}
+                        onClick={() => {
+                          if (editStarsMode) {
+                            onStars(index + 1);
+                          }
+                        }}
                       >
                         {item ? <TbStarFilled /> : <TbStar />}
                       </StarButton>
                     </StarItem>
                   ))}
                 </StarsList>
-                <ConfirmButton onClick={onConfirmForm} themeType={themeType}>
-                  Confirm
-                </ConfirmButton>
+                {!editStarsMode ? (
+                  <EditButton
+                    onClick={() => {
+                      setEditStarsMode((prev) => !prev);
+                    }}
+                  >
+                    <BiEditAlt />
+                  </EditButton>
+                ) : (
+                  <ConfirmButton onClick={onConfirmForm} themeType={themeType}>
+                    Confirm
+                  </ConfirmButton>
+                )}
               </Rating>
             )}
             <ModalParagraph>
@@ -319,6 +360,7 @@ const MovieModal = ({
                     <AddButton
                       onClick={() => {
                         setIsConfirmForm((prev) => !prev);
+                        setEditStarsMode((prev) => !prev);
                       }}
                     >
                       Add to library
@@ -326,18 +368,19 @@ const MovieModal = ({
                   )}
                   {isConfirmForm && (
                     <>
-                      <StarsList>
+                      <StarsListBottom>
                         {getRatingList().map((item, index) => (
-                          <StarItem key={index}>
-                            <StarButton
+                          <StarItemBottom key={index}>
+                            <StarButtonBottom
                               item={item}
+                              starsColor={starsColor()}
                               onClick={() => onStars(index + 1)}
                             >
                               {item ? <TbStarFilled /> : <TbStar />}
-                            </StarButton>
-                          </StarItem>
+                            </StarButtonBottom>
+                          </StarItemBottom>
                         ))}
-                      </StarsList>
+                      </StarsListBottom>
                       <MoreCheck>
                         <MoreCheckButton
                           forLater={forLater}

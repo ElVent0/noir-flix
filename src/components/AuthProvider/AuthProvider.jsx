@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
 
-  const themeType = useContext(ThemeContext);
+  const themetype = useContext(ThemeContext);
 
   const session = useSession();
 
@@ -40,16 +40,16 @@ const AuthProvider = ({ children }) => {
     <>
       <AuthContainer>
         <img
-          src={themeType ? fingerprint : fingerprintLight}
+          src={themetype ? fingerprint : fingerprintLight}
           width="120"
           alt="fingerpring"
         />
         <AuthParagraph>
           The library is available only to <span>authorized</span> users
         </AuthParagraph>
-        <Login onClick={onOpenLoginModal} themeType={themeType}>
+        <Login onClick={onOpenLoginModal} themetype={themetype}>
           <TbLogin />
-          <Logintext themeType={themeType}>Login</Logintext>
+          <Logintext themetype={themetype}>Login</Logintext>
         </Login>
       </AuthContainer>
 

@@ -200,6 +200,20 @@ export const AddButton = styled.button`
 export const StarsList = styled.ul`
   display: flex;
   gap: 4px;
+  /* background-color: var(--pure-white); */
+  background-color: ${(prop) =>
+    prop.editStarsMode ? "var(--pure-white)" : "transparent"};
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 0px 10px;
+`;
+
+export const StarsListBottom = styled.ul`
+  display: flex;
+  gap: 4px;
   background-color: var(--pure-white);
   height: 36px;
   display: flex;
@@ -213,6 +227,15 @@ export const StarItem = styled.li`
   transition: 0.3s;
   &:hover,
   &:focus {
+    /* transform: scale(1.1); */
+    transform: ${(prop) => (prop.editStarsMode ? "scale(1.1)" : "none")};
+  }
+`;
+
+export const StarItemBottom = styled.li`
+  transition: 0.3s;
+  &:hover,
+  &:focus {
     transform: scale(1.1);
   }
 `;
@@ -223,7 +246,38 @@ export const StarButton = styled.button`
   align-items: center;
   background-color: transparent;
   font-size: 22px;
+  color: ${({ starsColor }) => starsColor};
+  cursor: ${(prop) => (prop.editStarsMode ? "pointer" : "auto")};
+`;
+
+export const StarButtonBottom = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-size: 22px;
   color: var(--accent);
+`;
+
+export const EditButton = styled.button`
+  background-color: transparent;
+  color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  transition: 0.3s;
+  margin-left: -10px;
+  & > svg {
+    font-size: 22px;
+  }
+  &:hover,
+  &:active {
+    background-color: var(--pure-white);
+  }
 `;
 
 export const ConfirmButton = styled.button`
@@ -267,15 +321,16 @@ export const MoreCheckButton = styled.button`
   height: 100%;
   font-size: 18px;
   border-radius: 10px;
-  background-color: var(--pure-white);
   transition: 0.3s;
   & > svg {
     font-size: 22px;
   }
   color: ${({ forLater }) =>
-    forLater === true ? "var(--accent)" : "var(--text-main)"};
+    forLater === true ? "var(--pure-white)" : "var(--text-main)"};
+  background: ${({ forLater }) =>
+    forLater === true ? "var(--more-check)" : "var(--pure-white)"};
   border: ${({ forLater }) =>
-    forLater === true ? "1px solid var(--accent)" : "transparent"};
+    forLater === true ? "1px solid var(--more-check)" : "transparent"};
 `;
 
 export const MoreCheckPoster = styled.div`
@@ -309,10 +364,10 @@ export const MoreCheckButtonPoster = styled.button`
   }
   color: ${({ forLater }) =>
     forLater === true ? "var(--pure-white)" : "var(--text-main)"};
-  background-color: ${({ forLater }) =>
-    forLater === true ? "var(--accent)" : "var(--bg-grey)"};
+  background: ${({ forLater }) =>
+    forLater === true ? "var(--more-check)" : "var(--bg-grey)"};
   border: ${({ forLater }) =>
-    forLater === true ? "1px solid var(--accent)" : "transparent"};
+    forLater === true ? "1px solid var(--more-check)" : "transparent"};
   &:hover,
   &:focus {
     & > svg {

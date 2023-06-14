@@ -11,6 +11,7 @@ import {
   MoviesParagraph,
   StarsList,
   StarItem,
+  MoreCheckContainer,
   MoreCheck,
 } from "./MoviesList.styled";
 import poster from "../../media/poster.jpg";
@@ -103,12 +104,15 @@ const MoviesList = ({
           onAddToRecentMovies(id);
         };
 
+        let starsFinal = 0;
+
         const getRatingList = () => {
           const stars = finalList[index].stars;
 
           const ratingList = [];
           for (let i = 1; i <= stars; i += 1) {
             ratingList.push(true);
+            starsFinal += 1;
           }
           for (let i = 1; i <= 5 - stars; i += 1) {
             ratingList.push(false);
@@ -116,6 +120,21 @@ const MoviesList = ({
           return ratingList;
         };
 
+        const starsColor = () => {
+          if (starsFinal === 1) {
+            return "#c2c2c2";
+          } else if (starsFinal === 2) {
+            return "#85c7e6";
+          } else if (starsFinal === 3) {
+            return "#6492ff";
+          } else if (starsFinal === 4) {
+            return "#af4dff";
+          } else if (starsFinal === 5) {
+            return "#e32fff";
+          } else if (starsFinal === 0) {
+            return "--accent";
+          }
+        };
         return (
           <MoviesItem key={item.id}>
             <MoviesHeader>
@@ -128,7 +147,7 @@ const MoviesList = ({
                 {page === "library" && (
                   <StarsList>
                     {getRatingList().map((item, index) => (
-                      <StarItem key={index}>
+                      <StarItem key={index} starsColor={starsColor}>
                         {item ? <TbStarFilled /> : <TbStar />}
                       </StarItem>
                     ))}
@@ -140,12 +159,11 @@ const MoviesList = ({
             <MoviesBody>{item.overview}</MoviesBody>
             <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
             {page === "library" && (
-              <MoreCheck
-                forLater={finalList[index].for_later}
-                themeType={themeType}
-              >
-                <MdMoreTime />
-              </MoreCheck>
+              <MoreCheckContainer forLater={finalList[index].for_later}>
+                <MoreCheck>
+                  <MdMoreTime />
+                </MoreCheck>
+              </MoreCheckContainer>
             )}
           </MoviesItem>
         );

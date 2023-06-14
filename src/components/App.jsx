@@ -48,6 +48,7 @@ const App = () => {
       --nav-black: #242424;
       --nav-black-transparent: #24242490;
       --pure-white: #fff;
+      --more-check: linear-gradient(164deg, rgba(255,150,51,1) 0%, rgba(255,197,51,1) 100%);
   }`;
 
   const DarkTheme = createGlobalStyle`
@@ -63,6 +64,7 @@ const App = () => {
       --nav-black-transparent: #f4f7f9;
       --text-main: #efefef;
       --text-main-transparent: #DADDE1;
+      --more-check: linear-gradient(164deg, rgba(255,150,51,1) 0%, rgba(255,197,51,1) 100%);
   }`;
 
   useEffect(() => {

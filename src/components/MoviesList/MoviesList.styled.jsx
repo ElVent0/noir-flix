@@ -137,26 +137,34 @@ export const StarItem = styled.li`
   align-items: center;
   background-color: transparent;
   font-size: 18px;
-  color: var(--accent);
+  color: ${({ starsColor }) => starsColor};
+`;
+
+export const MoreCheckContainer = styled.div`
+  width: 30px;
+  height: 30px;
+  padding-right: 6px;
+  padding-bottom: 6px;
+  display: ${({ forLater }) => (forLater === true ? "block" : "none")};
+  background-color: var(--bg-grey);
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  border-radius: 0 0 10px 0;
 `;
 
 export const MoreCheck = styled.div`
   width: 24px;
   height: 24px;
-  display: ${({ forLater }) => (forLater === true ? "flex" : "none")};
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
   border-radius: 8px;
   color: var(--pure-white);
-  background-color: ${(prop) =>
-    prop.themeType ? "var(--accent)" : "var(--text-main)"};
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  background: var(--more-check);
   & > svg {
     position: relative;
-    top: -1px;
     left: 1px;
   }
 `;
