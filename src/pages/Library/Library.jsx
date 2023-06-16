@@ -15,6 +15,7 @@ import { useEffect, useState, useContext } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ThemeContext } from "../../components/App";
+import { getUserMovies } from "../../api/database";
 
 const Library = ({ onAddToRecentMovies }) => {
   const [moviesList, setMoviesList] = useState(null);
@@ -30,41 +31,22 @@ const Library = ({ onAddToRecentMovies }) => {
   const supabase = useSupabaseClient();
   const themetype = useContext(ThemeContext);
 
-  const getMoviesFromLibarary = async () => {
-    const { data } = await supabase
-      .from("library")
-      .select("*")
-      .eq("user_id", session.user.id);
-
-    // Сортування за датою
-    let result = data.sort(
-      (a, b) =>
-        new Date(b.creation_date).getTime() -
-        new Date(a.creation_date).getTime()
-    );
-
-    // Виявлення дублікатів
-    result = result.filter((obj, index, self) => {
-      return index === self.findIndex((o) => o.movie_id === obj.movie_id);
-    });
-
-    setMoviesListIds(result);
-
-    setMoviesList([]);
-
-    for (let item of result) {
-      const getDataForSingleMovie = async () => {
-        const newData = await getMovieById(item.movie_id);
-        setMoviesList((prev) => [...prev, newData]);
-      };
-
-      getDataForSingleMovie();
-    }
-  };
-
-  // -----------------------------------------------------------------------------------------
-
   useEffect(() => {
+    const getMoviesFromLibarary = async () => {
+      const result = await getUserMovies(supabase, session, setMoviesListIds);
+
+      if (result) {
+        const finalList = [];
+
+        for (let item of result) {
+          const newData = await getMovieById(item.movie_id);
+          finalList.push(newData);
+        }
+
+        setMoviesList(finalList);
+      }
+    };
+
     if (session) {
       getMoviesFromLibarary();
     }

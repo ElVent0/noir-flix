@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import poster from "../../media/poster.jpg";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { getUserMovies } from "../../api/database";
 
 const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [moviesList, setMoviesList] = useState(null);
@@ -51,11 +52,32 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   // -----------------------------------------------------------------------------------------
 
   useEffect(() => {
+    if (searchInput !== "") {
+      getDataByTitle();
+    } else if (searchInput === "") {
+      getData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput, location]);
+
+  // -----------------------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (session) {
+      getUserMovies(supabase, session, setMoviesListIds);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
+  // -----------------------------------------------------------------------------------------
+
+  useEffect(() => {
     if (searchParams.get("id") !== null) {
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
         setMovieData(data);
       };
+
       getDataForMovie();
     } else if (searchParams.get("page") !== null) {
       window.scrollTo({
@@ -68,44 +90,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
-
-  // -----------------------------------------------------------------------------------------
-
-  useEffect(() => {
-    if (searchInput !== "") {
-      getDataByTitle();
-    } else if (searchInput === "") {
-      getData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput, location]);
-
-  // -----------------------------------------------------------------------------------------
-
-  useEffect(() => {
-    const getMoviesFromLibarary = async (id) => {
-      const { data } = await supabase.from("library").select("*");
-
-      if (session) {
-        let result = data
-          .filter((item) => item.user_id === session.user.id)
-          .sort(
-            (a, b) =>
-              new Date(b.creation_date).getTime() -
-              new Date(a.creation_date).getTime()
-          );
-
-        result = result.filter((obj, index, self) => {
-          return index === self.findIndex((o) => o.movie_id === obj.movie_id);
-        });
-
-        setMoviesListIds(result);
-      }
-    };
-
-    getMoviesFromLibarary();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
 
   // -----------------------------------------------------------------------------------------
 
