@@ -71,7 +71,7 @@ const ProfileModal = ({
         errorToast();
       }
     } catch (e) {
-      console.log("signInWithOAuth error", e);
+      console.error("signInWithOAuth error", e);
     }
   };
 
@@ -101,7 +101,7 @@ const ProfileModal = ({
         errorToast();
       }
     } catch (e) {
-      console.log("signInWithPassword error", e);
+      console.error("signInWithPassword error", e);
     }
   };
 
@@ -131,7 +131,7 @@ const ProfileModal = ({
         errorToastCreation();
       }
     } catch (e) {
-      console.log("signUp error", e);
+      console.error("signUp error", e);
     }
 
     setIsLoginModal(false);

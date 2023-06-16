@@ -18,9 +18,9 @@ import {
 } from "./RecentMovies.styled";
 import { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../App";
+import genres from "../../utils/genres.json";
 
 const RecentMovies = ({
-  genres,
   poster,
   recentList,
   setRecentList,

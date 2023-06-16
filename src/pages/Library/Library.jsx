@@ -28,20 +28,22 @@ const Library = ({ onAddToRecentMovies }) => {
   const location = useLocation();
   const session = useSession();
   const supabase = useSupabaseClient();
-
   const themetype = useContext(ThemeContext);
 
-  const getMoviesFromLibarary = async (id) => {
-    const { data } = await supabase.from("library").select("*");
+  const getMoviesFromLibarary = async () => {
+    const { data } = await supabase
+      .from("library")
+      .select("*")
+      .eq("user_id", session.user.id);
 
-    let result = data
-      .filter((item) => item.user_id === session.user.id)
-      .sort(
-        (a, b) =>
-          new Date(b.creation_date).getTime() -
-          new Date(a.creation_date).getTime()
-      );
+    // Сортування за датою
+    let result = data.sort(
+      (a, b) =>
+        new Date(b.creation_date).getTime() -
+        new Date(a.creation_date).getTime()
+    );
 
+    // Виявлення дублікатів
     result = result.filter((obj, index, self) => {
       return index === self.findIndex((o) => o.movie_id === obj.movie_id);
     });
@@ -90,28 +92,6 @@ const Library = ({ onAddToRecentMovies }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  const genres = {
-    28: "Action",
-    12: "Adventure",
-    16: "Animation",
-    35: "Comedy",
-    80: "Crime",
-    99: "Documentary",
-    18: "Drama",
-    10751: "Family",
-    14: "Fantasy",
-    36: "History",
-    27: "Horror",
-    10402: "Music",
-    9648: "Mystery",
-    10749: "Romance",
-    878: "Science Fiction",
-    10770: "TV Movie",
-    53: "Thriller",
-    10752: "War",
-    37: "Western",
-  };
-
   const onclose = () => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("id");
@@ -141,8 +121,6 @@ const Library = ({ onAddToRecentMovies }) => {
     setStars(0);
   };
 
-  console.log(themetype);
-
   const themeBackground = themetype ? "var(--pure-white)" : "var(--text-main)";
 
   return (
@@ -165,7 +143,6 @@ const Library = ({ onAddToRecentMovies }) => {
                 <MoviesList
                   moviesList={moviesList}
                   moviesListIds={moviesListIds}
-                  genres={genres}
                   searchParams={searchParams}
                   setSearchParams={setSearchParams}
                   stars={stars}
@@ -201,7 +178,6 @@ const Library = ({ onAddToRecentMovies }) => {
         <MovieModal
           movieData={movieData}
           onCloseReadMore={onCloseReadMore}
-          genresInEnglish={genres}
           page="library"
           moviesListIds={moviesListIds}
           onclose={onclose}

@@ -76,28 +76,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput, location]);
 
-  const genres = {
-    28: "Action",
-    12: "Adventure",
-    16: "Animation",
-    35: "Comedy",
-    80: "Crime",
-    99: "Documentary",
-    18: "Drama",
-    10751: "Family",
-    14: "Fantasy",
-    36: "History",
-    27: "Horror",
-    10402: "Music",
-    9648: "Mystery",
-    10749: "Romance",
-    878: "Science Fiction",
-    10770: "TV Movie",
-    53: "Thriller",
-    10752: "War",
-    37: "Western",
-  };
-
   const changeSearchInput = (e) => {
     setSearchInput(e.currentTarget.value);
     setSearchParams({ page: 1 });
@@ -163,7 +141,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
             />
             <MoviesList
               moviesList={moviesList}
-              genres={genres}
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               onAddToRecentMovies={onAddToRecentMovies}
@@ -172,7 +149,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
             <MoviesNavigation totalPages={totalPages} />
           </ResearchStyled>
           <RecentMovies
-            genres={genres}
             poster={poster}
             recentList={recentList}
             setRecentList={setRecentList}
@@ -185,7 +161,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
             <MovieModal
               movieData={movieData}
               onCloseReadMore={onCloseReadMore}
-              genresInEnglish={genres}
               page="research"
               moviesListIds={moviesListIds}
             />

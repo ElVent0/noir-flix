@@ -18,13 +18,12 @@ import poster from "../../media/poster.jpg";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
-import { useEffect, useState, useContext } from "react";
-import { ThemeContext } from "../App";
+import { useEffect, useState } from "react";
+import genresNames from "../../utils/genres.json";
 
 const MoviesList = ({
   moviesList,
   moviesListIds,
-  genres: genresNames,
   searchParams,
   setSearchParams,
   stars,
@@ -33,7 +32,6 @@ const MoviesList = ({
   page,
 }) => {
   const [finalList, setFinalList] = useState([]);
-  const themeType = useContext(ThemeContext);
 
   const genreIds = (item) => {
     if (page === "research") {

@@ -148,7 +148,7 @@ const MovieModal = ({
             console.error("Помилка оновлення рядка:", error);
           });
       } catch (e) {
-        console.log("update error", e);
+        console.error("update error", e);
       }
     }
   };
@@ -193,7 +193,7 @@ const MovieModal = ({
           console.error("Помилка видалення рядка:", error);
         });
     } catch (e) {
-      console.log("delete error", e);
+      console.error("delete error", e);
     }
   };
 
