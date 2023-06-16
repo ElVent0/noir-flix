@@ -12,15 +12,17 @@ import {
 } from "./ProfileModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
-import { useSession } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import path from "../../media/profile.jpg";
 import logo from "../../media/noirflix-3-3.png";
 import logoLight from "../../media/noirflix-3-4.png";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
+import { logout } from "../../api/auth.jsx";
 
-const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
+const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
   const session = useSession();
+  const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
 
   const userData = session.user.identities[0].identity_data;
@@ -31,6 +33,11 @@ const ProfileModal = ({ onCloseProfileModal, onLogout, avatar }) => {
     } else if (session.user.app_metadata.provider === "email") {
       return session.user.user_metadata.name;
     }
+  };
+
+  const onLogout = () => {
+    logout(supabase);
+    setIsProfileModal(false);
   };
 
   return ReactDOM.createPortal(

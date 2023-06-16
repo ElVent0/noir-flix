@@ -22,7 +22,7 @@ import { BsFillMoonStarsFill } from "react-icons/bs";
 import { useState, useEffect, useContext } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSession } from "@supabase/auth-helpers-react";
 import { createAvatar } from "@dicebear/core";
 import { funEmoji } from "@dicebear/collection";
 import { Toaster } from "react-hot-toast";
@@ -36,9 +36,7 @@ const Header = ({ themeToggle }) => {
   const [isFixed, setIsFixed] = useState(false);
 
   const themeType = useContext(ThemeContext);
-
   const session = useSession();
-  const supabase = useSupabaseClient();
 
   useEffect(() => {
     if (session) {
@@ -49,10 +47,6 @@ const Header = ({ themeToggle }) => {
       );
     }
   }, [session]);
-
-  const logout = async () => {
-    await supabase.auth.signOut();
-  };
 
   const onOpenProfileModal = () => {
     setIsProfileModal(true);
@@ -81,11 +75,6 @@ const Header = ({ themeToggle }) => {
     }
   };
 
-  const onLogout = () => {
-    logout();
-    setIsProfileModal(false);
-  };
-
   window.onscroll = function () {
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
@@ -106,9 +95,6 @@ const Header = ({ themeToggle }) => {
           <NavigationItem>
             <NavigationLink to="library">Library</NavigationLink>
           </NavigationItem>
-          {/* <NavigationItem>
-            <NavigationLink to="сollection">Collection</NavigationLink>
-          </NavigationItem> */}
         </NavigationList>
       </Navigation>
       <Logo
@@ -149,7 +135,7 @@ const Header = ({ themeToggle }) => {
       {isProfileModal && (
         <ProfileModal
           onCloseProfileModal={onCloseProfileModal}
-          onLogout={onLogout}
+          setIsProfileModal={setIsProfileModal}
           avatar={avatar}
         />
       )}

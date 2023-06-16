@@ -32,6 +32,11 @@ import {
 import path from "../../media/login-2.jpg";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
+import {
+  loginWithGoogle,
+  loginWithMail,
+  createUserWithMail,
+} from "../../api/auth";
 
 const ProfileModal = ({
   onCloseLoginModal,
@@ -61,90 +66,32 @@ const ProfileModal = ({
     setUserPassword(e.target.value);
   };
 
-  const loginWithGoogle = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-      });
-
-      if (error) {
-        errorToast();
-      }
-    } catch (e) {
-      console.error("signInWithOAuth error", e);
-    }
-  };
-
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  const loginWithMail = async () => {
-    if (userMail.length === 0) {
-      errorMail();
-      return;
-    } else if (!emailRegex.test(userMail)) {
-      errorMail();
-      return;
-    } else if (userPassword.length < 6) {
-      errorPassword();
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: userMail,
-        password: userPassword,
-      });
-
-      setIsLoginModal(false);
-
-      if (error) {
-        errorToast();
-      }
-    } catch (e) {
-      console.error("signInWithPassword error", e);
-    }
-  };
-
-  const createUserWithMail = async () => {
-    if (userName.length < 3) {
-      errorName();
-      return;
-    } else if (userMail.length === 0) {
-      errorMail();
-      return;
-    } else if (!emailRegex.test(userMail)) {
-      errorMail();
-      return;
-    } else if (userPassword.length < 6) {
-      errorPassword();
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.signUp({
-        email: userMail,
-        password: userPassword,
-        options: { data: { name: userName } },
-      });
-
-      if (error) {
-        errorToastCreation();
-      }
-    } catch (e) {
-      console.error("signUp error", e);
-    }
-
-    setIsLoginModal(false);
-    notifyOnMailSignUp();
-  };
-
   const sendLoginForm = (e) => {
     e.preventDefault();
 
     if (isLoginTypeModal === true) {
-      loginWithMail();
+      loginWithMail(
+        userMail,
+        errorMail,
+        userPassword,
+        errorPassword,
+        supabase,
+        setIsLoginModal,
+        errorToast
+      );
     } else {
-      createUserWithMail();
+      createUserWithMail(
+        userName,
+        errorName,
+        errorMail,
+        userMail,
+        userPassword,
+        errorPassword,
+        supabase,
+        errorToastCreation,
+        setIsLoginModal,
+        notifyOnMailSignUp
+      );
     }
   };
 
@@ -155,10 +102,10 @@ const ProfileModal = ({
     setUserPassword("");
   };
 
-  function handleInvalid(event) {
+  const handleInvalid = (event) => {
     event.preventDefault();
     errorMail();
-  }
+  };
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseLoginModal}>
@@ -249,7 +196,7 @@ const ProfileModal = ({
             </LoginForm>
           )}
           <OrElement>or</OrElement>
-          <GoogleLogin onClick={() => loginWithGoogle()}>
+          <GoogleLogin onClick={() => loginWithGoogle(supabase, errorToast)}>
             <FcGoogle />
             <p>Continue with Google</p>
           </GoogleLogin>

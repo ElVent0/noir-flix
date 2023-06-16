@@ -20,6 +20,7 @@ import { TbStarFilled } from "react-icons/tb";
 import { MdMoreTime } from "react-icons/md";
 import { useEffect, useState } from "react";
 import genresNames from "../../utils/genres.json";
+import { starsColor } from "../../utils/colors";
 
 const MoviesList = ({
   moviesList,
@@ -118,21 +119,6 @@ const MoviesList = ({
           return ratingList;
         };
 
-        const starsColor = () => {
-          if (starsFinal === 1) {
-            return "#c2c2c2";
-          } else if (starsFinal === 2) {
-            return "#85c7e6";
-          } else if (starsFinal === 3) {
-            return "#6492ff";
-          } else if (starsFinal === 4) {
-            return "#af4dff";
-          } else if (starsFinal === 5) {
-            return "#e32fff";
-          } else if (starsFinal === 0) {
-            return "--accent";
-          }
-        };
         return (
           <MoviesItem key={item.id}>
             <MoviesHeader>
@@ -145,7 +131,7 @@ const MoviesList = ({
                 {page === "library" && (
                   <StarsList>
                     {getRatingList().map((item, index) => (
-                      <StarItem key={index} starsColor={starsColor}>
+                      <StarItem key={index} starsColor={starsColor(starsFinal)}>
                         {item ? <TbStarFilled /> : <TbStar />}
                       </StarItem>
                     ))}

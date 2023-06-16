@@ -54,6 +54,7 @@ import { getVideoByIds } from "../../api/movies.jsx";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
+import { starsColor } from "../../utils/colors";
 
 const MovieModal = ({
   movieData,
@@ -229,22 +230,6 @@ const MovieModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const starsColor = () => {
-    if (stars === 1) {
-      return "#c2c2c2";
-    } else if (stars === 2) {
-      return "#85c7e6";
-    } else if (stars === 3) {
-      return "#6492ff";
-    } else if (stars === 4) {
-      return "#af4dff";
-    } else if (stars === 5) {
-      return "#e32fff";
-    } else if (stars === 0) {
-      return "--accent";
-    }
-  };
-
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
       <Modal>
@@ -291,7 +276,7 @@ const MovieModal = ({
                       <StarButton
                         item={item}
                         editStarsMode={editStarsMode}
-                        starsColor={starsColor()}
+                        starsColor={starsColor(stars)}
                         onClick={() => {
                           if (editStarsMode) {
                             onStars(index + 1);
@@ -373,7 +358,7 @@ const MovieModal = ({
                           <StarItemBottom key={index}>
                             <StarButtonBottom
                               item={item}
-                              starsColor={starsColor()}
+                              starsColor={starsColor(stars)}
                               onClick={() => onStars(index + 1)}
                             >
                               {item ? <TbStarFilled /> : <TbStar />}
