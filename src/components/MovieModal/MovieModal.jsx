@@ -82,8 +82,6 @@ const MovieModal = ({
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
 
-  console.log(1, movieData, moviesListIds);
-
   useEffect(() => {
     const getTrailer = async () => {
       const data = await getVideoByIds(movieData.id);

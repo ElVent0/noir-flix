@@ -90,7 +90,7 @@ export const errorPassword = () =>
   });
 
 export const successToast = () =>
-  toast.success("The movie has been added to the library", {
+  toast.success("The movie has been added", {
     duration: 4000,
     style: {
       padding: "16px",
@@ -105,7 +105,7 @@ export const successToast = () =>
   });
 
 export const successEditToast = () =>
-  toast.success("The movie data have been changed in your library", {
+  toast.success("The movie data have been changed", {
     duration: 4000,
     style: {
       padding: "16px",
@@ -120,7 +120,7 @@ export const successEditToast = () =>
   });
 
 export const successDeleteToast = () =>
-  toast.success("The movie has been removed from your library", {
+  toast.success("The movie has been removed", {
     duration: 4000,
     style: {
       padding: "16px",
