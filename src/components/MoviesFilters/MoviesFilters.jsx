@@ -9,7 +9,7 @@ import {
   BodySort,
   ItemSort,
   ButtonSort,
-  CloseSerachButton,
+  CloseSearchButton,
   StarsList,
   StarItem,
   ButtonAll,
@@ -140,9 +140,9 @@ const ResearchFilters = ({
             themeType={themeType}
           ></SearchInput>
           {onFocus && (
-            <CloseSerachButton>
+            <CloseSearchButton>
               <RiCloseLine />
-            </CloseSerachButton>
+            </CloseSearchButton>
           )}
         </Search>
       )}

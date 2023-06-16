@@ -47,7 +47,6 @@ export const HeaderSort = styled.button`
   padding: 0 4px 0 12px;
   color: var(--text-main);
   background-color: transparent;
-
   & > svg {
     margin-left: auto;
     font-size: 14px;
@@ -156,7 +155,7 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const CloseSerachButton = styled.button`
+export const CloseSearchButton = styled.button`
   display: block;
   width: 20px;
   height: 20px;
