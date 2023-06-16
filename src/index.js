@@ -5,9 +5,9 @@ import { BrowserRouter } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import "./index.css";
+
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
-
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

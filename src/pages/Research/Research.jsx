@@ -20,11 +20,9 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [searchInput, setSearchInput] = useState("");
   const [inputSort, setInputSort] = useState("Popularity");
   const [movieData, setMovieData] = useState(null);
-
   const [trendingList, setTrendingList] = useState([]);
 
   const location = useLocation();
-
   const session = useSession();
   const supabase = useSupabaseClient();
 
@@ -40,6 +38,8 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     setTotalPages(data.total_pages);
   };
 
+  // -----------------------------------------------------------------------------------------
+
   useEffect(() => {
     const getData = async () => {
       const data = await getMovies(1, "New");
@@ -47,6 +47,8 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     };
     getData();
   }, []);
+
+  // -----------------------------------------------------------------------------------------
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
@@ -67,6 +69,8 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
+  // -----------------------------------------------------------------------------------------
+
   useEffect(() => {
     if (searchInput !== "") {
       getDataByTitle();
@@ -76,26 +80,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput, location]);
 
-  const changeSearchInput = (e) => {
-    setSearchInput(e.currentTarget.value);
-    setSearchParams({ page: 1 });
-  };
-
-  const onCloseReadMore = (e) => {
-    const onclose = () => {
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.delete("id");
-      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-      window.history.replaceState({}, "", newUrl);
-      setMovieData(null);
-    };
-    if (e.target === e.currentTarget) {
-      onclose();
-    }
-    if (e.currentTarget.id === "button-close") {
-      onclose();
-    }
-  };
+  // -----------------------------------------------------------------------------------------
 
   useEffect(() => {
     const getMoviesFromLibarary = async (id) => {
@@ -121,6 +106,29 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     getMoviesFromLibarary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
+
+  // -----------------------------------------------------------------------------------------
+
+  const changeSearchInput = (e) => {
+    setSearchInput(e.currentTarget.value);
+    setSearchParams({ page: 1 });
+  };
+
+  const onCloseReadMore = (e) => {
+    const onclose = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.delete("id");
+      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+      window.history.replaceState({}, "", newUrl);
+      setMovieData(null);
+    };
+    if (e.target === e.currentTarget) {
+      onclose();
+    }
+    if (e.currentTarget.id === "button-close") {
+      onclose();
+    }
+  };
 
   return (
     <>

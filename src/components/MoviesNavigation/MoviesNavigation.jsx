@@ -20,22 +20,26 @@ const MoviesNavigation = ({ totalPages }) => {
   const currentPage =
     searchParams.get("page") !== null ? Number(searchParams.get("page")) : 1;
 
-  let pageNumbers = [];
-  const createPageNumbersList = () => {
-    pageNumbers.push(currentPage - 4);
-    pageNumbers.push(currentPage - 3);
-    pageNumbers.push(currentPage - 2);
-    pageNumbers.push(currentPage - 1);
+  const pageNumbersList = () => {
+    let pageNumbersArray = [];
+
+    pageNumbersArray.push(currentPage - 4);
+    pageNumbersArray.push(currentPage - 3);
+    pageNumbersArray.push(currentPage - 2);
+    pageNumbersArray.push(currentPage - 1);
+
     for (let i = 0; i < 5; i += 1) {
-      pageNumbers.push(currentPage + i);
+      pageNumbersArray.push(currentPage + i);
     }
-    pageNumbers = [
-      ...pageNumbers.filter(function (x) {
+
+    pageNumbersArray = [
+      ...pageNumbersArray.filter(function (x) {
         return x > 0 && x <= 496 && x <= totalPages;
       }),
     ];
+
+    return pageNumbersArray;
   };
-  createPageNumbersList();
 
   return (
     <MoviesNavigationStyled>
@@ -47,8 +51,8 @@ const MoviesNavigation = ({ totalPages }) => {
       )}
       {currentPage > 5 && <p>...</p>}
       <MoviesNavigationList>
-        {pageNumbers.length > 0 &&
-          pageNumbers.map((item) => (
+        {pageNumbersList().length > 0 &&
+          pageNumbersList().map((item) => (
             <MoviesNavigationItem key={item}>
               {currentPage !== item && (
                 <MoviesNavigationButton

@@ -24,20 +24,15 @@ const MainPoster = ({
 
   const themeType = useContext(ThemeContext);
 
-  const updateCount = () => {
-    setInterval(() => {
-      setCurrentTrendOne((prev) => (prev + 1) % 20);
-      setCurrentTrendTwo((prev) => (prev + 1) % 20);
-    }, 8000);
-  };
-
   useEffect(() => {
+    const updateCount = () => {
+      setInterval(() => {
+        setCurrentTrendOne((prev) => (prev + 1) % 20);
+        setCurrentTrendTwo((prev) => (prev + 1) % 20);
+      }, 8000);
+    };
     updateCount();
   }, []);
-
-  const path = (trend) => {
-    return `https://image.tmdb.org/t/p/original/${trendingList[trend].backdrop_path}`;
-  };
 
   const onReadMore = async (id) => {
     const params = {};
@@ -86,7 +81,9 @@ const MainPoster = ({
               More
             </MainPosterMore>
           </MainPosterContent>
-          <Poster path={path(currentTrendOne)}></Poster>
+          <Poster
+            path={`https://image.tmdb.org/t/p/original/${trendingList[currentTrendOne].backdrop_path}`}
+          ></Poster>
         </MainPosterStyled>
       )}
       {trendingList.length > 0 && (
@@ -124,7 +121,9 @@ const MainPoster = ({
               More
             </MainPosterMore>
           </MainPosterContent>
-          <Poster path={path(currentTrendTwo)}></Poster>
+          <Poster
+            path={`https://image.tmdb.org/t/p/original/${trendingList[currentTrendTwo].backdrop_path}`}
+          ></Poster>
         </MainPosterStyled>
       )}
     </MainPosters>

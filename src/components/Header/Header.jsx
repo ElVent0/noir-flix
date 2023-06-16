@@ -38,6 +38,7 @@ const Header = ({ themeToggle }) => {
   const themeType = useContext(ThemeContext);
   const session = useSession();
 
+  // Створюємо аватарку
   useEffect(() => {
     if (session) {
       setAvatar(
@@ -52,11 +53,6 @@ const Header = ({ themeToggle }) => {
     setIsProfileModal(true);
   };
 
-  const onOpenLoginModal = () => {
-    setIsLoginTypeModal(true);
-    setIsLoginModal(true);
-  };
-
   const onCloseProfileModal = (e) => {
     if (e.target === e.currentTarget) {
       setIsProfileModal(false);
@@ -64,6 +60,11 @@ const Header = ({ themeToggle }) => {
     if (e.currentTarget.id === "button-close") {
       setIsProfileModal(false);
     }
+  };
+
+  const onOpenLoginModal = () => {
+    setIsLoginTypeModal(true);
+    setIsLoginModal(true);
   };
 
   const onCloseLoginModal = (e) => {
@@ -75,6 +76,7 @@ const Header = ({ themeToggle }) => {
     }
   };
 
+  // Змінюємо властивості хедеру при скролі
   window.onscroll = function () {
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
@@ -132,6 +134,7 @@ const Header = ({ themeToggle }) => {
           </>
         )}
       </LoginMenu>
+
       {isProfileModal && (
         <ProfileModal
           onCloseProfileModal={onCloseProfileModal}
@@ -139,6 +142,7 @@ const Header = ({ themeToggle }) => {
           avatar={avatar}
         />
       )}
+
       {isLoginModal && (
         <LoginModal
           onCloseLoginModal={onCloseLoginModal}
@@ -147,6 +151,7 @@ const Header = ({ themeToggle }) => {
           setIsLoginModal={setIsLoginModal}
         />
       )}
+
       <Toaster
         toastOptions={{
           style: {

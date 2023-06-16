@@ -62,12 +62,16 @@ const Library = ({ onAddToRecentMovies }) => {
     }
   };
 
+  // -----------------------------------------------------------------------------------------
+
   useEffect(() => {
     if (session) {
       getMoviesFromLibarary();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
+
+  // -----------------------------------------------------------------------------------------
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
@@ -92,7 +96,9 @@ const Library = ({ onAddToRecentMovies }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  const onclose = () => {
+  // -----------------------------------------------------------------------------------------
+
+  const onClose = () => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("id");
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
@@ -102,10 +108,10 @@ const Library = ({ onAddToRecentMovies }) => {
 
   const onCloseReadMore = (e) => {
     if (e.target === e.currentTarget) {
-      onclose();
+      onClose();
     }
     if (e.currentTarget.id === "button-close") {
-      onclose();
+      onClose();
     }
   };
 
@@ -120,8 +126,6 @@ const Library = ({ onAddToRecentMovies }) => {
   const onAllStarsButton = () => {
     setStars(0);
   };
-
-  const themeBackground = themetype ? "var(--pure-white)" : "var(--text-main)";
 
   return (
     <>
@@ -164,7 +168,12 @@ const Library = ({ onAddToRecentMovies }) => {
                   There are no entries in your library yet. <br />
                   Add your first movie
                 </p>
-                <NavigationLink to="/" themebackground={themeBackground}>
+                <NavigationLink
+                  to="/"
+                  themebackground={
+                    themetype ? "var(--pure-white)" : "var(--text-main)"
+                  }
+                >
                   Research
                 </NavigationLink>
               </NothingBlock>
@@ -180,7 +189,7 @@ const Library = ({ onAddToRecentMovies }) => {
           onCloseReadMore={onCloseReadMore}
           page="library"
           moviesListIds={moviesListIds}
-          onclose={onclose}
+          onClose={onClose}
         />
       )}
     </>

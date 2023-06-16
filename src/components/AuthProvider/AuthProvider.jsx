@@ -17,14 +17,15 @@ const AuthProvider = ({ children }) => {
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
 
   const themetype = useContext(ThemeContext);
-
   const session = useSession();
 
+  // Відкриваємо модалку логінізації
   const onOpenLoginModal = () => {
     setIsLoginTypeModal(true);
     setIsLoginModal(true);
   };
 
+  // Закриваємо модалку логінізації
   const onCloseLoginModal = (e) => {
     if (e.target === e.currentTarget) {
       setIsLoginModal(false);
