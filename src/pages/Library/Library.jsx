@@ -31,22 +31,22 @@ const Library = ({ onAddToRecentMovies }) => {
   const supabase = useSupabaseClient();
   const themetype = useContext(ThemeContext);
 
-  useEffect(() => {
-    const getMoviesFromLibarary = async () => {
-      const result = await getUserMovies(supabase, session, setMoviesListIds);
+  const getMoviesFromLibarary = async () => {
+    const result = await getUserMovies(supabase, session, setMoviesListIds);
 
-      if (result) {
-        const finalList = [];
+    if (result) {
+      const finalList = [];
 
-        for (let item of result) {
-          const newData = await getMovieById(item.movie_id);
-          finalList.push(newData);
-        }
-
-        setMoviesList(finalList);
+      for (let item of result) {
+        const newData = await getMovieById(item.movie_id);
+        finalList.push(newData);
       }
-    };
 
+      setMoviesList(finalList);
+    }
+  };
+
+  useEffect(() => {
     if (session) {
       getMoviesFromLibarary();
     }
@@ -80,7 +80,7 @@ const Library = ({ onAddToRecentMovies }) => {
 
   // -----------------------------------------------------------------------------------------
 
-  const onClose = () => {
+  const onclose = () => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("id");
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
@@ -90,10 +90,10 @@ const Library = ({ onAddToRecentMovies }) => {
 
   const onCloseReadMore = (e) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      onclose();
     }
     if (e.currentTarget.id === "button-close") {
-      onClose();
+      onclose();
     }
   };
 
@@ -171,7 +171,9 @@ const Library = ({ onAddToRecentMovies }) => {
           onCloseReadMore={onCloseReadMore}
           page="library"
           moviesListIds={moviesListIds}
-          onClose={onClose}
+          onclose={onclose}
+          setMoviesListIds={setMoviesListIds}
+          getMoviesFromLibarary={getMoviesFromLibarary}
         />
       )}
     </>

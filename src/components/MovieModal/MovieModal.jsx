@@ -55,6 +55,12 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
 import { starsColor } from "../../utils/colors";
+import {
+  sendMovie,
+  updateStars,
+  updateForLater,
+  deleteMovie,
+} from "../../api/database";
 
 const MovieModal = ({
   movieData,
@@ -62,6 +68,8 @@ const MovieModal = ({
   page,
   moviesListIds,
   onclose,
+  setMoviesListIds,
+  getMoviesFromLibarary,
 }) => {
   const [editStarsMode, setEditStarsMode] = useState(false);
   const [stars, setStars] = useState(0);
@@ -70,133 +78,11 @@ const MovieModal = ({
   const [movieTrailer, setMovieTrailer] = useState(null);
   const [isInLibrary, setIsInLibrary] = useState(false);
 
-  const posterPath = `https://image.tmdb.org/t/p/original/${movieData.poster_path}`;
-  const bgPath = `https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`;
-
   const session = useSession();
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
 
-  useEffect(() => {
-    if (moviesListIds) {
-      const fragmentData = moviesListIds.filter(
-        (item) => item.movie_id === movieData.id
-      );
-      setIsInLibrary(fragmentData.length === 0 ? false : true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moviesListIds]);
-
-  const getRatingList = () => {
-    const ratingList = [];
-    for (let i = 1; i <= stars; i += 1) {
-      ratingList.push(true);
-    }
-    for (let i = 1; i <= 5 - stars; i += 1) {
-      ratingList.push(false);
-    }
-    return ratingList;
-  };
-
-  const onStars = (number) => {
-    setStars(number);
-  };
-
-  const onConfirmForm = () => {
-    if (stars === 0) {
-      errorToast();
-      return;
-    }
-    if (page === "research") {
-      const sendMovie = async () => {
-        try {
-          const { error } = await supabase
-            .from("library")
-            .insert({
-              user_id: session.user.id,
-              movie_id: movieData.id,
-              movie_rating: stars,
-              movie_for_future: forLater,
-              creation_date: new Date(),
-            })
-            .single();
-
-          if (error) {
-            console.error(1, error);
-            return;
-          } else {
-            successToast();
-          }
-        } catch (e) {
-          console.error("insert error", e);
-        }
-      };
-
-      sendMovie();
-    } else if (page === "library") {
-      try {
-        supabase
-          .from("library")
-          .update({ movie_rating: stars })
-          .match({
-            user_id: session.user.id,
-            movie_id: movieData.id,
-          })
-          .then(() => {
-            successEditToast();
-          })
-          .catch((error) => {
-            console.error("Помилка оновлення рядка:", error);
-          });
-      } catch (e) {
-        console.error("update error", e);
-      }
-    }
-  };
-
-  const onClickForLater = () => {
-    setForLater((prev) => !prev);
-    try {
-      if (page === "library") {
-        supabase
-          .from("library")
-          .update({ movie_for_future: !forLater })
-          .match({
-            user_id: session.user.id,
-            movie_id: movieData.id,
-          })
-          .then(() => {
-            successEditToast();
-          })
-          .catch((error) => {
-            console.error("Помилка оновлення рядка:", error);
-          });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const onDeleteMovie = () => {
-    try {
-      supabase
-        .from("library")
-        .delete()
-        .match({
-          user_id: session.user.id,
-          movie_id: movieData.id,
-        })
-        .then(() => {
-          successDeleteToast();
-          onclose();
-        })
-        .catch((error) => {
-          console.error("Помилка видалення рядка:", error);
-        });
-    } catch (e) {
-      console.error("delete error", e);
-    }
-  };
+  console.log(1, movieData, moviesListIds);
 
   useEffect(() => {
     const getTrailer = async () => {
@@ -220,15 +106,108 @@ const MovieModal = ({
       setMovieTrailer(trailer);
     };
 
+    // Встановлюємо трейлер до фільму
     getTrailer();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     if (page === "library") {
       setStars(movieData.stars);
       setForLater(movieData.for_later);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // -----------------------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (moviesListIds) {
+      const fragmentData = moviesListIds.filter(
+        (item) => item.movie_id === movieData.id
+      );
+      setIsInLibrary(fragmentData.length === 0 ? false : true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moviesListIds]);
+
+  // -----------------------------------------------------------------------------------------
+
+  const onConfirmForm = () => {
+    if (stars === 0) {
+      errorToast();
+      return;
+    }
+
+    if (page === "research") {
+      sendMovie(
+        supabase,
+        session,
+        movieData,
+        stars,
+        forLater,
+        successToast,
+        setMoviesListIds
+      );
+      // setIsInLibrary((prev) => !prev);
+    } else if (page === "library") {
+      updateStars(
+        supabase,
+        stars,
+        session,
+        movieData,
+        successEditToast,
+        setMoviesListIds,
+        setEditStarsMode,
+        getMoviesFromLibarary
+      );
+    }
+  };
+
+  // -----------------------------------------------------------------------------------------
+
+  const onClickForLater = () => {
+    updateForLater(
+      page,
+      supabase,
+      forLater,
+      session,
+      movieData,
+      successEditToast,
+      setMoviesListIds,
+      getMoviesFromLibarary
+    );
+    setForLater((prev) => !prev);
+  };
+
+  // -----------------------------------------------------------------------------------------
+
+  const onDeleteMovie = () => {
+    deleteMovie(
+      supabase,
+      session,
+      movieData,
+      successDeleteToast,
+      onclose,
+      setMoviesListIds,
+      getMoviesFromLibarary
+    );
+  };
+
+  // -----------------------------------------------------------------------------------------
+
+  const getRatingList = () => {
+    const ratingList = [];
+    for (let i = 1; i <= stars; i += 1) {
+      ratingList.push(true);
+    }
+    for (let i = 1; i <= 5 - stars; i += 1) {
+      ratingList.push(false);
+    }
+    return ratingList;
+  };
+
+  const onStars = (number) => {
+    setStars(number);
+  };
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
@@ -237,7 +216,7 @@ const MovieModal = ({
           <ModalPoster
             width="300"
             height="430"
-            src={posterPath}
+            src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
             alt="Movie poster"
           />
           {page === "library" && (
@@ -329,7 +308,9 @@ const MovieModal = ({
           </ModalContentBody>
           {movieTrailer && (
             <TrailerList>
-              <TrailerItem path={bgPath}>
+              <TrailerItem
+                path={`https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`}
+              >
                 <TrailerButton href={movieTrailer} target="_blank">
                   <YoutubeLogo src={youtubeLogo} alt="youtube logo" />
                 </TrailerButton>

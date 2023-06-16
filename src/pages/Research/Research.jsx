@@ -155,6 +155,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               onCloseReadMore={onCloseReadMore}
               page="research"
               moviesListIds={moviesListIds}
+              setMoviesListIds={setMoviesListIds}
             />
           )}
         </>

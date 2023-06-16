@@ -270,13 +270,15 @@ export const EditButton = styled.button`
   align-items: center;
   border-radius: 10px;
   transition: 0.3s;
-  margin-left: -10px;
+  margin-left: -6px;
+  opacity: 0.4;
   & > svg {
     font-size: 22px;
   }
   &:hover,
   &:active {
     background-color: var(--pure-white);
+    opacity: 1;
   }
 `;
 
@@ -323,7 +325,7 @@ export const MoreCheckButton = styled.button`
   border-radius: 10px;
   transition: 0.3s;
   & > svg {
-    font-size: 22px;
+    font-size: 24px;
   }
   color: ${({ forLater }) =>
     forLater === true ? "var(--pure-white)" : "var(--text-main)"};
@@ -360,7 +362,7 @@ export const MoreCheckButtonPoster = styled.button`
   transition: 0.3s;
   border-radius: 10px;
   & > svg {
-    font-size: 22px;
+    font-size: 26px;
   }
   color: ${({ forLater }) =>
     forLater === true ? "var(--pure-white)" : "var(--text-main)"};
