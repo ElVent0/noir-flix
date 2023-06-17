@@ -51,13 +51,13 @@ const ResearchFilters = ({
     setSearchParams({ sort: item });
   };
 
-  // const onSortInLibrary = (item) => {
-  //   setInputSort(item);
-  //   setIsOpenSort((prev) => !prev);
-  // };
+  const onSortInLibrary = (item) => {
+    setInputSort(item);
+    setIsOpenSort((prev) => !prev);
+  };
 
   const sortItems = ["Popularity", "Vote", "Title", "New", "Future"];
-  // const sortItemsInLibrary = ["Favorite", "New"];
+  const sortItemsInLibrary = ["Favorite", "New"];
 
   const onFocusInput = () => {
     setOnFocus((prev) => !prev);
@@ -103,6 +103,27 @@ const ResearchFilters = ({
       )}
       {!onFocus && window.location.pathname === "/library" && (
         <>
+          <FiltersParagraph>Sort</FiltersParagraph>
+          <FilterInputSort
+            onMouseEnter={() => setIsOpenSort((prev) => !prev)}
+            onMouseLeave={() => setIsOpenSort((prev) => !prev)}
+          >
+            <HeaderSort>
+              {inputSort}
+              <IoIosArrowDown />
+            </HeaderSort>
+            {isOpenSort && (
+              <BodySort isOpenSort={isOpenSort}>
+                {sortItemsInLibrary
+                  .filter((item) => item !== inputSort)
+                  .map((item) => (
+                    <ItemSort key={item} onClick={() => onSortInLibrary(item)}>
+                      <ButtonSort themeType={themeType}>{item}</ButtonSort>
+                    </ItemSort>
+                  ))}
+              </BodySort>
+            )}
+          </FilterInputSort>
           <FiltersParagraph>Rating</FiltersParagraph>
           <StarsList>
             {getRatingList().map((item, index) => (

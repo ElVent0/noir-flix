@@ -1,19 +1,51 @@
-export const getUserMovies = async (supabase, session, setMoviesListIds) => {
+export const getUserMovies = async (
+  supabase,
+  session,
+  setMoviesListIds,
+  inputSort
+) => {
   const { data } = await supabase
     .from("library")
     .select("*")
     .eq("user_id", session.user.id);
 
   // Сортування за датою
-  let result = data.sort(
-    (a, b) =>
-      new Date(b.creation_date).getTime() - new Date(a.creation_date).getTime()
-  );
 
-  // Виявлення дублікатів
-  result = result.filter((obj, index, self) => {
-    return index === self.findIndex((o) => o.movie_id === obj.movie_id);
-  });
+  let result;
+
+  console.log(1, result);
+
+  if (window.location.pathname === "/") {
+    result = data.sort(
+      (a, b) =>
+        new Date(b.creation_date).getTime() -
+        new Date(a.creation_date).getTime()
+    );
+
+    result = result.filter((obj, index, self) => {
+      return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+    });
+  } else if (window.location.pathname === "/library") {
+    if (inputSort === "New") {
+      result = data.sort(
+        (a, b) =>
+          new Date(b.creation_date).getTime() -
+          new Date(a.creation_date).getTime()
+      );
+
+      result = result.filter((obj, index, self) => {
+        return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+      });
+    } else if (inputSort === "Favorite") {
+      result = data.sort((a, b) => b.movie_rating - a.movie_rating);
+
+      result = result.filter((obj, index, self) => {
+        return index === self.findIndex((o) => o.movie_id === obj.movie_id);
+      });
+    }
+  }
+
+  console.log(2, result);
 
   setMoviesListIds(result);
 

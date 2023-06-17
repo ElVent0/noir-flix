@@ -32,7 +32,12 @@ const Library = ({ onAddToRecentMovies }) => {
   const themetype = useContext(ThemeContext);
 
   const getMoviesFromLibarary = async () => {
-    const result = await getUserMovies(supabase, session, setMoviesListIds);
+    const result = await getUserMovies(
+      supabase,
+      session,
+      setMoviesListIds,
+      inputSort
+    );
 
     if (result) {
       const finalList = [];
@@ -51,7 +56,7 @@ const Library = ({ onAddToRecentMovies }) => {
       getMoviesFromLibarary();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, [session, inputSort]);
 
   // -----------------------------------------------------------------------------------------
 
