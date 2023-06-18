@@ -29,12 +29,32 @@ export const FiltersParagraph = styled.p`
       display: none;
     }
   }
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 export const FilterInputSort = styled.div`
   width: 120px;
   height: 36px;
   position: relative;
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 export const HeaderSort = styled.button`
@@ -170,22 +190,27 @@ export const CloseSearchButton = styled.button`
   transition: 0.3s;
   &:hover,
   &:focus {
-    background-color: var(--hover-grey);
+    background-color: ${(prop) =>
+      prop.themeType ? "var(--hover-grey)" : "var(--nav-black)"};
   }
 `;
 
 export const StarsList = styled.ul`
   display: flex;
   gap: 4px;
-`;
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
 
-export const StarItem = styled.li`
-  transition: 0.3s;
-  &:hover,
-  &:focus {
-    transform: scale(1.1);
+    100% {
+      opacity: 1;
+    }
   }
 `;
+
+export const StarItem = styled.li``;
 
 export const StarButton = styled.button`
   display: flex;
@@ -194,6 +219,13 @@ export const StarButton = styled.button`
   background-color: transparent;
   font-size: 22px;
   color: var(--accent);
+  & > svg {
+    transition: 0.6s;
+    &:hover,
+    &:focus {
+      transform: rotate(20deg);
+    }
+  }
 `;
 
 export const ButtonAll = styled.button`
@@ -203,7 +235,7 @@ export const ButtonAll = styled.button`
   align-items: center;
   margin-left: 10px;
   padding: 0 10px;
-  transition: 0.3s;
+  transition: 0.6s;
   border-radius: 6px;
   font-size: 16px;
   background-color: ${(props) =>
@@ -216,7 +248,18 @@ export const ButtonAll = styled.button`
       : "1px solid var(--accent)"};
   &:hover,
   &:focus {
-    transform: scale(1.05);
+    background-color: ${(props) =>
+      props.stars === 0 ? "var(--accent-hover)" : "var(--bg-grey)"};
+  }
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 `;
 
@@ -226,10 +269,16 @@ export const MoreCheck = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s;
-  &:hover,
-  &:focus {
-    transform: scale(1.1);
+
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 `;
 
@@ -240,11 +289,60 @@ export const MoreCheckButton = styled.button`
   width: 100%;
   height: 100%;
   background-color: transparent;
-  font-size: 18px;
+  font-size: 17px;
   transition: 0.3s;
   border-radius: 6px;
   background: ${({ forLater }) =>
     forLater === true ? "var(--more-check)" : "var(--bg-grey)"};
   color: ${({ forLater }) =>
     forLater === true ? "var(--pure-white)" : "var(--text-main)"};
+  & > svg {
+    transition: 0.6s;
+    &:hover,
+    &:focus {
+      transform: rotate(20deg);
+    }
+  }
+`;
+
+export const GenresList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-right: 20px;
+  max-width: 750px;
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    40% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
+export const GenresItem = styled.li`
+  border-radius: 8px;
+  background-color: ${(prop) =>
+    prop.isActive ? "var(--accent)" : "var(--hover-grey)"};
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    background-color: ${(prop) =>
+      prop.isActive ? "var(--accent)" : "var(--element-grey)"};
+  }
+`;
+
+export const GenresButton = styled.button`
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: transparent;
+  color: ${({ isActive, themeType }) =>
+    isActive && themeType ? "var(--pure-white)" : "var(--nav-black)"};
 `;

@@ -39,7 +39,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
-import { MdMoreTime } from "react-icons/md";
+import { FaCrown } from "react-icons/fa";
 import { MdOutlineDone } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
 import youtubeLogo from "../../media/youtube-logo.png";
@@ -227,7 +227,7 @@ const MovieModal = ({
                   onClick={() => onClickForLater()}
                   themeType={themeType}
                 >
-                  <MdMoreTime />
+                  <FaCrown />
                 </MoreCheckButtonPoster>
               </MoreCheckPoster>
             </>
@@ -350,7 +350,7 @@ const MovieModal = ({
                           forLater={forLater}
                           onClick={() => setForLater((prev) => !prev)}
                         >
-                          <MdMoreTime />
+                          <FaCrown />
                         </MoreCheckButton>
                       </MoreCheck>
                       <ConfirmButton

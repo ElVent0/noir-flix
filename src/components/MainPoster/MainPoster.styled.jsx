@@ -162,11 +162,17 @@ export const MainPosterRating = styled.p`
   }
 `;
 
-export const MainPosterName = styled.p`
+export const MainPosterTitle = styled.div`
+  height: 53px;
   position: absolute;
   bottom: 12px;
   left: 12px;
   z-index: 998;
+  display: flex;
+  align-items: flex-end;
+`;
+
+export const MainPosterName = styled.p`
   color: ${(prop) =>
     prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
   font-size: 22px;

@@ -6,6 +6,7 @@ import {
   MainPosterElementRight,
   MainPosterContent,
   MainPosterRating,
+  MainPosterTitle,
   MainPosterName,
   MainPosterAbout,
   MainPosterMore,
@@ -55,16 +56,18 @@ const MainPoster = ({
           )}
           {trendingList[currentTrendOne].title &&
             trendingList[currentTrendOne].release_date && (
-              <MainPosterName themeType={themeType}>
-                {trendingList[currentTrendOne].title}
-                <span>
-                  (
-                  {new Date(
-                    trendingList[currentTrendOne].release_date
-                  ).getFullYear()}
-                  )
-                </span>
-              </MainPosterName>
+              <MainPosterTitle>
+                <MainPosterName themeType={themeType}>
+                  {trendingList[currentTrendOne].title}
+                  <span>
+                    (
+                    {new Date(
+                      trendingList[currentTrendOne].release_date
+                    ).getFullYear()}
+                    )
+                  </span>
+                </MainPosterName>
+              </MainPosterTitle>
             )}
           <MainPosterElementLeft></MainPosterElementLeft>
           <MainPosterElementRight></MainPosterElementRight>
@@ -95,16 +98,18 @@ const MainPoster = ({
           )}
           {trendingList[currentTrendTwo].title &&
             trendingList[currentTrendTwo].release_date && (
-              <MainPosterName themeType={themeType}>
-                {trendingList[currentTrendTwo].title}
-                <span>
-                  (
-                  {new Date(
-                    trendingList[currentTrendTwo].release_date
-                  ).getFullYear()}
-                  )
-                </span>
-              </MainPosterName>
+              <MainPosterTitle>
+                <MainPosterName themeType={themeType}>
+                  {trendingList[currentTrendTwo].title}
+                  <span>
+                    (
+                    {new Date(
+                      trendingList[currentTrendTwo].release_date
+                    ).getFullYear()}
+                    )
+                  </span>
+                </MainPosterName>
+              </MainPosterTitle>
             )}
           <MainPosterElementLeft></MainPosterElementLeft>
           <MainPosterElementRight></MainPosterElementRight>

@@ -163,8 +163,4 @@ export const MoreCheck = styled.div`
   border-radius: 8px;
   color: var(--pure-white);
   background: var(--more-check);
-  & > svg {
-    position: relative;
-    left: 1px;
-  }
 `;

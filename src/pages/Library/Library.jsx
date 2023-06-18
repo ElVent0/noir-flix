@@ -65,17 +65,20 @@ const Library = ({ onAddToRecentMovies }) => {
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
 
+        // if (session) {
+        // await getMoviesFromLibarary();
+
         const result =
           moviesListIds &&
           moviesListIds.filter((item) => item.movie_id === data.id);
 
-        if (result) {
+        if (moviesListIds) {
           data.creation_date = result[0].creation_date;
           data.stars = result[0].movie_rating;
           data.for_later = result[0].movie_for_future;
-
           setMovieData(data);
         }
+        // }
       };
 
       getDataForMovie();

@@ -16,6 +16,9 @@ import {
   StarButton,
   MoreCheck,
   MoreCheckButton,
+  GenresList,
+  GenresItem,
+  GenresButton,
 } from "./MoviesFilters.styled";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -23,9 +26,10 @@ import { useSearchParams } from "react-router-dom";
 import { RiCloseLine } from "react-icons/ri";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
-import { MdMoreTime } from "react-icons/md";
+import { FaCrown } from "react-icons/fa";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
+import genresData from "../../utils/genres.json";
 
 const ResearchFilters = ({
   setInputSort,
@@ -37,6 +41,9 @@ const ResearchFilters = ({
   forLater,
   onForLater,
   onAllStarsButton,
+  setSearchInput,
+  setCurrentGenre,
+  currentGenre,
 }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
@@ -60,6 +67,13 @@ const ResearchFilters = ({
   const sortItemsInLibrary = ["Favorite", "New"];
 
   const onFocusInput = () => {
+    if (!onFocus) {
+      setOnFocus((prev) => !prev);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchInput("");
     setOnFocus((prev) => !prev);
   };
 
@@ -73,6 +87,8 @@ const ResearchFilters = ({
     }
     return ratingList;
   };
+
+  const finalGenresList = [["0", "All"], ...Object.entries(genresData)];
 
   return (
     <Filters>
@@ -99,6 +115,29 @@ const ResearchFilters = ({
               </BodySort>
             )}
           </FilterInputSort>
+          <FiltersParagraph>Genre</FiltersParagraph>
+          <GenresList>
+            {finalGenresList.map((item) => {
+              let isActive;
+              if (currentGenre === item[0]) {
+                isActive = true;
+              } else {
+                isActive = false;
+              }
+              return (
+                <GenresItem key={item[0]} isActive={isActive}>
+                  <GenresButton
+                    id={item[0]}
+                    onClick={() => setCurrentGenre(item[0])}
+                    isActive={isActive}
+                    themeType={themeType}
+                  >
+                    {[item[1]]}
+                  </GenresButton>
+                </GenresItem>
+              );
+            })}
+          </GenresList>
         </>
       )}
       {!onFocus && window.location.pathname === "/library" && (
@@ -137,16 +176,16 @@ const ResearchFilters = ({
           <ButtonAll stars={stars} onClick={onAllStarsButton}>
             All
           </ButtonAll>
-          <FiltersParagraph>Watch again</FiltersParagraph>
+          <FiltersParagraph>Favorite</FiltersParagraph>
           <MoreCheck>
             <MoreCheckButton forLater={forLater} onClick={onForLater}>
-              <MdMoreTime />
+              <FaCrown />
             </MoreCheckButton>
           </MoreCheck>
         </>
       )}
       {window.location.pathname === "/" && (
-        <Search focusEvent={onFocus}>
+        <Search focusEvent={onFocus} onClick={onFocusInput}>
           <AiOutlineSearch />
           <SearchInput
             type="text"
@@ -155,13 +194,11 @@ const ResearchFilters = ({
             autoComplete="off"
             value={searchInput}
             onChange={changeSearchInput}
-            onFocus={onFocusInput}
-            onBlur={onFocusInput}
             focusEvent={onFocus}
             themeType={themeType}
           ></SearchInput>
           {onFocus && (
-            <CloseSearchButton>
+            <CloseSearchButton onClick={clearSearch} themeType={themeType}>
               <RiCloseLine />
             </CloseSearchButton>
           )}

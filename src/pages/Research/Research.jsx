@@ -1,4 +1,4 @@
-import { ResearchStyled } from "./Research.styled.jsx";
+import { ResearchStyled, NothingBlock } from "./Research.styled.jsx";
 import MoviesFilters from "../../components/MoviesFilters/MoviesFilters";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import Loader from "../../components/Loader/Loader";
@@ -12,6 +12,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import poster from "../../media/poster.jpg";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { getUserMovies } from "../../api/database";
+import { GiEmptyChessboard } from "react-icons/gi";
 
 const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [moviesList, setMoviesList] = useState(null);
@@ -20,6 +21,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [totalPages, setTotalPages] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [inputSort, setInputSort] = useState("Popularity");
+  const [currentGenre, setCurrentGenre] = useState("0");
   const [movieData, setMovieData] = useState(null);
   const [trendingList, setTrendingList] = useState([]);
 
@@ -28,7 +30,11 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const supabase = useSupabaseClient();
 
   const getData = async () => {
-    const data = await getMovies(searchParams.get("page"), inputSort);
+    const data = await getMovies(
+      searchParams.get("page"),
+      inputSort,
+      currentGenre
+    );
     setMoviesList(data.results);
     setTotalPages(data.total_pages);
   };
@@ -38,6 +44,12 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
     setMoviesList(data.results);
     setTotalPages(data.total_pages);
   };
+
+  useEffect(() => {
+    getData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentGenre]);
 
   // -----------------------------------------------------------------------------------------
 
@@ -130,6 +142,9 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               inputSort={inputSort}
               searchInput={searchInput}
               changeSearchInput={changeSearchInput}
+              setSearchInput={setSearchInput}
+              setCurrentGenre={setCurrentGenre}
+              currentGenre={currentGenre}
             />
             <MoviesList
               moviesList={moviesList}
@@ -138,7 +153,14 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               onAddToRecentMovies={onAddToRecentMovies}
               page="research"
             />
-            <MoviesNavigation totalPages={totalPages} />
+            {moviesList && moviesList.length === 0 ? (
+              <NothingBlock>
+                <GiEmptyChessboard />
+                It seems that there is no such film...
+              </NothingBlock>
+            ) : (
+              <MoviesNavigation totalPages={totalPages} />
+            )}
           </ResearchStyled>
           <RecentMovies
             poster={poster}
@@ -162,7 +184,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       ) : (
         <Loader />
       )}
-      {moviesList && moviesList.length === 0 && <p>Упс, тут нічого...</p>}
     </>
   );
 };

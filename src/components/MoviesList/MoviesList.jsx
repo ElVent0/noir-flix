@@ -17,7 +17,7 @@ import {
 import poster from "../../media/poster.jpg";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
-import { MdMoreTime } from "react-icons/md";
+import { FaCrown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import genresNames from "../../utils/genres.json";
 import { starsColor } from "../../utils/colors";
@@ -108,15 +108,17 @@ const MoviesList = ({
         const getRatingList = () => {
           const stars = finalList[index].stars;
 
-          const ratingList = [];
-          for (let i = 1; i <= stars; i += 1) {
-            ratingList.push(true);
-            starsFinal += 1;
+          if (stars) {
+            const ratingList = [];
+            for (let i = 1; i <= stars; i += 1) {
+              ratingList.push(true);
+              starsFinal += 1;
+            }
+            for (let i = 1; i <= 5 - stars; i += 1) {
+              ratingList.push(false);
+            }
+            return ratingList;
           }
-          for (let i = 1; i <= 5 - stars; i += 1) {
-            ratingList.push(false);
-          }
-          return ratingList;
         };
 
         return (
@@ -145,7 +147,7 @@ const MoviesList = ({
             {page === "library" && (
               <MoreCheckContainer forLater={finalList[index].for_later}>
                 <MoreCheck>
-                  <MdMoreTime />
+                  <FaCrown />
                 </MoreCheck>
               </MoreCheckContainer>
             )}

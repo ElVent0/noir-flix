@@ -224,19 +224,18 @@ export const StarsListBottom = styled.ul`
 `;
 
 export const StarItem = styled.li`
-  transition: 0.3s;
+  transition: 0.6s;
   &:hover,
   &:focus {
-    /* transform: scale(1.1); */
-    transform: ${(prop) => (prop.editStarsMode ? "scale(1.1)" : "none")};
+    transform: ${(prop) => (prop.editStarsMode ? "rotate(20deg)" : "none")};
   }
 `;
 
 export const StarItemBottom = styled.li`
-  transition: 0.3s;
+  transition: 0.6s;
   &:hover,
   &:focus {
-    transform: scale(1.1);
+    transform: rotate(20deg);
   }
 `;
 
@@ -306,11 +305,11 @@ export const MoreCheck = styled.div`
   align-items: center;
   transition: 0.3s;
 
-  &:hover,
-  &:focus {
-    & > button > svg {
-      transition: 0.3s;
-      transform: scale(1.1);
+  & > button > svg {
+    transition: 0.6s;
+    &:hover,
+    &:focus {
+      transform: rotate(20deg);
     }
   }
 `;
@@ -323,9 +322,9 @@ export const MoreCheckButton = styled.button`
   height: 100%;
   font-size: 18px;
   border-radius: 10px;
-  transition: 0.3s;
+  transition: 0.6s;
   & > svg {
-    font-size: 24px;
+    font-size: 22px;
   }
   color: ${({ forLater }) =>
     forLater === true ? "var(--pure-white)" : "var(--text-main)"};
@@ -359,7 +358,6 @@ export const MoreCheckButtonPoster = styled.button`
   font-size: 18px;
   top: 0;
   right: 0;
-  transition: 0.3s;
   border-radius: 10px;
   & > svg {
     font-size: 26px;
@@ -370,11 +368,12 @@ export const MoreCheckButtonPoster = styled.button`
     forLater === true ? "var(--more-check)" : "var(--bg-grey)"};
   border: ${({ forLater }) =>
     forLater === true ? "1px solid var(--more-check)" : "transparent"};
-  &:hover,
-  &:focus {
-    & > svg {
-      transition: 0.3s;
-      transform: scale(1.1);
+
+  & > svg {
+    transition: 0.6s;
+    &:hover,
+    &:focus {
+      transform: rotate(20deg);
     }
   }
 `;

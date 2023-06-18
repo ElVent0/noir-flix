@@ -1,10 +1,14 @@
+// import genresData from "../utils/genres.json";
+
+// console.log("g", genresData);
+
 const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
 const day = currentDate.getDate().toString().padStart(2, "0");
 const dateString = `${year}-${month}-${day}`;
 
-export const getMovies = async (currentPage, inputSort) => {
+export const getMovies = async (currentPage, inputSort, currentGenre) => {
   const inputSortType = () => {
     if (inputSort === "Popularity") {
       return `popularity.desc&vote_average.gte=3.0&vote_count.gte=100`;
@@ -19,11 +23,19 @@ export const getMovies = async (currentPage, inputSort) => {
     }
   };
 
+  const inputCurrentGenre = () => {
+    if (currentGenre === "0") {
+      return "";
+    } else {
+      return `&with_genres=${currentGenre}`;
+    }
+  };
+
   try {
     const data = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=${
         process.env.REACT_APP_API_KEY
-      }&page=${currentPage}&sort_by=${inputSortType()}`
+      }&page=${currentPage}&sort_by=${inputSortType()}${inputCurrentGenre()}`
     );
     const result = await data.json();
     return result;

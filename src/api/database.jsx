@@ -13,8 +13,6 @@ export const getUserMovies = async (
 
   let result;
 
-  console.log(1, result);
-
   if (window.location.pathname === "/") {
     result = data.sort(
       (a, b) =>
@@ -44,8 +42,6 @@ export const getUserMovies = async (
       });
     }
   }
-
-  console.log(2, result);
 
   setMoviesListIds(result);
 

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ResearchStyled = styled.div`
+  min-height: calc(100vh - 339px);
   background-color: var(--pure-white);
   padding: 0 20px 40px 20px;
   border-radius: 10px;
@@ -13,5 +14,18 @@ export const ResearchStyled = styled.div`
     100% {
       opacity: 100%;
     }
+  }
+`;
+
+export const NothingBlock = styled.div`
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & > svg {
+    font-size: 100px;
+    margin-bottom: 30px;
+    opacity: 0.6;
   }
 `;
