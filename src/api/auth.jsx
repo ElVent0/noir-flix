@@ -62,7 +62,7 @@ export const createUserWithMail = async (
   setIsLoginModal,
   notifyOnMailSignUp
 ) => {
-  if (userName.length < 3) {
+  if (userName.length < 2) {
     errorName();
     return;
   } else if (userMail.length === 0) {

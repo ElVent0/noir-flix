@@ -36,8 +36,7 @@ export const ModalContent = styled.div`
 export const ModalPoster = styled.div`
   width: 300px;
   height: auto;
-  background-image: radial-gradient(#11b3ff33, #11b3ffaf),
-    url(${(props) => props.path});
+  background-image: url(${(props) => props.path});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

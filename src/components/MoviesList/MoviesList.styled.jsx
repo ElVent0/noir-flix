@@ -29,6 +29,7 @@ export const MoviesPoster = styled.div`
   background-image: url(${(props) => props.path});
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
 `;
 
 export const MoviesHeaderContent = styled.div`
@@ -145,11 +146,9 @@ export const MoreCheckContainer = styled.div`
   height: 30px;
   padding-right: 6px;
   padding-bottom: 6px;
-  display: ${({ forLater }) => (forLater === true ? "block" : "none")};
+  /* display: ${({ forLater }) => (forLater === true ? "block" : "none")}; */
   background-color: var(--bg-grey);
   position: absolute;
-  top: 6px;
-  left: 6px;
   border-radius: 0 0 10px 0;
 `;
 
@@ -163,4 +162,48 @@ export const MoreCheck = styled.div`
   border-radius: 8px;
   color: var(--pure-white);
   background: var(--more-check);
+`;
+
+export const CornerElementLeft = styled.div`
+  position: absolute;
+  z-index: 1000;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  transform: rotate(0deg);
+  left: 30px;
+  top: 0px;
+  &:before {
+    content: "";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 14%;
+    top: 0;
+    left: 0;
+    box-shadow: -50px -50px 0 0 var(--bg-grey);
+  }
+`;
+
+export const CornerElementBottom = styled.div`
+  position: absolute;
+  z-index: 1000;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  transform: rotate(0deg);
+  left: 0px;
+  top: 30px;
+  &:before {
+    content: "";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 14%;
+    top: 0;
+    left: 0;
+    box-shadow: -50px -50px 0 0 var(--bg-grey);
+  }
 `;

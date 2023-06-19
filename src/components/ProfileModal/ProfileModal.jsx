@@ -14,16 +14,11 @@ import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import path from "../../media/profile.jpg";
-import logo from "../../media/noirflix-3-3.png";
-import logoLight from "../../media/noirflix-3-4.png";
-import { ThemeContext } from "../App";
-import { useContext } from "react";
 import { logout } from "../../api/auth.jsx";
 
 const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
   const session = useSession();
   const supabase = useSupabaseClient();
-  const themeType = useContext(ThemeContext);
 
   const userData = session.user.identities[0].identity_data;
 
@@ -44,7 +39,7 @@ const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
     <ModalBackdrop onClick={onCloseProfileModal}>
       <Modal>
         <Statistics path={path}>
-          <img src={themeType ? logo : logoLight} alt="logo" width="140px" />
+          {/* <img src={themeType ? logo : logoLight} alt="logo" width="140px" /> */}
         </Statistics>
         <Profile>
           <UserImage src={avatar} alt="User image" />

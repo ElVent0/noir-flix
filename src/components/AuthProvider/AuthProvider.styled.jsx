@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 export const AuthContainer = styled.div`
-  height: calc(100vh - 247px);
+  background-color: var(--pure-white);
+  min-height: calc(100vh - 217px);
+  padding: 0 20px 40px 20px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,7 +23,7 @@ export const Login = styled.button`
   font-size: 18px;
   line-height: 20px;
   color: ${(prop) =>
-    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
+    prop.themetype ? "var(--pure-white)" : "var(--nav-black)"};
   height: 44px;
   width: 100px;
   justify-content: center;
@@ -32,7 +35,7 @@ export const Login = styled.button`
   & > svg {
     font-size: 23px;
     color: ${(prop) =>
-      prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
+      prop.themetype ? "var(--pure-white)" : "var(--nav-black)"};
     margin-right: 6px;
   }
   &:hover,

@@ -13,6 +13,8 @@ import {
   StarItem,
   MoreCheckContainer,
   MoreCheck,
+  CornerElementLeft,
+  CornerElementBottom,
 } from "./MoviesList.styled";
 import poster from "../../media/poster.jpg";
 import { TbStar } from "react-icons/tb";
@@ -124,7 +126,19 @@ const MoviesList = ({
         return (
           <MoviesItem key={item.id}>
             <MoviesHeader>
-              <MoviesPoster path={path}></MoviesPoster>
+              <MoviesPoster path={path}>
+                {page === "library" && finalList[index].for_later && (
+                  <>
+                    <MoreCheckContainer>
+                      <MoreCheck>
+                        <FaCrown />
+                      </MoreCheck>
+                    </MoreCheckContainer>
+                    <CornerElementLeft></CornerElementLeft>
+                    <CornerElementBottom></CornerElementBottom>
+                  </>
+                )}
+              </MoviesPoster>
               <MoviesHeaderContent>
                 <MoviesName>{item.title}</MoviesName>
                 <MoviesYear>
@@ -144,13 +158,6 @@ const MoviesList = ({
             </MoviesHeader>
             <MoviesBody>{item.overview}</MoviesBody>
             <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
-            {page === "library" && (
-              <MoreCheckContainer forLater={finalList[index].for_later}>
-                <MoreCheck>
-                  <FaCrown />
-                </MoreCheck>
-              </MoreCheckContainer>
-            )}
           </MoviesItem>
         );
       })}

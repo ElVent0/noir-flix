@@ -42,10 +42,14 @@ export const CloseButton = styled.button`
 `;
 
 export const Logout = styled.button`
-  background-color: var(--pure-white);
   font-size: 16px;
   line-height: 19px;
-  color: var(--nav-black-transparent);
+  /* background-color: var(--pure-white);
+  color: var(--nav-black-transparent); */
+  background-color: ${(prop) =>
+    prop.isActive ? "var(--accent)" : "var(--hover-grey)"};
+  color: ${({ isActive, themeType }) =>
+    isActive && themeType ? "var(--pure-white)" : "var(--nav-black)"};
   height: 36px;
   align-items: flex-end;
   border-radius: 10px;
@@ -62,7 +66,8 @@ export const Logout = styled.button`
   }
   &:hover,
   &:active {
-    background-color: var(--hover-grey);
+    background-color: ${(prop) =>
+      prop.isActive ? "var(--accent)" : "var(--element-grey)"};
   }
 `;
 
@@ -100,11 +105,7 @@ export const UserMail = styled.p`
 
 export const Statistics = styled.div`
   width: 50%;
-  background-image: radial-gradient(
-      var(--bg-grey) 10%,
-      var(--accent-transparent)
-    ),
-    url(${(props) => props.path});
+  background-image: url(${(props) => props.path});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left;
