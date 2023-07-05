@@ -28,14 +28,16 @@ export const ModalPoster = styled.img`
 `;
 
 export const PosterContainer = styled.div`
-  width: 300px;
-  height: 430px;
+  /* width: 300px;
+  height: 430px; */
+  width: 338px;
+  height: 484px;
   position: relative;
   overflow: hidden;
 `;
 
 export const ModalContent = styled.div`
-  width: 380px;
+  width: 420px;
   padding: 0 6px 0 12px;
   display: flex;
   flex-direction: column;
@@ -92,9 +94,10 @@ export const ModalParagraph = styled.p`
   line-height: 15px;
   color: var(--text-main-transparent);
   &:last-child {
-    max-height: ${(props) => props.page === "research" && "114px"};
-    max-height: ${(props) => props.page === "library" && "84px"};
+    max-height: ${(props) => props.page === "research" && "144px"};
+    max-height: ${(props) => props.page === "library" && "114px"};
     overflow-y: scroll;
+    margin-bottom: 0;
 
     ::-webkit-scrollbar {
       width: 8px;
@@ -131,43 +134,63 @@ export const ModalContentFooter = styled.div`
 `;
 
 export const TrailerList = styled.ul`
+  margin-top: 12px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 `;
 
 export const TrailerItem = styled.li`
-  width: 112px;
+  width: 124px;
   height: 70px;
-  border-radius: 10px;
+  border-radius: 4px;
   background-image: url(${(props) => props.path});
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   overflow: hidden;
+  position: relative;
+  & > div {
+    pointer-events: none;
+  }
+  /* &:hover,
+  &:focus {
+    & > div {
+      display: none;
+    }
+  } */
 `;
 
 export const TrailerButton = styled.a`
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transition: 0.3s;
-  background: #00000090;
+  background: #00000040;
+  position: absolute;
   cursor: pointer;
   &:hover,
   &:focus {
     background: red;
     & > img {
       width: 82%;
+      top: 0px;
+      left: 14px;
+    }
+  }
+  &:hover,
+  &:focus {
+    & ~ div {
+      display: none;
     }
   }
 `;
 
 export const YoutubeLogo = styled.img`
-  width: 44px;
-  height: auto;
   transition: 0.3s;
   animation: scaling 2s ease-in-out infinite;
+  position: relative;
+  top: 4px;
+  left: 4px;
   @keyframes scaling {
     0% {
       transform: scale(1);
@@ -178,6 +201,23 @@ export const YoutubeLogo = styled.img`
     100% {
       transform: scale(1);
     }
+  }
+`;
+
+export const TrailerName = styled.div`
+  background-color: #0f0f0fad;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 26px; */
+  padding: 4px 0;
+  bottom: 0;
+  overflow: hidden;
+  & > p {
+    text-align: center;
+    font-size: 11.2px;
   }
 `;
 
@@ -303,15 +343,6 @@ export const MoreCheck = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s;
-
-  & > button > svg {
-    transition: 0.6s;
-    &:hover,
-    &:focus {
-      transform: rotate(20deg);
-    }
-  }
 `;
 
 export const MoreCheckButton = styled.button`
@@ -324,6 +355,7 @@ export const MoreCheckButton = styled.button`
   border-radius: 10px;
   transition: 0.6s;
   & > svg {
+    transition: 0.6s;
     font-size: 22px;
   }
   color: ${({ forLater }) =>
@@ -332,6 +364,12 @@ export const MoreCheckButton = styled.button`
     forLater === true ? "var(--more-check)" : "var(--pure-white)"};
   border: ${({ forLater }) =>
     forLater === true ? "1px solid var(--more-check)" : "transparent"};
+  & > svg {
+    &:hover,
+    &:focus {
+      transform: rotate(20deg);
+    }
+  }
 `;
 
 export const MoreCheckPoster = styled.div`
@@ -413,7 +451,7 @@ export const CornerElementBottom = styled.div`
   height: 30px;
   overflow: hidden;
   transform: rotate(90deg);
-  right: 0;
+  right: -1px;
   top: 42px;
   &:before {
     content: "";

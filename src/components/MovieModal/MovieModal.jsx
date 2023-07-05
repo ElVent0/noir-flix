@@ -27,6 +27,7 @@ import {
   TrailerList,
   TrailerItem,
   TrailerButton,
+  TrailerName,
   YoutubeLogo,
   Rating,
   CornerElementLeft,
@@ -61,6 +62,7 @@ import {
   updateForLater,
   deleteMovie,
 } from "../../api/database";
+import { v4 as uuidv4 } from "uuid";
 
 const MovieModal = ({
   movieData,
@@ -86,22 +88,30 @@ const MovieModal = ({
     const getTrailer = async () => {
       const data = await getVideoByIds(movieData.id);
 
+      console.log("trailers data", data);
+
       const arrayItem = data.results.filter(
-        (item) => item.name === "Final Trailer"
+        (item) => item.name === "Final Trailer" || item.type === "Trailer"
       );
 
-      let trailer;
-      if (data.results.length > 0 && arrayItem[0] !== undefined) {
-        trailer = `https://www.youtube.com/watch?v=${arrayItem[0].key}`;
-      } else if (data.results.length > 0 && arrayItem[0] === undefined) {
-        trailer = `https://www.youtube.com/watch?v=${
-          data.results[data.results.length - 1].key
-        }`;
-      } else {
-        return;
-      }
+      console.log("arrayItem", arrayItem);
 
-      setMovieTrailer(trailer);
+      const finalArray = arrayItem.map((item) => ({
+        id: uuidv4(),
+        name: item.name,
+        link: `https://www.youtube.com/watch?v=${item.key}`,
+        preview: `https://img.youtube.com/vi/${item.key}/0.jpg`,
+      }));
+
+      console.log("trailers arrey", finalArray);
+
+      setMovieTrailer(
+        finalArray
+          .slice(0, 3)
+          .sort((a, b) =>
+            a.name.toUpperCase().localeCompare(b.name.toUpperCase())
+          )
+      );
     };
 
     // Встановлюємо трейлер до фільму
@@ -212,8 +222,8 @@ const MovieModal = ({
       <Modal>
         <PosterContainer>
           <ModalPoster
-            width="300"
-            height="430"
+            width="338"
+            height="484"
             src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
             alt="Movie poster"
           />
@@ -306,13 +316,28 @@ const MovieModal = ({
           </ModalContentBody>
           {movieTrailer && (
             <TrailerList>
-              <TrailerItem
-                path={`https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`}
-              >
-                <TrailerButton href={movieTrailer} target="_blank">
-                  <YoutubeLogo src={youtubeLogo} alt="youtube logo" />
-                </TrailerButton>
-              </TrailerItem>
+              {movieTrailer.map((item) => (
+                <TrailerItem
+                  key={item.id}
+                  path={
+                    item.preview
+                      ? item.preview
+                      : `https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`
+                  }
+                >
+                  <TrailerButton href={item.link} target="_blank">
+                    <YoutubeLogo
+                      src={youtubeLogo}
+                      width="26"
+                      height="auto"
+                      alt="youtube logo"
+                    />
+                  </TrailerButton>
+                  <TrailerName>
+                    <p>{item.name}</p>
+                  </TrailerName>
+                </TrailerItem>
+              ))}
             </TrailerList>
           )}
 
