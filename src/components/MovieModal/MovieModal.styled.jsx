@@ -4,8 +4,14 @@ import { NavLink } from "react-router-dom";
 export const ModalBackdrop = styled.div`
   width: 100%;
   height: 100%;
-  background: rgba(24, 24, 24, 0.2);
-  backdrop-filter: blur(2px);
+  background: rgb(57, 76, 84);
+  background: radial-gradient(
+    circle,
+    rgba(57, 76, 84, 0.4) 0%,
+    rgba(29, 33, 35, 0.6) 100%
+  );
+  background-repeat: no-repeat;
+  backdrop-filter: blur(4px);
   position: fixed;
   top: 0;
   display: flex;
@@ -57,7 +63,7 @@ export const CollectionItem = styled.li`
   &:hover,
   &:focus {
     &:after {
-      opacity: 0.6;
+      opacity: ${({ isCurrentMovie }) => (isCurrentMovie ? "1" : "0.6")};
     }
   }
 `;

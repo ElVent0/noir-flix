@@ -11,6 +11,7 @@ export const HeaderStyled = styled.div`
   top: 0px;
   z-index: 1000;
   border-radius: 0 0 10px 10px;
+  overflow: hidden;
   background-color: ${(prop) =>
     prop.isFixed ? "var(--pure-white)" : "transparent"};
   padding: ${(prop) => (prop.isFixed ? "0 20px" : "0px")};
@@ -18,7 +19,6 @@ export const HeaderStyled = styled.div`
     prop.isFixed ? "0px 10px 24px -14px rgba(0,0,0,0.4)" : "none"};
   animation: ${({ isFixed }) =>
     isFixed ? "headerAnimationOn .3s linear" : "none"};
-
   @keyframes headerAnimationOn {
     0% {
       background-color: transparent;
@@ -227,4 +227,19 @@ export const UserImage = styled.img`
   width: 24px;
   height: 24px;
   border-radius: 6px;
+`;
+
+export const ProgressContainer = styled.div`
+  width: 100%;
+  height: 6px;
+  background-color: transparent;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`;
+
+export const ProgressBar = styled.div`
+  width: ${({ percentage }) => `${percentage}%`};
+  height: 100%;
+  background-color: var(--accent);
 `;

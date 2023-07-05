@@ -13,6 +13,8 @@ import {
   ThemeButton,
   ThemeButtonDotLight,
   ThemeButtonDotDark,
+  ProgressContainer,
+  ProgressBar,
 } from "./Header.styled.jsx";
 import logo from "../../media/noirflix-3-3.png";
 import logoLight from "../../media/noirflix-3-4.png";
@@ -34,9 +36,25 @@ const Header = ({ themeToggle }) => {
   const [isLoginTypeModal, setIsLoginTypeModal] = useState(true);
   const [avatar, setAvatar] = useState(null);
   const [isFixed, setIsFixed] = useState(false);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
 
   const themeType = useContext(ThemeContext);
   const session = useSession();
+
+  const handleScroll = () => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const currentScrollPercentage =
+      (scrollTop / (documentHeight - windowHeight)) * 100;
+
+    setScrollPercentage(currentScrollPercentage);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Створюємо аватарку
   useEffect(() => {
@@ -51,35 +69,40 @@ const Header = ({ themeToggle }) => {
 
   const onOpenProfileModal = () => {
     setIsProfileModal(true);
+    document.body.style.overflow = "hidden";
   };
 
   const onCloseProfileModal = (e) => {
     if (e.target === e.currentTarget) {
       setIsProfileModal(false);
+      document.body.style.overflow = "auto";
     }
     if (e.currentTarget.id === "button-close") {
       setIsProfileModal(false);
+      document.body.style.overflow = "auto";
     }
   };
 
   const onOpenLoginModal = () => {
     setIsLoginTypeModal(true);
     setIsLoginModal(true);
+    document.body.style.overflow = "hidden";
   };
 
   const onCloseLoginModal = (e) => {
     if (e.target === e.currentTarget) {
       setIsLoginModal(false);
+      document.body.style.overflow = "auto";
     }
     if (e.currentTarget.id === "button-close") {
       setIsLoginModal(false);
+      document.body.style.overflow = "auto";
     }
   };
 
   // Змінюємо властивості хедеру при скролі
   window.onscroll = function () {
-    const scrollPosition =
-      window.pageYOffset || document.documentElement.scrollTop;
+    const scrollPosition = window.pageYOffset || document.body.scrollTop;
     if (scrollPosition > 50) {
       setIsFixed(true);
     } else if (0 < scrollPosition < 50) {
@@ -102,7 +125,7 @@ const Header = ({ themeToggle }) => {
       <Logo
         src={themeType ? logo : logoLight}
         alt="Logo"
-        width="96"
+        width="82"
         height="auto"
         isFixed={isFixed}
       />
@@ -159,6 +182,11 @@ const Header = ({ themeToggle }) => {
           },
         }}
       />
+      {isFixed && (
+        <ProgressContainer>
+          <ProgressBar percentage={scrollPercentage}></ProgressBar>
+        </ProgressContainer>
+      )}
     </HeaderStyled>
   );
 };

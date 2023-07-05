@@ -88,6 +88,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
         setMovieData(data);
+        document.body.style.overflow = "hidden";
       };
 
       getDataForMovie();
@@ -117,6 +118,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
       window.history.replaceState({}, "", newUrl);
       setMovieData(null);
+      document.body.style.overflow = "auto";
     };
     if (e.target === e.currentTarget) {
       onclose();

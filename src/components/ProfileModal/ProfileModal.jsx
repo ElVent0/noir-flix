@@ -33,6 +33,7 @@ const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
   const onLogout = () => {
     logout(supabase);
     setIsProfileModal(false);
+    document.body.style.overflow = "auto";
   };
 
   return ReactDOM.createPortal(

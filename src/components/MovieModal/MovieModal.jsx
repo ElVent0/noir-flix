@@ -94,16 +94,35 @@ const MovieModal = ({
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
 
+  const getTrailers = async () => {
+    const data = await getVideoByIds(movieData.id);
+
+    const arrayItem = data.results.filter(
+      (item) => item.name === "Final Trailer" || item.type === "Trailer"
+    );
+
+    const finalArray = arrayItem.map((item) => ({
+      id: uuidv4(),
+      name: item.name,
+      link: `https://www.youtube.com/watch?v=${item.key}`,
+      preview: `https://img.youtube.com/vi/${item.key}/0.jpg`,
+    }));
+
+    setMovieTrailer(
+      finalArray
+        .slice(0, 3)
+        .sort((a, b) =>
+          a.name.toUpperCase().localeCompare(b.name.toUpperCase())
+        )
+    );
+  };
+
   useEffect(() => {
     const getTrailer = async () => {
-      const data = await getVideoByIds(movieData.id);
-
       if (movieData && movieData.belongs_to_collection) {
         const collectionData = await getCollection(
           movieData.belongs_to_collection.id
         );
-
-        console.log(2, collectionData.parts);
 
         setCollection(
           collectionData.parts
@@ -119,24 +138,7 @@ const MovieModal = ({
         );
       }
 
-      const arrayItem = data.results.filter(
-        (item) => item.name === "Final Trailer" || item.type === "Trailer"
-      );
-
-      const finalArray = arrayItem.map((item) => ({
-        id: uuidv4(),
-        name: item.name,
-        link: `https://www.youtube.com/watch?v=${item.key}`,
-        preview: `https://img.youtube.com/vi/${item.key}/0.jpg`,
-      }));
-
-      setMovieTrailer(
-        finalArray
-          .slice(0, 3)
-          .sort((a, b) =>
-            a.name.toUpperCase().localeCompare(b.name.toUpperCase())
-          )
-      );
+      getTrailers();
     };
 
     // Встановлюємо трейлер до фільму
@@ -149,6 +151,10 @@ const MovieModal = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getTrailers();
+  }, [movieData]);
 
   // -----------------------------------------------------------------------------------------
 

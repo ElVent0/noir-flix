@@ -3,7 +3,7 @@
 }
 
 html {
-  overflow-y: scroll;
+  /* overflow-y: auto; */
 }
 
 body {
@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: "Roboto", sans-serif;
   color: var(--text-main);
+  overflow-y: auto;
 }
 
 code {
@@ -62,6 +63,7 @@ button {
 
 ::-webkit-scrollbar {
   width: 8px;
+  display: none;
 }
 
 ::-webkit-scrollbar-track {

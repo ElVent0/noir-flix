@@ -77,6 +77,7 @@ const Library = ({ onAddToRecentMovies }) => {
           data.stars = result[0].movie_rating;
           data.for_later = result[0].movie_for_future;
           setMovieData(data);
+          document.body.style.overflow = "hidden";
         }
         // }
       };
@@ -94,6 +95,7 @@ const Library = ({ onAddToRecentMovies }) => {
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
     window.history.replaceState({}, "", newUrl);
     setMovieData(null);
+    document.body.style.overflow = "auto";
   };
 
   const onCloseReadMore = (e) => {
