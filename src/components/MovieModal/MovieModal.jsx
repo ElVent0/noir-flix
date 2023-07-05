@@ -35,6 +35,14 @@ import {
   DeleteFromLibraryButton,
   InLibraryBlock,
   EditButton,
+  ModalContainer,
+  CollectionBlock,
+  CollectionList,
+  CollectionItem,
+  ModalReviews,
+  CollectionItemLink,
+  CollectionItemPoster,
+  CollectionItemTitle,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
@@ -51,7 +59,7 @@ import {
   successEditToast,
   successDeleteToast,
 } from "../../utils/toasters.js";
-import { getVideoByIds } from "../../api/movies.jsx";
+import { getVideoByIds, getCollection } from "../../api/movies.jsx";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
@@ -62,6 +70,7 @@ import {
   updateForLater,
   deleteMovie,
 } from "../../api/database";
+import poster from "../../media/poster.jpg";
 import { v4 as uuidv4 } from "uuid";
 
 const MovieModal = ({
@@ -79,6 +88,7 @@ const MovieModal = ({
   const [isConfirmForm, setIsConfirmForm] = useState(false);
   const [movieTrailer, setMovieTrailer] = useState(null);
   const [isInLibrary, setIsInLibrary] = useState(false);
+  const [collection, setCollection] = useState([]);
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -88,13 +98,30 @@ const MovieModal = ({
     const getTrailer = async () => {
       const data = await getVideoByIds(movieData.id);
 
-      console.log("trailers data", data);
+      if (movieData && movieData.belongs_to_collection) {
+        const collectionData = await getCollection(
+          movieData.belongs_to_collection.id
+        );
+
+        console.log(2, collectionData.parts);
+
+        setCollection(
+          collectionData.parts
+            .filter(
+              (item) =>
+                new Date(item.release_date).getTime() < new Date().getTime()
+            )
+            .sort(
+              (a, b) =>
+                new Date(b.release_date).getTime() -
+                new Date(a.release_date).getTime()
+            )
+        );
+      }
 
       const arrayItem = data.results.filter(
         (item) => item.name === "Final Trailer" || item.type === "Trailer"
       );
-
-      console.log("arrayItem", arrayItem);
 
       const finalArray = arrayItem.map((item) => ({
         id: uuidv4(),
@@ -102,8 +129,6 @@ const MovieModal = ({
         link: `https://www.youtube.com/watch?v=${item.key}`,
         preview: `https://img.youtube.com/vi/${item.key}/0.jpg`,
       }));
-
-      console.log("trailers arrey", finalArray);
 
       setMovieTrailer(
         finalArray
@@ -217,202 +242,245 @@ const MovieModal = ({
     setStars(number);
   };
 
+  console.log(collection);
+
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
-      <Modal>
-        <PosterContainer>
-          <ModalPoster
-            width="338"
-            height="484"
-            src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
-            alt="Movie poster"
-          />
-          {page === "library" && (
+      <ModalContainer>
+        <CollectionBlock>
+          {collection.length !== 0 && (
             <>
-              <CornerElementLeft></CornerElementLeft>
-              <CornerElementBottom></CornerElementBottom>
-              <MoreCheckPoster page={page}>
-                <MoreCheckButtonPoster
-                  forLater={forLater}
-                  onClick={() => onClickForLater()}
-                  themeType={themeType}
-                >
-                  <FaCrown />
-                </MoreCheckButtonPoster>
-              </MoreCheckPoster>
+              <CollectionList>
+                {collection.map((item) => {
+                  const isCurrentMovie =
+                    item.id === movieData.id ? true : false;
+
+                  return (
+                    <CollectionItem
+                      isCurrentMovie={isCurrentMovie}
+                      key={item.id}
+                    >
+                      <CollectionItemLink to={`/?id=${item.id}`}>
+                        <CollectionItemPoster
+                          src={
+                            item.poster_path
+                              ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+                              : poster
+                          }
+                          alt="movie poster"
+                          width="44"
+                          height="66"
+                        />
+                        <CollectionItemTitle>
+                          {item.original_title}
+                        </CollectionItemTitle>
+                      </CollectionItemLink>
+                    </CollectionItem>
+                  );
+                })}
+              </CollectionList>
             </>
           )}
-        </PosterContainer>
-        <ModalContent>
-          <ModalContentHeader>
-            <div>
-              <Title>{movieData.original_title}</Title>
-              <Year>{new Date(movieData.release_date).getFullYear()}</Year>
-            </div>
-
-            <CloseButton id="button-close" onClick={onCloseReadMore}>
-              <RiCloseLine />
-            </CloseButton>
-          </ModalContentHeader>
-          <ModalContentBody>
+        </CollectionBlock>
+        <Modal>
+          <PosterContainer>
+            <ModalPoster
+              width="338"
+              height="484"
+              src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
+              alt="Movie poster"
+            />
             {page === "library" && (
-              <Rating>
-                <StarsList editStarsMode={editStarsMode}>
-                  {getRatingList().map((item, index) => (
-                    <StarItem key={index} editStarsMode={editStarsMode}>
-                      <StarButton
-                        item={item}
-                        editStarsMode={editStarsMode}
-                        starsColor={starsColor(stars)}
-                        onClick={() => {
-                          if (editStarsMode) {
-                            onStars(index + 1);
-                          }
-                        }}
-                      >
-                        {item ? <TbStarFilled /> : <TbStar />}
-                      </StarButton>
-                    </StarItem>
-                  ))}
-                </StarsList>
-                {!editStarsMode ? (
-                  <EditButton
-                    onClick={() => {
-                      setEditStarsMode((prev) => !prev);
-                    }}
+              <>
+                <CornerElementLeft></CornerElementLeft>
+                <CornerElementBottom></CornerElementBottom>
+                <MoreCheckPoster page={page}>
+                  <MoreCheckButtonPoster
+                    forLater={forLater}
+                    onClick={() => onClickForLater()}
+                    themeType={themeType}
                   >
-                    <BiEditAlt />
-                  </EditButton>
-                ) : (
-                  <ConfirmButton onClick={onConfirmForm} themeType={themeType}>
-                    Confirm
-                  </ConfirmButton>
-                )}
-              </Rating>
+                    <FaCrown />
+                  </MoreCheckButtonPoster>
+                </MoreCheckPoster>
+              </>
             )}
-            <ModalParagraph>
-              <span>Tagline:</span> {movieData.tagline}
-            </ModalParagraph>
-            <ModalParagraph>
-              <span>Rating:</span> {movieData.vote_average.toFixed(1)} / 10 (
-              {movieData.vote_count} votes)
-            </ModalParagraph>
-            <ModalParagraph>
-              <span>Runtime:</span> {movieData.runtime} min
-            </ModalParagraph>
-            <ModalParagraph>
-              <span>Genres:</span>{" "}
-              {movieData.genres.map((item) => item.name).join(", ")}
-            </ModalParagraph>
-            <ModalParagraph>
-              <span>Countries:</span>{" "}
-              {movieData.production_countries
-                .map((item) => item.name)
-                .join(", ")}
-            </ModalParagraph>
-            <ModalParagraph page={page}>
-              <span>{movieData.overview}</span>
-            </ModalParagraph>
-          </ModalContentBody>
-          {movieTrailer && (
-            <TrailerList>
-              {movieTrailer.map((item) => (
-                <TrailerItem
-                  key={item.id}
-                  path={
-                    item.preview
-                      ? item.preview
-                      : `https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`
-                  }
-                >
-                  <TrailerButton href={item.link} target="_blank">
-                    <YoutubeLogo
-                      src={youtubeLogo}
-                      width="26"
-                      height="auto"
-                      alt="youtube logo"
-                    />
-                  </TrailerButton>
-                  <TrailerName>
-                    <p>{item.name}</p>
-                  </TrailerName>
-                </TrailerItem>
-              ))}
-            </TrailerList>
-          )}
+          </PosterContainer>
+          <ModalContent>
+            <ModalContentHeader>
+              <div>
+                <Title>{movieData.original_title}</Title>
+                <Year>{new Date(movieData.release_date).getFullYear()}</Year>
+              </div>
 
-          {!isInLibrary && page === "research" ? (
-            <ModalContentFooter>
-              {page === "research" && (
-                <>
-                  {!isConfirmForm && session && (
-                    <AddButton
+              <CloseButton id="button-close" onClick={onCloseReadMore}>
+                <RiCloseLine />
+              </CloseButton>
+            </ModalContentHeader>
+            <ModalContentBody>
+              {page === "library" && (
+                <Rating>
+                  <StarsList editStarsMode={editStarsMode}>
+                    {getRatingList().map((item, index) => (
+                      <StarItem key={index} editStarsMode={editStarsMode}>
+                        <StarButton
+                          item={item}
+                          editStarsMode={editStarsMode}
+                          starsColor={starsColor(stars)}
+                          onClick={() => {
+                            if (editStarsMode) {
+                              onStars(index + 1);
+                            }
+                          }}
+                        >
+                          {item ? <TbStarFilled /> : <TbStar />}
+                        </StarButton>
+                      </StarItem>
+                    ))}
+                  </StarsList>
+                  {!editStarsMode ? (
+                    <EditButton
                       onClick={() => {
-                        setIsConfirmForm((prev) => !prev);
                         setEditStarsMode((prev) => !prev);
                       }}
                     >
-                      Add to library
-                    </AddButton>
+                      <BiEditAlt />
+                    </EditButton>
+                  ) : (
+                    <ConfirmButton
+                      onClick={onConfirmForm}
+                      themeType={themeType}
+                    >
+                      Confirm
+                    </ConfirmButton>
                   )}
-                  {isConfirmForm && (
-                    <>
-                      <StarsListBottom>
-                        {getRatingList().map((item, index) => (
-                          <StarItemBottom key={index}>
-                            <StarButtonBottom
-                              item={item}
-                              starsColor={starsColor(stars)}
-                              onClick={() => onStars(index + 1)}
-                            >
-                              {item ? <TbStarFilled /> : <TbStar />}
-                            </StarButtonBottom>
-                          </StarItemBottom>
-                        ))}
-                      </StarsListBottom>
-                      <MoreCheck>
-                        <MoreCheckButton
-                          forLater={forLater}
-                          onClick={() => setForLater((prev) => !prev)}
-                        >
-                          <FaCrown />
-                        </MoreCheckButton>
-                      </MoreCheck>
-                      <ConfirmButton
-                        onClick={onConfirmForm}
-                        themeType={themeType}
+                </Rating>
+              )}
+              <ModalParagraph>
+                <span>Tagline:</span> {movieData.tagline}
+              </ModalParagraph>
+              <ModalParagraph>
+                <span>Rating:</span> {movieData.vote_average.toFixed(1)} / 10 (
+                {movieData.vote_count} votes)
+              </ModalParagraph>
+              <ModalParagraph>
+                <span>Runtime:</span> {movieData.runtime} min
+              </ModalParagraph>
+              <ModalParagraph>
+                <span>Genres:</span>{" "}
+                {movieData.genres.map((item) => item.name).join(", ")}
+              </ModalParagraph>
+              <ModalParagraph>
+                <span>Countries:</span>{" "}
+                {movieData.production_countries
+                  .map((item) => item.name)
+                  .join(", ")}
+              </ModalParagraph>
+              <ModalParagraph page={page}>
+                <span>{movieData.overview}</span>
+              </ModalParagraph>
+            </ModalContentBody>
+            {movieTrailer && (
+              <TrailerList>
+                {movieTrailer.map((item) => (
+                  <TrailerItem
+                    key={item.id}
+                    path={
+                      item.preview
+                        ? item.preview
+                        : `https://image.tmdb.org/t/p/original/${movieData.backdrop_path}`
+                    }
+                  >
+                    <TrailerButton href={item.link} target="_blank">
+                      <YoutubeLogo
+                        src={youtubeLogo}
+                        width="26"
+                        height="auto"
+                        alt="youtube logo"
+                      />
+                    </TrailerButton>
+                    <TrailerName>
+                      <p>{item.name}</p>
+                    </TrailerName>
+                  </TrailerItem>
+                ))}
+              </TrailerList>
+            )}
+
+            {!isInLibrary && page === "research" ? (
+              <ModalContentFooter>
+                {page === "research" && (
+                  <>
+                    {!isConfirmForm && session && (
+                      <AddButton
+                        onClick={() => {
+                          setIsConfirmForm((prev) => !prev);
+                          setEditStarsMode((prev) => !prev);
+                        }}
                       >
-                        Confirm
-                      </ConfirmButton>
-                    </>
-                  )}
-                </>
-              )}
-            </ModalContentFooter>
-          ) : (
-            <>
-              {page === "research" && (
-                <InLibraryBlock themeType={themeType}>
-                  <MdOutlineDone />
-                  In library
-                </InLibraryBlock>
-              )}
-            </>
-          )}
-          {page === "library" && (
-            <DeleteFromLibraryButton onClick={onDeleteMovie}>
-              Delete from library
-            </DeleteFromLibraryButton>
-          )}
-        </ModalContent>
-        <Toaster
-          toastOptions={{
-            style: {
-              zIndex: 9999,
-            },
-          }}
-        />
-      </Modal>
+                        Add to library
+                      </AddButton>
+                    )}
+                    {isConfirmForm && (
+                      <>
+                        <StarsListBottom>
+                          {getRatingList().map((item, index) => (
+                            <StarItemBottom key={index}>
+                              <StarButtonBottom
+                                item={item}
+                                starsColor={starsColor(stars)}
+                                onClick={() => onStars(index + 1)}
+                              >
+                                {item ? <TbStarFilled /> : <TbStar />}
+                              </StarButtonBottom>
+                            </StarItemBottom>
+                          ))}
+                        </StarsListBottom>
+                        <MoreCheck>
+                          <MoreCheckButton
+                            forLater={forLater}
+                            onClick={() => setForLater((prev) => !prev)}
+                          >
+                            <FaCrown />
+                          </MoreCheckButton>
+                        </MoreCheck>
+                        <ConfirmButton
+                          onClick={onConfirmForm}
+                          themeType={themeType}
+                        >
+                          Confirm
+                        </ConfirmButton>
+                      </>
+                    )}
+                  </>
+                )}
+              </ModalContentFooter>
+            ) : (
+              <>
+                {page === "research" && (
+                  <InLibraryBlock themeType={themeType}>
+                    <MdOutlineDone />
+                    In library
+                  </InLibraryBlock>
+                )}
+              </>
+            )}
+            {page === "library" && (
+              <DeleteFromLibraryButton onClick={onDeleteMovie}>
+                Delete from library
+              </DeleteFromLibraryButton>
+            )}
+          </ModalContent>
+          <Toaster
+            toastOptions={{
+              style: {
+                zIndex: 9999,
+              },
+            }}
+          />
+        </Modal>
+        <ModalReviews></ModalReviews>
+      </ModalContainer>
     </ModalBackdrop>,
     document.body
   );

@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const ModalBackdrop = styled.div`
   width: 100%;
   height: 100%;
-  background: rgba(36, 36, 36, 0.2);
+  background: rgba(24, 24, 24, 0.2);
   backdrop-filter: blur(2px);
   position: fixed;
   top: 0;
@@ -11,6 +12,86 @@ export const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+`;
+
+export const ModalContainer = styled.div`
+  display: flex;
+`;
+
+export const CollectionBlock = styled.div`
+  width: 160px;
+  margin-right: 6px;
+  border-radius: 6px;
+  overflow: hidden;
+  height: auto;
+`;
+
+export const CollectionList = styled.ul`
+  max-height: 496px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 4px;
+  }
+`;
+
+export const CollectionItem = styled.li`
+  margin-bottom: 6px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:after {
+    content: "";
+    width: 6px;
+    height: 100%;
+    position: absolute;
+    background-color: var(--accent);
+    right: 0;
+    top: 0;
+    opacity: ${({ isCurrentMovie }) => (isCurrentMovie ? "1" : "0.2")};
+    transition: 0.6s;
+  }
+  &:hover,
+  &:focus {
+    &:after {
+      opacity: 0.6;
+    }
+  }
+`;
+
+export const CollectionItemLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-grey);
+  border-radius: 10px;
+  gap: 8px;
+  padding: 4px;
+  width: 100%;
+  height: 100%;
+  color: var(--text-main);
+  transition: 0.6s;
+  &:hover,
+  &:focus {
+    background-color: var(--hover-grey);
+  }
+`;
+
+export const CollectionItemPoster = styled.img`
+  border-radius: 6px;
+`;
+
+export const CollectionItemTitle = styled.p`
+  width: 100%;
+  font-size: 12.6px;
+`;
+
+export const ModalReviews = styled.div`
+  outline: 1px solid red;
+  width: 264px;
+  margin-left: 6px;
 `;
 
 export const Modal = styled.div`

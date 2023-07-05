@@ -83,3 +83,16 @@ export const getVideoByIds = async (id) => {
     console.error("getVideoByIds error");
   }
 };
+
+export const getCollection = async (id) => {
+  try {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/collection/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US
+`
+    );
+    const result = await data.json();
+    return result;
+  } catch (e) {
+    console.error("getVideoByIds error");
+  }
+};
