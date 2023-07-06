@@ -37,10 +37,12 @@ const MoviesList = ({
   const [finalList, setFinalList] = useState([]);
 
   const genreIds = (item) => {
-    if (page === "research") {
-      return item.genre_ids.map((item) => genresNames[item]).join(", ");
-    } else if (page === "library") {
-      return item.genres.map((item) => genresNames[item.id]).join(", ");
+    if (item && item.genre_ids) {
+      if (page === "research") {
+        return item.genre_ids.map((item) => genresNames[item]).join(", ");
+      } else if (page === "library") {
+        return item.genres.map((item) => genresNames[item.id]).join(", ");
+      }
     }
   };
 
