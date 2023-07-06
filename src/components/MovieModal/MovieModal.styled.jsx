@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
 export const ModalBackdrop = styled.div`
   width: 100%;
@@ -30,15 +29,31 @@ export const CollectionBlock = styled.div`
   border-radius: 6px;
   overflow: hidden;
   height: auto;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--bg-grey);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-hover);
+    border-radius: 4px;
+  }
 `;
 
 export const CollectionList = styled.ul`
   max-height: 496px;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 4px;
-  }
+  margin-right: 4px;
 `;
 
 export const CollectionItem = styled.li`
@@ -68,16 +83,16 @@ export const CollectionItem = styled.li`
   }
 `;
 
-export const CollectionItemLink = styled(NavLink)`
+export const CollectionItemLink = styled.button`
   display: flex;
   align-items: center;
   background-color: var(--bg-grey);
   border-radius: 10px;
-  gap: 8px;
   padding: 4px;
+  color: var(--text-main);
+  gap: 8px;
   width: 100%;
   height: 100%;
-  color: var(--text-main);
   transition: 0.6s;
   &:hover,
   &:focus {
@@ -92,12 +107,7 @@ export const CollectionItemPoster = styled.img`
 export const CollectionItemTitle = styled.p`
   width: 100%;
   font-size: 12.6px;
-`;
-
-export const ModalReviews = styled.div`
-  outline: 1px solid red;
-  width: 264px;
-  margin-left: 6px;
+  text-align: left;
 `;
 
 export const Modal = styled.div`

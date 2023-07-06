@@ -39,7 +39,6 @@ import {
   CollectionBlock,
   CollectionList,
   CollectionItem,
-  ModalReviews,
   CollectionItemLink,
   CollectionItemPoster,
   CollectionItemTitle,
@@ -53,8 +52,9 @@ import { MdOutlineDone } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
 import youtubeLogo from "../../media/youtube-logo.png";
 import { Toaster } from "react-hot-toast";
+import ModalReviews from "../ModalReviews/ModalReviews";
 import {
-  errorToast,
+  errorMovieToast,
   successToast,
   successEditToast,
   successDeleteToast,
@@ -72,6 +72,7 @@ import {
 } from "../../api/database";
 import poster from "../../media/poster.jpg";
 import { v4 as uuidv4 } from "uuid";
+import { useSearchParams } from "react-router-dom";
 
 const MovieModal = ({
   movieData,
@@ -93,6 +94,7 @@ const MovieModal = ({
   const session = useSession();
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const getTrailers = async () => {
     const data = await getVideoByIds(movieData.id);
@@ -152,8 +154,23 @@ const MovieModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // -----------------------------------------------------------------------------------------
+
   useEffect(() => {
     getTrailers();
+
+    if (moviesListIds && page === "research") {
+      const fragmentData = moviesListIds.filter(
+        (item) => item.movie_id === movieData.id
+      );
+      setIsInLibrary(fragmentData.length === 0 ? false : true);
+    }
+
+    if (page === "library") {
+      setForLater(movieData.for_later);
+      setStars(movieData.stars);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieData]);
 
   // -----------------------------------------------------------------------------------------
@@ -172,7 +189,7 @@ const MovieModal = ({
 
   const onConfirmForm = () => {
     if (stars === 0) {
-      errorToast();
+      errorMovieToast();
       return;
     }
 
@@ -247,13 +264,10 @@ const MovieModal = ({
   const onStars = (number) => {
     setStars(number);
   };
-
-  console.log(collection);
-
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
       <ModalContainer>
-        <CollectionBlock>
+        <CollectionBlock onClick={onCloseReadMore}>
           {collection.length !== 0 && (
             <>
               <CollectionList>
@@ -261,12 +275,22 @@ const MovieModal = ({
                   const isCurrentMovie =
                     item.id === movieData.id ? true : false;
 
+                  const onChangeMovie = () => {
+                    const params = { id: item.id };
+
+                    if (searchParams.get("page")) {
+                      params.page = searchParams.get("page");
+                    }
+
+                    setSearchParams(params);
+                  };
+
                   return (
                     <CollectionItem
                       isCurrentMovie={isCurrentMovie}
                       key={item.id}
                     >
-                      <CollectionItemLink to={`/?id=${item.id}`}>
+                      <CollectionItemLink onClick={onChangeMovie}>
                         <CollectionItemPoster
                           src={
                             item.poster_path
@@ -485,7 +509,7 @@ const MovieModal = ({
             }}
           />
         </Modal>
-        <ModalReviews></ModalReviews>
+        <ModalReviews movieData={movieData} />
       </ModalContainer>
     </ModalBackdrop>,
     document.body

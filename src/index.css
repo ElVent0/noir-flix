@@ -2,9 +2,9 @@
   box-sizing: border-box;
 }
 
-html {
-  /* overflow-y: auto; */
-}
+/* html {
+  overflow-y: auto;
+} */
 
 body {
   margin: 0;

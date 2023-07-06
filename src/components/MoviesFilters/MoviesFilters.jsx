@@ -47,7 +47,7 @@ const ResearchFilters = ({
 }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const themeType = useContext(ThemeContext);
 
@@ -115,7 +115,7 @@ const ResearchFilters = ({
               </BodySort>
             )}
           </FilterInputSort>
-          <FiltersParagraph>Genre</FiltersParagraph>
+          <FiltersParagraph>Genres</FiltersParagraph>
           <GenresList>
             {finalGenresList.map((item) => {
               let isActive;
@@ -124,11 +124,24 @@ const ResearchFilters = ({
               } else {
                 isActive = false;
               }
+
+              const onChangeGenre = (item) => {
+                const params = {};
+
+                if (searchParams.get("page")) {
+                  params.page = "1";
+                }
+
+                setSearchParams(params);
+
+                setCurrentGenre(item);
+              };
+
               return (
                 <GenresItem key={item[0]} isActive={isActive}>
                   <GenresButton
                     id={item[0]}
-                    onClick={() => setCurrentGenre(item[0])}
+                    onClick={() => onChangeGenre(item[0])}
                     isActive={isActive}
                     themeType={themeType}
                   >

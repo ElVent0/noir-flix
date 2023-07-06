@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./SharedLayout/SharedLayout.jsx";
 import Research from "../pages/Research/Research";
 import Library from "../pages/Library/Library";
+import Reviews from "../pages/Reviews/Reviews";
 import WrongPath from "../components/WrongPath/WrongPath";
 import { useState, useEffect, createContext } from "react";
 import { lightTheme, darkTheme } from "../utils/colors.js";
@@ -80,6 +81,10 @@ const App = () => {
             <Route
               path="/library"
               element={<Library onAddToRecentMovies={onAddToRecentMovies} />}
+            />
+            <Route
+              path="/reviews"
+              element={<Reviews onAddToRecentMovies={onAddToRecentMovies} />}
             />
             <Route path="*" element={<WrongPath />} />
           </Route>

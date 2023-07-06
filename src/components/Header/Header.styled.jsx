@@ -7,7 +7,7 @@ export const HeaderStyled = styled.div`
   display: flex;
   align-items: center;
   position: sticky;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   top: 0px;
   z-index: 1000;
   border-radius: 0 0 10px 10px;
@@ -38,6 +38,10 @@ export const Logo = styled.img`
   position: relative;
   top: ${(prop) => (prop.isFixed ? "0px" : "-6px")};
   display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const ThemeButton = styled.button`
@@ -166,6 +170,7 @@ export const LoginMenu = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: auto;
 `;
 
 export const Login = styled.button`

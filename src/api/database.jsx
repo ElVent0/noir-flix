@@ -176,3 +176,71 @@ export const deleteMovie = async (
     console.error("delete error", e);
   }
 };
+
+export const sendReviews = async (
+  supabase,
+  session,
+  movieData,
+  textArea,
+  goodButton,
+  badButton,
+  successToast,
+  // setMoviesListIds,
+  onDefaultState
+) => {
+  try {
+    const { error } = await supabase
+      .from("reviews")
+      .insert({
+        userId: session.user.id,
+        username: session.user.user_metadata.name,
+        movieId: movieData.id,
+        content: textArea,
+        good: goodButton,
+        bad: badButton,
+      })
+      .single();
+
+    if (error) {
+      console.error("insert review error 1", error);
+      return;
+    } else {
+      // getUserMovies(supabase, session, setMoviesListIds);
+      onDefaultState();
+      successToast();
+    }
+  } catch (e) {
+    console.error("insert review error 2", e);
+  }
+};
+
+export const getReviews = async (supabase, setReviewsList) => {
+  const { data } = await supabase.from("reviews").select("*");
+
+  // Сортування за датою
+  let result;
+  if (window.location.pathname === "/reviews") {
+    result = data.sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+    setReviewsList(result);
+  }
+};
+
+export const getUserReviews = async (supabase, session, setReviewsList) => {
+  const { data } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("user_id", session.user.id);
+
+  // Сортування за датою
+  let result;
+  if (window.location.pathname === "/reviews") {
+    result = data.sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+    setReviewsList(result);
+  }
+};

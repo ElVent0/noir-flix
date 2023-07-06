@@ -120,6 +120,9 @@ const Header = ({ themeToggle }) => {
           <NavigationItem>
             <NavigationLink to="library">Library</NavigationLink>
           </NavigationItem>
+          <NavigationItem>
+            <NavigationLink to="reviews">Reviews</NavigationLink>
+          </NavigationItem>
         </NavigationList>
       </Navigation>
       <Logo

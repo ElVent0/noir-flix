@@ -33,6 +33,36 @@ export const errorToast = () =>
     },
   });
 
+export const errorMovieToast = () =>
+  toast.error("Fill in STARS field", {
+    duration: 4000,
+    style: {
+      padding: "16px",
+      textAlign: "center",
+      color: "#606770",
+      zIndex: "2001",
+    },
+    iconTheme: {
+      primary: "#fa4b34",
+      secondary: "#ffffff",
+    },
+  });
+
+export const errorReviewToast = () =>
+  toast.error("Fill in all fields", {
+    duration: 4000,
+    style: {
+      padding: "16px",
+      textAlign: "center",
+      color: "#606770",
+      zIndex: "2001",
+    },
+    iconTheme: {
+      primary: "#fa4b34",
+      secondary: "#ffffff",
+    },
+  });
+
 export const errorToastCreation = () =>
   toast.error("Cannot create new user now", {
     duration: 4000,
@@ -91,6 +121,21 @@ export const errorPassword = () =>
 
 export const successToast = () =>
   toast.success("The movie has been added", {
+    duration: 4000,
+    style: {
+      padding: "16px",
+      textAlign: "center",
+      color: "#606770",
+      zIndex: "2001",
+    },
+    iconTheme: {
+      primary: "#11b3ff",
+      secondary: "#ffffff",
+    },
+  });
+
+export const successReviewToast = () =>
+  toast.success("The review has been added", {
     duration: 4000,
     style: {
       padding: "16px",

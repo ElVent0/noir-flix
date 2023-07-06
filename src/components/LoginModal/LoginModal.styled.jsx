@@ -107,8 +107,8 @@ export const MailInput = styled.input`
   display: block;
   width: 100%;
   height: 40px;
-  border-radius: 10px;
   margin-bottom: 8px;
+  border-radius: 10px;
   border: 1px solid var(--text-main-transparent);
   background-color: var(--pure-white);
   padding: 0 12px;
@@ -164,13 +164,13 @@ export const PasswordContainer = styled.div`
 export const ButtonSubmit = styled.button`
   width: 100%;
   height: 46px;
-  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+  border-radius: 10px;
   background-color: var(--accent);
   font-size: 18px;
   color: ${(prop) =>
