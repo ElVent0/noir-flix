@@ -127,13 +127,13 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       setIsOpenModal(false);
       setTimeout(() => {
         onclose();
-      }, 300);
+      }, 200);
     }
     if (e.currentTarget.id === "button-close") {
       setIsOpenModal(false);
       setTimeout(() => {
         onclose();
-      }, 300);
+      }, 200);
     }
   };
 

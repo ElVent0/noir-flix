@@ -21,8 +21,8 @@ export const ModalBackdrop = styled.div`
   transform: translate3d(0, 0, 0);
   animation: ${(props) =>
     props.isOpenModal
-      ? "upScaling 0.5s ease-in-out"
-      : "downScaling 0.3s ease-in-out"};
+      ? "upScaling 0.3s ease-in-out"
+      : "downScaling 0.2s ease-in-out"};
   @keyframes upScaling {
     0% {
       opacity: 0;

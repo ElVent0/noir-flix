@@ -81,14 +81,14 @@ const Header = ({ themeToggle }) => {
       setTimeout(() => {
         setIsProfileModal(false);
         document.body.style.overflow = "auto";
-      }, 300);
+      }, 200);
     }
     if (e.currentTarget.id === "button-close") {
       setIsOpenModalProfle(false);
       setTimeout(() => {
         setIsProfileModal(false);
         document.body.style.overflow = "auto";
-      }, 300);
+      }, 200);
     }
   };
 
@@ -105,14 +105,14 @@ const Header = ({ themeToggle }) => {
       setTimeout(() => {
         setIsLoginModal(false);
         document.body.style.overflow = "auto";
-      }, 300);
+      }, 200);
     }
     if (e.currentTarget.id === "button-close") {
       setIsOpenModalLogin(false);
       setTimeout(() => {
         setIsLoginModal(false);
         document.body.style.overflow = "auto";
-      }, 300);
+      }, 200);
     }
   };
 
