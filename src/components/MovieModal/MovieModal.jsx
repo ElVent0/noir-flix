@@ -267,8 +267,8 @@ const MovieModal = ({
     setStars(number);
   };
   return ReactDOM.createPortal(
-    <ModalBackdrop onClick={onCloseReadMore}>
-      <ModalContainer movieData={movieData} isOpenModal={isOpenModal}>
+    <ModalBackdrop onClick={onCloseReadMore} isOpenModal={isOpenModal}>
+      <ModalContainer movieData={movieData}>
         <CollectionBlock onClick={onCloseReadMore}>
           {collection.length !== 0 && (
             <>

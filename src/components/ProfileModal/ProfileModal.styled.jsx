@@ -16,6 +16,28 @@ export const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 2000;
+  animation: ${(props) =>
+    props.isOpenModalProfile
+      ? "upScaling 0.5s ease-in-out"
+      : "downScaling 0.3s ease-in-out"};
+  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  @keyframes upScaling {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes downScaling {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 `;
 
 export const Modal = styled.div`
@@ -26,24 +48,6 @@ export const Modal = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  animation: ${(props) =>
-    props.isOpenModalProfile ? "upScaling 0.5s" : "downScaling 0.3s"};
-  @keyframes upScaling {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes downScaling {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
 `;
 
 export const CloseButton = styled.button`

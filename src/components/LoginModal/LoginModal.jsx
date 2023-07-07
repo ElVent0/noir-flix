@@ -109,8 +109,11 @@ const ProfileModal = ({
   };
 
   return ReactDOM.createPortal(
-    <ModalBackdrop onClick={onCloseLoginModal}>
-      <Modal themeType={themeType} isOpenModalLogin={isOpenModalLogin}>
+    <ModalBackdrop
+      onClick={onCloseLoginModal}
+      isOpenModalLogin={isOpenModalLogin}
+    >
+      <Modal themeType={themeType}>
         <ModalPoster path={path}></ModalPoster>
         <ModalContent>
           <CloseButton id="button-close" onClick={onCloseLoginModal}>

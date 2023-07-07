@@ -17,29 +17,32 @@ export const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-`;
-
-export const ModalContainer = styled.div`
-  display: flex;
-  /* animation: upScaling 0.6s; */
+  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   animation: ${(props) =>
-    props.isOpenModal ? "upScaling 0.5s" : "downScaling 0.3s"};
+    props.isOpenModal
+      ? "upScaling 0.5s ease-in-out"
+      : "downScaling 0.3s ease-in-out"};
   @keyframes upScaling {
     0% {
-      transform: scale(0);
+      opacity: 0;
     }
     100% {
-      transform: scale(1);
+      opacity: 1;
     }
   }
   @keyframes downScaling {
     0% {
-      transform: scale(1);
+      opacity: 1;
     }
     100% {
-      transform: scale(0);
+      opacity: 0;
     }
   }
+`;
+
+export const ModalContainer = styled.div`
+  display: flex;
 `;
 
 export const CollectionBlock = styled.div`

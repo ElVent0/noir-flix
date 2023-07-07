@@ -68,9 +68,6 @@ const Library = ({ onAddToRecentMovies }) => {
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
 
-        // if (session) {
-        // await getMoviesFromLibarary();
-
         const result =
           moviesListIds &&
           moviesListIds.filter((item) => item.movie_id === data.id);
