@@ -21,6 +21,15 @@ export const ModalBackdrop = styled.div`
 
 export const ModalContainer = styled.div`
   display: flex;
+  animation: upScaling 0.6s;
+  @keyframes upScaling {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const CollectionBlock = styled.div`
@@ -284,10 +293,10 @@ export const TrailerButton = styled.a`
 
 export const YoutubeLogo = styled.img`
   transition: 0.3s;
-  animation: scaling 2s ease-in-out infinite;
   position: relative;
   top: 4px;
   left: 4px;
+  animation: scaling 2s ease-in-out infinite;
   @keyframes scaling {
     0% {
       transform: scale(1);

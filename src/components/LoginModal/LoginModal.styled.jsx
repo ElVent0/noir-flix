@@ -26,6 +26,15 @@ export const Modal = styled.div`
   border-radius: 10px;
   display: flex;
   overflow: hidden;
+  animation: upScaling 0.6s;
+  @keyframes upScaling {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const ModalContent = styled.div`
