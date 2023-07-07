@@ -37,6 +37,8 @@ const Header = ({ themeToggle }) => {
   const [avatar, setAvatar] = useState(null);
   const [isFixed, setIsFixed] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [isOpenModalProfile, setIsOpenModalProfle] = useState(false);
+  const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
 
   const themeType = useContext(ThemeContext);
   const session = useSession();
@@ -69,34 +71,48 @@ const Header = ({ themeToggle }) => {
 
   const onOpenProfileModal = () => {
     setIsProfileModal(true);
+    setIsOpenModalProfle(true);
     document.body.style.overflow = "hidden";
   };
 
   const onCloseProfileModal = (e) => {
     if (e.target === e.currentTarget) {
-      setIsProfileModal(false);
-      document.body.style.overflow = "auto";
+      setIsOpenModalProfle(false);
+      setTimeout(() => {
+        setIsProfileModal(false);
+        document.body.style.overflow = "auto";
+      }, 300);
     }
     if (e.currentTarget.id === "button-close") {
-      setIsProfileModal(false);
-      document.body.style.overflow = "auto";
+      setIsOpenModalProfle(false);
+      setTimeout(() => {
+        setIsProfileModal(false);
+        document.body.style.overflow = "auto";
+      }, 300);
     }
   };
 
   const onOpenLoginModal = () => {
     setIsLoginTypeModal(true);
     setIsLoginModal(true);
+    setIsOpenModalLogin(true);
     document.body.style.overflow = "hidden";
   };
 
   const onCloseLoginModal = (e) => {
     if (e.target === e.currentTarget) {
-      setIsLoginModal(false);
-      document.body.style.overflow = "auto";
+      setIsOpenModalLogin(false);
+      setTimeout(() => {
+        setIsLoginModal(false);
+        document.body.style.overflow = "auto";
+      }, 300);
     }
     if (e.currentTarget.id === "button-close") {
-      setIsLoginModal(false);
-      document.body.style.overflow = "auto";
+      setIsOpenModalLogin(false);
+      setTimeout(() => {
+        setIsLoginModal(false);
+        document.body.style.overflow = "auto";
+      }, 300);
     }
   };
 
@@ -166,6 +182,7 @@ const Header = ({ themeToggle }) => {
           onCloseProfileModal={onCloseProfileModal}
           setIsProfileModal={setIsProfileModal}
           avatar={avatar}
+          isOpenModalProfile={isOpenModalProfile}
         />
       )}
 
@@ -175,6 +192,7 @@ const Header = ({ themeToggle }) => {
           isLoginTypeModal={isLoginTypeModal}
           setIsLoginTypeModal={setIsLoginTypeModal}
           setIsLoginModal={setIsLoginModal}
+          isOpenModalLogin={isOpenModalLogin}
         />
       )}
 

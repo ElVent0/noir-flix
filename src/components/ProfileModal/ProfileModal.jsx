@@ -16,7 +16,12 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import path from "../../media/profile.jpg";
 import { logout } from "../../api/auth.jsx";
 
-const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
+const ProfileModal = ({
+  onCloseProfileModal,
+  setIsProfileModal,
+  avatar,
+  isOpenModalProfile,
+}) => {
   const session = useSession();
   const supabase = useSupabaseClient();
 
@@ -38,7 +43,7 @@ const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseProfileModal}>
-      <Modal>
+      <Modal isOpenModalProfile={isOpenModalProfile}>
         <Statistics path={path}></Statistics>
         <Profile>
           <UserImage src={avatar} alt="User image" />

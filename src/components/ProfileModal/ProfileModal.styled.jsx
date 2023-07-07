@@ -26,13 +26,22 @@ export const Modal = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  animation: upScaling 0.6s;
+  animation: ${(props) =>
+    props.isOpenModalProfile ? "upScaling 0.5s" : "downScaling 0.3s"};
   @keyframes upScaling {
     0% {
       transform: scale(0);
     }
     100% {
       transform: scale(1);
+    }
+  }
+  @keyframes downScaling {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
     }
   }
 `;

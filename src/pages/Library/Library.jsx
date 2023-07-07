@@ -25,6 +25,7 @@ const Library = ({ onAddToRecentMovies }) => {
   const [stars, setStars] = useState(0);
   const [forLater, setForLater] = useState(false);
   const [inputSort, setInputSort] = useState("New");
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const location = useLocation();
   const session = useSession();
@@ -62,6 +63,8 @@ const Library = ({ onAddToRecentMovies }) => {
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
+      setIsOpenModal(true);
+
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
 
@@ -100,10 +103,16 @@ const Library = ({ onAddToRecentMovies }) => {
 
   const onCloseReadMore = (e) => {
     if (e.target === e.currentTarget) {
-      onclose();
+      setIsOpenModal(false);
+      setTimeout(() => {
+        onclose();
+      }, 300);
     }
     if (e.currentTarget.id === "button-close") {
-      onclose();
+      setIsOpenModal(false);
+      setTimeout(() => {
+        onclose();
+      }, 300);
     }
   };
 
@@ -184,6 +193,7 @@ const Library = ({ onAddToRecentMovies }) => {
           onclose={onclose}
           setMoviesListIds={setMoviesListIds}
           getMoviesFromLibarary={getMoviesFromLibarary}
+          isOpenModal={isOpenModal}
         />
       )}
     </>

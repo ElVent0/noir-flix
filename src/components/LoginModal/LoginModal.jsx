@@ -43,6 +43,7 @@ const ProfileModal = ({
   isLoginTypeModal,
   setIsLoginTypeModal,
   setIsLoginModal,
+  isOpenModalLogin,
 }) => {
   const [userName, setUserName] = useState("");
   const [userMail, setUserMail] = useState("");
@@ -109,7 +110,7 @@ const ProfileModal = ({
 
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseLoginModal}>
-      <Modal themeType={themeType}>
+      <Modal themeType={themeType} isOpenModalLogin={isOpenModalLogin}>
         <ModalPoster path={path}></ModalPoster>
         <ModalContent>
           <CloseButton id="button-close" onClick={onCloseLoginModal}>

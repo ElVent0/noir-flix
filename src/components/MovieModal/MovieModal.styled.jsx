@@ -21,13 +21,23 @@ export const ModalBackdrop = styled.div`
 
 export const ModalContainer = styled.div`
   display: flex;
-  animation: upScaling 0.6s;
+  /* animation: upScaling 0.6s; */
+  animation: ${(props) =>
+    props.isOpenModal ? "upScaling 0.5s" : "downScaling 0.3s"};
   @keyframes upScaling {
     0% {
       transform: scale(0);
     }
     100% {
       transform: scale(1);
+    }
+  }
+  @keyframes downScaling {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
     }
   }
 `;

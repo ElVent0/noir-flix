@@ -82,6 +82,7 @@ const MovieModal = ({
   onclose,
   setMoviesListIds,
   getMoviesFromLibarary,
+  isOpenModal,
 }) => {
   const [editStarsMode, setEditStarsMode] = useState(false);
   const [stars, setStars] = useState(0);
@@ -267,7 +268,7 @@ const MovieModal = ({
   };
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore}>
-      <ModalContainer>
+      <ModalContainer movieData={movieData} isOpenModal={isOpenModal}>
         <CollectionBlock onClick={onCloseReadMore}>
           {collection.length !== 0 && (
             <>

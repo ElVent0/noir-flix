@@ -24,6 +24,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const [currentGenre, setCurrentGenre] = useState("0");
   const [movieData, setMovieData] = useState(null);
   const [trendingList, setTrendingList] = useState([]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const location = useLocation();
   const session = useSession();
@@ -85,6 +86,8 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
+      setIsOpenModal(true);
+
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
         setMovieData(data);
@@ -121,10 +124,16 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       document.body.style.overflow = "auto";
     };
     if (e.target === e.currentTarget) {
-      onclose();
+      setIsOpenModal(false);
+      setTimeout(() => {
+        onclose();
+      }, 300);
     }
     if (e.currentTarget.id === "button-close") {
-      onclose();
+      setIsOpenModal(false);
+      setTimeout(() => {
+        onclose();
+      }, 300);
     }
   };
 
@@ -180,6 +189,7 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               page="research"
               moviesListIds={moviesListIds}
               setMoviesListIds={setMoviesListIds}
+              isOpenModal={isOpenModal}
             />
           )}
         </>
