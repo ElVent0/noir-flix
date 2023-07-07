@@ -16,7 +16,7 @@ import {
   CornerElementLeft,
   CornerElementBottom,
 } from "./MoviesList.styled";
-import poster from "../../media/poster.jpg";
+import poster from "../../media/poster.png";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { FaCrown } from "react-icons/fa";

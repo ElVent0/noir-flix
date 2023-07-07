@@ -2,7 +2,6 @@ import {
   ModalReviewsStyled,
   MoviesReviews,
   NewReviewForm,
-  Rating,
   ReviewsList,
   ReviewItem,
   RatingList,
@@ -12,34 +11,37 @@ import {
   GoodButton,
   BadButton,
   ButtonCofirm,
+  ItemHeader,
+  UserName,
+  ItemBody,
+  ItemReview,
+  UserDate,
+  NothingBlock,
 } from "./ModalReviews.styled";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
 import { useState } from "react";
 import { useEffect } from "react";
-import { sendReviews } from "../../api/database";
+import { sendReviews, getMovieReviews } from "../../api/database";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { errorReviewToast, successReviewToast } from "../../utils/toasters.js";
+import { getDate } from "../../utils/utils";
 
 const ModalReviews = ({ movieData }) => {
   const [textArea, setTextArea] = useState("");
   const [goodButton, setGoodButton] = useState(false);
   const [badButton, setBadButton] = useState(false);
+  const [movieReviewsList, setMovieReviewsList] = useState([]);
 
   const session = useSession();
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
 
-  //   let initGood = 0;
-  //   const goodReviews = reviews.reduce((a, b) => a + b.good, initGood);
-
-  //   let initBad = 0;
-  //   const badReviews = reviews.reduce((a, b) => a + b.bad, initBad);
-
   //   console.log(session.user.identities.identity_data);
   //   console.log(session.user.user_metadata.name);
   //   console.log(session.user);
+  // console.log(movieData);
 
   const onDefaultState = () => {
     setTextArea("");
@@ -59,8 +61,9 @@ const ModalReviews = ({ movieData }) => {
         goodButton,
         badButton,
         successReviewToast,
-        // errorReviewToast,
-        onDefaultState
+        onDefaultState,
+        movieData.id,
+        setMovieReviewsList
       );
     } else {
       errorReviewToast();
@@ -69,39 +72,75 @@ const ModalReviews = ({ movieData }) => {
 
   const onChangeTextArea = (e) => {
     setTextArea(e.target.value);
-    console.log(textArea);
   };
 
   const onClickGood = () => {
     setBadButton(false);
     setGoodButton(true);
-    console.log(goodButton, badButton);
   };
 
   const onClickBad = () => {
     setGoodButton(false);
     setBadButton(true);
-    console.log(goodButton, badButton);
   };
 
   useEffect(() => {
+    getMovieReviews(supabase, movieData.id, setMovieReviewsList);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    getMovieReviews(supabase, movieData.id, setMovieReviewsList);
     onDefaultState();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieData]);
+
+  console.log(movieReviewsList);
+
+  let initGood = 0;
+  const goodReviews = movieReviewsList.reduce((a, b) => a + b.good, initGood);
+
+  let initBad = 0;
+  const badReviews = movieReviewsList.reduce((a, b) => a + b.bad, initBad);
 
   return (
     <ModalReviewsStyled>
       <MoviesReviews>
-        <Rating>
-          <RatingList>
-            <RatingItem>{/* {goodReviews} */}</RatingItem>
-            <RatingItem>{/* {badReviews} */}</RatingItem>
-          </RatingList>
-        </Rating>
-        <ReviewsList>
-          {/* {reviews.map((item) => (
-            <ReviewItem key={item.id}></ReviewItem>
-          ))} */}
-        </ReviewsList>
+        <RatingList>
+          <RatingItem>
+            <BiSolidLike />
+            {goodReviews}
+          </RatingItem>
+          <RatingItem>
+            <BiSolidDislike />
+            {badReviews}
+          </RatingItem>
+        </RatingList>
+        {movieReviewsList.length !== 0 ? (
+          <ReviewsList>
+            {movieReviewsList.map((item) => (
+              <ReviewItem key={item.id}>
+                <ItemHeader isgood={item.good}>
+                  <UserName>{item.username}</UserName>
+                  {item.good ? <BiSolidLike /> : <BiSolidDislike />}
+                  <UserDate>{getDate(item.created_at)}</UserDate>
+                </ItemHeader>
+                <ItemBody>
+                  <ItemReview>{item.content}</ItemReview>
+                </ItemBody>
+              </ReviewItem>
+            ))}
+          </ReviewsList>
+        ) : (
+          <NothingBlock>
+            <p>
+              There are no reviews for this movie yet. Be the first to comment
+              on it
+            </p>
+          </NothingBlock>
+        )}
       </MoviesReviews>
       <NewReviewForm onSubmit={(e) => onFormSubmit(e)}>
         <TextArea

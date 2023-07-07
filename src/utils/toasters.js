@@ -165,7 +165,7 @@ export const successEditToast = () =>
   });
 
 export const successDeleteToast = () =>
-  toast.success("The movie has been removed", {
+  toast.success("Deleted", {
     duration: 4000,
     style: {
       padding: "16px",

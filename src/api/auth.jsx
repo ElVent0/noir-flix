@@ -1,6 +1,10 @@
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-export const loginWithGoogle = async (supabase, errorToast) => {
+export const loginWithGoogle = async (
+  supabase,
+  errorToast,
+  setIsLoginModal
+) => {
   try {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -8,6 +12,9 @@ export const loginWithGoogle = async (supabase, errorToast) => {
 
     if (error) {
       errorToast();
+    } else {
+      setIsLoginModal(false);
+      document.body.style.overflow = "auto";
     }
   } catch (e) {
     console.error("signInWithOAuth error", e);
@@ -40,10 +47,11 @@ export const loginWithMail = async (
       password: userPassword,
     });
 
-    setIsLoginModal(false);
-
     if (error) {
       errorToast();
+    } else {
+      setIsLoginModal(false);
+      document.body.style.overflow = "auto";
     }
   } catch (e) {
     console.error("signInWithPassword error", e);
@@ -86,6 +94,8 @@ export const createUserWithMail = async (
     if (error) {
       errorToastCreation();
     }
+    setIsLoginModal(false);
+    document.body.style.overflow = "auto";
   } catch (e) {
     console.error("signUp error", e);
   }

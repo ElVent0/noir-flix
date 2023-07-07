@@ -184,7 +184,7 @@ export const CloseSearchButton = styled.button`
   align-items: center;
   color: var(--pure-white);
   background-color: var(--element-grey);
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 0;
   font-size: 18px;
   transition: 0.3s;
@@ -236,7 +236,7 @@ export const ButtonAll = styled.button`
   margin-left: 10px;
   padding: 0 10px;
   transition: 0.6s;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 16px;
   background-color: ${(props) =>
     props.stars === 0 ? "var(--accent)" : "var(--pure-white)"};
@@ -291,7 +291,7 @@ export const MoreCheckButton = styled.button`
   background-color: transparent;
   font-size: 17px;
   transition: 0.3s;
-  border-radius: 6px;
+  border-radius: 8px;
   background: ${({ forLater }) =>
     forLater === true ? "var(--more-check)" : "var(--bg-grey)"};
   color: ${({ forLater }) =>

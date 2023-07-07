@@ -185,8 +185,9 @@ export const sendReviews = async (
   goodButton,
   badButton,
   successToast,
-  // setMoviesListIds,
-  onDefaultState
+  onDefaultState,
+  movieId,
+  setMovieReviewsList
 ) => {
   try {
     const { error } = await supabase
@@ -195,6 +196,8 @@ export const sendReviews = async (
         userId: session.user.id,
         username: session.user.user_metadata.name,
         movieId: movieData.id,
+        movieName: movieData.original_title,
+        moviePoster: movieData.poster_path,
         content: textArea,
         good: goodButton,
         bad: badButton,
@@ -205,9 +208,9 @@ export const sendReviews = async (
       console.error("insert review error 1", error);
       return;
     } else {
-      // getUserMovies(supabase, session, setMoviesListIds);
       onDefaultState();
       successToast();
+      getMovieReviews(supabase, movieId, setMovieReviewsList);
     }
   } catch (e) {
     console.error("insert review error 2", e);
@@ -232,7 +235,7 @@ export const getUserReviews = async (supabase, session, setReviewsList) => {
   const { data } = await supabase
     .from("reviews")
     .select("*")
-    .eq("user_id", session.user.id);
+    .eq("userId", session.user.id);
 
   // Сортування за датою
   let result;
@@ -242,5 +245,55 @@ export const getUserReviews = async (supabase, session, setReviewsList) => {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
     setReviewsList(result);
+  }
+};
+
+export const getMovieReviews = async (
+  supabase,
+  movieId,
+  setMovieReviewsList
+) => {
+  const { data } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("movieId", movieId);
+
+  // Сортування за датою
+  let result;
+  result = data.sort(
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+
+  setMovieReviewsList(result);
+};
+
+export const deleteReview = async (
+  supabase,
+  session,
+  id,
+  isUsersReviews,
+  successDeleteToast,
+  setReviewsList
+) => {
+  try {
+    const { error } = await supabase.from("reviews").delete().match({
+      userId: session.user.id,
+      id: id,
+    });
+
+    if (error) {
+      console.error("Помилка видалення рядка огляду:", error);
+      return;
+    } else {
+      if (!isUsersReviews) {
+        getReviews(supabase, setReviewsList);
+      } else {
+        getUserReviews(supabase, session, setReviewsList);
+      }
+    }
+    successDeleteToast();
+  } catch (e) {
+    console.error("delete review error", e);
   }
 };

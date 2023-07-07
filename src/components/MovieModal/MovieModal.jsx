@@ -70,7 +70,7 @@ import {
   updateForLater,
   deleteMovie,
 } from "../../api/database";
-import poster from "../../media/poster.jpg";
+import poster from "../../media/poster.png";
 import { v4 as uuidv4 } from "uuid";
 import { useSearchParams } from "react-router-dom";
 
@@ -164,6 +164,7 @@ const MovieModal = ({
         (item) => item.movie_id === movieData.id
       );
       setIsInLibrary(fragmentData.length === 0 ? false : true);
+      setIsConfirmForm(false);
     }
 
     if (page === "library") {

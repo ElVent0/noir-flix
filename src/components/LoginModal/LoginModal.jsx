@@ -196,7 +196,11 @@ const ProfileModal = ({
             </LoginForm>
           )}
           <OrElement>or</OrElement>
-          <GoogleLogin onClick={() => loginWithGoogle(supabase, errorToast)}>
+          <GoogleLogin
+            onClick={() =>
+              loginWithGoogle(supabase, errorToast, setIsLoginModal)
+            }
+          >
             <FcGoogle />
             <p>Continue with Google</p>
           </GoogleLogin>

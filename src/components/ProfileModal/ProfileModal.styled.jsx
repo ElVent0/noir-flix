@@ -83,6 +83,7 @@ export const Profile = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex-grow: 1;
 `;
 
 export const UserImage = styled.img`

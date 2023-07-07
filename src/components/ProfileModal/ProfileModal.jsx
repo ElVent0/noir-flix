@@ -39,9 +39,7 @@ const ProfileModal = ({ onCloseProfileModal, setIsProfileModal, avatar }) => {
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseProfileModal}>
       <Modal>
-        <Statistics path={path}>
-          {/* <img src={themeType ? logo : logoLight} alt="logo" width="140px" /> */}
-        </Statistics>
+        <Statistics path={path}></Statistics>
         <Profile>
           <UserImage src={avatar} alt="User image" />
           <UserName>{userName()}</UserName>

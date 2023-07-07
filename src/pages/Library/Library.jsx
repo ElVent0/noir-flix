@@ -72,8 +72,6 @@ const Library = ({ onAddToRecentMovies }) => {
           moviesListIds &&
           moviesListIds.filter((item) => item.movie_id === data.id);
 
-        console.log(result);
-
         if (moviesListIds) {
           data.creation_date = result[0].creation_date;
           data.stars = result[0].movie_rating;

@@ -9,7 +9,7 @@ import MainPoster from "../../components/MainPoster/MainPoster";
 import { getMovies, getMovieByTitle, getMovieById } from "../../api/movies";
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
-import poster from "../../media/poster.jpg";
+import poster from "../../media/poster.png";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { getUserMovies } from "../../api/database";
 import { GiEmptyChessboard } from "react-icons/gi";
