@@ -19,6 +19,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 // import path from "../../media/profile.jpg";
+import path from "../../media/profile.png";
 import { logout } from "../../api/auth.jsx";
 import { useState, useEffect, useRef } from "react";
 
@@ -27,6 +28,7 @@ const ProfileModal = ({
   setIsProfileModal,
   avatar,
   isOpenModalProfile,
+  themeType,
 }) => {
   const [rotation, setRotation] = useState(0);
   const divRef = useRef(null);
@@ -71,13 +73,13 @@ const ProfileModal = ({
     };
   }, []);
 
-  const userName = () => {
-    if (session.user.app_metadata.provider === "google") {
-      return userData.full_name;
-    } else if (session.user.app_metadata.provider === "email") {
-      return session.user.user_metadata.name;
-    }
-  };
+  // const userName = () => {
+  //   if (session.user.app_metadata.provider === "google") {
+  //     return userData.name;
+  //   } else if (session.user.app_metadata.provider === "email") {
+  //     return session.user.user_metadata.name;
+  //   }
+  // };
 
   const onLogout = () => {
     logout(supabase);
@@ -85,14 +87,16 @@ const ProfileModal = ({
     document.body.style.overflow = "auto";
   };
 
+  console.log(session);
+
   return ReactDOM.createPortal(
     <ModalBackdrop
       onClick={onCloseProfileModal}
       isOpenModalProfile={isOpenModalProfile}
     >
-      <Modal>
+      <Modal themetype={themeType}>
         {/* <Statistics path={path}></Statistics> */}
-        <Profile>
+        <Profile path={path} themetype={themeType}>
           <UserImageContainer mouseX={mouseX} mouseY={mouseY}>
             <UserImage
               src={avatar}
@@ -110,7 +114,16 @@ const ProfileModal = ({
             </UserImageCover>
           </UserImageContainer>
           <ShadowContainer></ShadowContainer>
-          <UserName>{userName()}</UserName>
+          <UserName>
+            {session.user.app_metadata.providers[
+              session.user.app_metadata.providers.length - 1
+            ] === "google" &&
+              (session.user.user_metadata.username ||
+                session.user.user_metadata.full_name)}
+            {session.user.app_metadata.providers[
+              session.user.app_metadata.providers.length - 1
+            ] === "email" && session.user.user_metadata.username}
+          </UserName>
           <UserMail>{userData.email}</UserMail>
           <Logout onClick={onLogout}>
             <TbLogout />

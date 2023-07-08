@@ -186,7 +186,11 @@ const Reviews = () => {
             width="160"
             alt="Nothing illustration"
           />
-          <p>There are no reviews yet. Be the first to comment on something</p>
+          <p>
+            {isUsersReviews
+              ? "You haven't left any reviews yet. Comment something"
+              : "There are no reviews yet. Be the first to comment on something"}
+          </p>
         </NothingBlock>
       )}
     </ReviewsStyled>

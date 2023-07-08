@@ -12,8 +12,8 @@ export const notifyOnMailSignUp = () =>
         zIndex: "2001",
       },
       iconTheme: {
-        primary: "#fb6d00",
-        secondary: "#FFFAEE",
+        primary: "#11b3ff",
+        secondary: "#fff",
       },
     }
   );

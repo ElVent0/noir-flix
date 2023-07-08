@@ -189,12 +189,31 @@ export const sendReviews = async (
   movieId,
   setMovieReviewsList
 ) => {
+  const nameOfUser = () => {
+    if (
+      session.user.app_metadata.providers[
+        session.user.app_metadata.providers.length - 1
+      ] === "google"
+    ) {
+      return (
+        session.user.user_metadata.username ||
+        session.user.user_metadata.full_name
+      );
+    } else if (
+      session.user.app_metadata.providers[
+        session.user.app_metadata.providers.length - 1
+      ] === "email"
+    ) {
+      return session.user.user_metadata.username;
+    }
+  };
+
   try {
     const { error } = await supabase
       .from("reviews")
       .insert({
         userId: session.user.id,
-        username: session.user.user_metadata.name,
+        username: nameOfUser(),
         movieId: movieData.id,
         movieName: movieData.original_title,
         moviePoster: movieData.poster_path,

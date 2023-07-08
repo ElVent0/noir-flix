@@ -88,7 +88,7 @@ export const createUserWithMail = async (
     const { error } = await supabase.auth.signUp({
       email: userMail,
       password: userPassword,
-      options: { data: { name: userName } },
+      options: { data: { username: userName } },
     });
 
     if (error) {

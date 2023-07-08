@@ -19,7 +19,7 @@ export const ModalBackdrop = styled.div`
   animation: ${(props) =>
     props.isOpenModalLogin
       ? "upScaling 0.3s ease-in-out"
-      : "downScaling 0.2s ease-in-out"};
+      : "downScaling 0.3s ease-in-out"};
   transform: translateZ(0);
   transform: translate3d(0, 0, 0);
   @keyframes upScaling {

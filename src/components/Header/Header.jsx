@@ -165,11 +165,14 @@ const Header = ({ themeToggle }) => {
             <Profile onClick={onOpenProfileModal}>
               <UserImage src={avatar} alt="User image" />
               <p>
-                {session.user.user_metadata.name}
-                {/* {session.user.app_metadata.provider === "google"
-                  ? userData.full_name
-                  : session.user.user_metadata.name}
-                } */}
+                {session.user.app_metadata.providers[
+                  session.user.app_metadata.providers.length - 1
+                ] === "google" &&
+                  (session.user.user_metadata.username ||
+                    session.user.user_metadata.full_name)}
+                {session.user.app_metadata.providers[
+                  session.user.app_metadata.providers.length - 1
+                ] === "email" && session.user.user_metadata.username}
               </p>
             </Profile>
           </>
@@ -189,6 +192,7 @@ const Header = ({ themeToggle }) => {
           setIsProfileModal={setIsProfileModal}
           avatar={avatar}
           isOpenModalProfile={isOpenModalProfile}
+          themeType={themeType}
         />
       )}
 

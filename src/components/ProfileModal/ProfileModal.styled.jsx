@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ModalBackdrop = styled.div`
   width: 100%;
@@ -19,7 +19,7 @@ export const ModalBackdrop = styled.div`
   animation: ${(props) =>
     props.isOpenModalProfile
       ? "upScaling 0.3s ease-in-out"
-      : "downScaling 0.2s ease-in-out"};
+      : "downScaling 0.3s ease-in-out"};
   transform: translateZ(0);
   transform: translate3d(0, 0, 0);
   @keyframes upScaling {
@@ -57,7 +57,21 @@ export const Modal = styled.div`
     width: 150%;
     height: 180%;
     border-radius: 8px;
+    /* background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff); */
+
     background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
+
+    ${(props) =>
+      props.themetype &&
+      css`
+        background: linear-gradient(
+          132deg,
+          var(--accent),
+          #3d6eff40 43%,
+          #6600ff40
+        );
+      `};
+
     position: absolute;
     z-index: -1;
     top: -35%;
@@ -140,7 +154,17 @@ export const Logout = styled.button`
 export const Profile = styled.div`
   width: 534px;
   height: 375px;
-  background: var(--bg-grey-transparent);
+  background-image: linear-gradient(132deg, #0f1f4dde 30%, #254dc4da),
+    url(${(props) => props.path});
+
+  ${(props) =>
+    props.themetype &&
+    css`
+      background-image: linear-gradient(132deg, #ffffffea 30%, #ffffffe2),
+        url(${(props) => props.path});
+    `};
+  background-size: cover;
+  background-position: center;
   border-radius: 10px;
   padding-top: 60px;
   padding: 18px 12px;
@@ -161,7 +185,6 @@ export const UserImageContainer = styled.div.attrs(({ mouseX, mouseY }) => ({
 }))`
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10px;
   width: 140px;
   height: 140px;
   border-radius: 50%;
@@ -246,8 +269,9 @@ export const UserImageCoverContent = styled.div.attrs(({ rotation }) => ({
 export const UserName = styled.p`
   text-align: center;
   color: var(--text-main);
-  font-size: 16px;
-  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
 `;
 
 export const UserMail = styled.p`

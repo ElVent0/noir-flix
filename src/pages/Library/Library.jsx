@@ -109,13 +109,7 @@ const Library = ({ onAddToRecentMovies }) => {
   };
 
   const onCloseReadMore = (e) => {
-    if (e.target === e.currentTarget) {
-      setIsOpenModal(false);
-      setTimeout(() => {
-        onclose();
-      }, 200);
-    }
-    if (e.currentTarget.id === "button-close") {
+    if (e.target === e.currentTarget || e.currentTarget.id === "button-close") {
       setIsOpenModal(false);
       setTimeout(() => {
         onclose();

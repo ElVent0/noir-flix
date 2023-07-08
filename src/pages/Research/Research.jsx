@@ -86,8 +86,6 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
 
   useEffect(() => {
     if (searchParams.get("id") !== null) {
-      setIsOpenModal(true);
-
       const getDataForMovie = async () => {
         const data = await getMovieById(searchParams.get("id"));
         setMovieData(data);
@@ -95,6 +93,8 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       };
 
       getDataForMovie();
+
+      setIsOpenModal(true);
     } else if (searchParams.get("page") !== null) {
       window.scrollTo({
         top: 262,
@@ -123,13 +123,8 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
       setMovieData(null);
       document.body.style.overflow = "auto";
     };
-    if (e.target === e.currentTarget) {
-      setIsOpenModal(false);
-      setTimeout(() => {
-        onclose();
-      }, 200);
-    }
-    if (e.currentTarget.id === "button-close") {
+
+    if (e.target === e.currentTarget || e.currentTarget.id === "button-close") {
       setIsOpenModal(false);
       setTimeout(() => {
         onclose();
