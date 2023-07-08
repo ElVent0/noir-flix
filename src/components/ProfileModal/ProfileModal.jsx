@@ -12,6 +12,7 @@ import {
   UserImageCover,
   UserImageCoverContent,
   UnderModal,
+  ShadowContainer,
   // Statistics,
 } from "./ProfileModal.styled";
 import { RiCloseLine } from "react-icons/ri";
@@ -108,6 +109,7 @@ const ProfileModal = ({
               ></UserImageCoverContent>
             </UserImageCover>
           </UserImageContainer>
+          <ShadowContainer></ShadowContainer>
           <UserName>{userName()}</UserName>
           <UserMail>{userData.email}</UserMail>
           <Logout onClick={onLogout}>

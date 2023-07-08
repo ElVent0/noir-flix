@@ -26,7 +26,7 @@ import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { useSession } from "@supabase/auth-helpers-react";
 import { createAvatar } from "@dicebear/core";
-import { funEmoji } from "@dicebear/collection";
+import { botttsNeutral } from "@dicebear/collection";
 import { Toaster } from "react-hot-toast";
 import { ThemeContext } from "../App";
 
@@ -62,8 +62,8 @@ const Header = ({ themeToggle }) => {
   useEffect(() => {
     if (session) {
       setAvatar(
-        createAvatar(funEmoji, {
-          seed: session.user.identities[0].id,
+        createAvatar(botttsNeutral, {
+          seed: session.user.identities[0].user_id,
         }).toDataUriSync()
       );
     }

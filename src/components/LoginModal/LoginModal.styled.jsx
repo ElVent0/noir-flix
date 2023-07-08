@@ -53,9 +53,10 @@ export const Modal = styled.div`
 
 export const UnderModal = styled.div`
   position: absolute;
+  background-color: var(--bg-grey-transparent);
   top: 25%;
   left: 35%;
-  z-index: -1;
+  z-index: -3;
   height: 60%;
   width: 30%;
   filter: blur(140px);
@@ -79,10 +80,23 @@ export const UnderModal = styled.div`
   }
 `;
 
+export const ModalPoster = styled.div`
+  width: 300px;
+  height: auto;
+  background-image: linear-gradient(132deg, #13131320 20%, #3d6dffa3),
+    url(${(props) => props.path});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: -2;
+`;
+
 export const ModalContent = styled.div`
   width: 340px;
   padding: 34px;
   position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,7 +108,7 @@ export const ModalContent = styled.div`
     width: 200%;
     height: 160%;
     border-radius: 8px;
-    background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
+    background: linear-gradient(132deg, #11b4ff40, #3d6eff20 43%, #6600ff20);
     position: absolute;
     filter: blur(80px);
     z-index: -1;
@@ -102,16 +116,6 @@ export const ModalContent = styled.div`
     left: -40%;
     animation: spin 2s linear infinite;
   }
-`;
-
-export const ModalPoster = styled.div`
-  width: 300px;
-  height: auto;
-  background-image: linear-gradient(132deg, #13131320 20%, #3d6dffa3),
-    url(${(props) => props.path});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 `;
 
 export const CloseButton = styled.button`

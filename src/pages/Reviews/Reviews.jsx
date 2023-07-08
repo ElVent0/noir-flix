@@ -28,7 +28,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { createAvatar } from "@dicebear/core";
-import { funEmoji } from "@dicebear/collection";
+import { botttsNeutral } from "@dicebear/collection";
 import { successDeleteToast } from "../../utils/toasters";
 import poster from "../../media/poster.png";
 import { getDate } from "../../utils/utils";
@@ -121,7 +121,7 @@ const Reviews = () => {
                     {session ? (
                       <HeaderProfile isme={item.userId === session.user.id}>
                         <img
-                          src={createAvatar(funEmoji, {
+                          src={createAvatar(botttsNeutral, {
                             seed: item.userId,
                           }).toDataUriSync()}
                           alt="User avatar"
@@ -131,7 +131,7 @@ const Reviews = () => {
                     ) : (
                       <HeaderProfile isme={false}>
                         <img
-                          src={createAvatar(funEmoji, {
+                          src={createAvatar(botttsNeutral, {
                             seed: item.userId,
                           }).toDataUriSync()}
                           alt="User avatar"

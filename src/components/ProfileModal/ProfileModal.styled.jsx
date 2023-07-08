@@ -125,7 +125,7 @@ export const Logout = styled.button`
   transition: 0.3s;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 30px;
   & > svg {
     font-size: 23px;
     margin-right: 7px;
@@ -161,11 +161,22 @@ export const UserImageContainer = styled.div.attrs(({ mouseX, mouseY }) => ({
 }))`
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
   width: 140px;
   height: 140px;
   border-radius: 50%;
   position: relative;
+`;
+
+export const ShadowContainer = styled.div`
+  width: 140px;
+  height: 14px;
+  background-color: #00000099;
+  border-radius: 50%;
+  filter: blur(14px);
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const UserImage = styled.img`

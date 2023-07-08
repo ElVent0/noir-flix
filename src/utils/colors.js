@@ -7,6 +7,7 @@ export const lightTheme = createGlobalStyle`
       --accent-transparent: #11b4ffc3;
       --bg-grey: #f4f7f9;
       --bg-grey-transparent: #f4f7f9;
+      --bg-super-transparent: #f4f7f9;
       --element-grey: #DADDE1;
       --hover-grey: #efefef;
       --text-main: #606770;
@@ -25,6 +26,7 @@ export const darkTheme = createGlobalStyle`
       --pure-white: #37373d;
       --bg-grey: #252526;
       --bg-grey-transparent: #252526c8;
+      --bg-super-transparent: #25252640;
       --hover-grey: #303032;
       --element-grey: #DADDE160;
       --nav-black: #fff;
