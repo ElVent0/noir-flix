@@ -13,6 +13,7 @@ import {
   ModalContent,
   ModalPoster,
   PasswordContainer,
+  UnderModal,
 } from "./LoginModal.styled";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
@@ -116,7 +117,11 @@ const ProfileModal = ({
       <Modal themeType={themeType}>
         <ModalPoster path={path}></ModalPoster>
         <ModalContent>
-          <CloseButton id="button-close" onClick={onCloseLoginModal}>
+          <CloseButton
+            type="button"
+            id="button-close"
+            onClick={onCloseLoginModal}
+          >
             <RiCloseLine />
           </CloseButton>
           {isLoginTypeModal && (
@@ -150,7 +155,7 @@ const ProfileModal = ({
               <ButtonSubmit type="submit" themeType={themeType}>
                 Login
               </ButtonSubmit>
-              <RegisterButton onClick={() => onRegisterButton()}>
+              <RegisterButton type="button" onClick={() => onRegisterButton()}>
                 Register
               </RegisterButton>
             </LoginForm>
@@ -194,13 +199,14 @@ const ProfileModal = ({
               <ButtonSubmit type="submit" themeType={themeType}>
                 Create
               </ButtonSubmit>
-              <RegisterButton onClick={() => onRegisterButton()}>
+              <RegisterButton type="button" onClick={() => onRegisterButton()}>
                 Login
               </RegisterButton>
             </LoginForm>
           )}
           <OrElement>or</OrElement>
           <GoogleLogin
+            type="button"
             onClick={() =>
               loginWithGoogle(supabase, errorToast, setIsLoginModal)
             }
@@ -210,6 +216,7 @@ const ProfileModal = ({
           </GoogleLogin>
         </ModalContent>
       </Modal>
+      <UnderModal></UnderModal>
       <Toaster
         toastOptions={{
           style: {

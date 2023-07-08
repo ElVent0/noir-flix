@@ -211,7 +211,8 @@ export const Profile = styled.button`
   line-height: 19px;
   color: var(--nav-black-transparent);
   height: 36px;
-  width: 100px;
+  /* width: 100px; */
+  padding: 0 10px 0 6px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;

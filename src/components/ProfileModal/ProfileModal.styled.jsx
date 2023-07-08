@@ -43,11 +43,55 @@ export const ModalBackdrop = styled.div`
 export const Modal = styled.div`
   width: 540px;
   height: 381px;
-  background: var(--bg-grey);
   border-radius: 10px;
   display: flex;
   position: relative;
   overflow: hidden;
+
+  padding: 3px;
+  position: relative;
+  color: rgb(88 199 250 / 0%);
+
+  &::before {
+    content: "";
+    width: 150%;
+    height: 180%;
+    border-radius: 8px;
+    background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
+    position: absolute;
+    z-index: -1;
+    top: -35%;
+    left: -25%;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+export const UnderModal = styled.div`
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  z-index: -1;
+  height: 60%;
+  width: 30%;
+  filter: blur(140px);
+  background-image: linear-gradient(
+    132deg,
+    var(--accent),
+    #3c67e3 43%,
+    #4e00c2
+  );
+  opacity: 1;
+  transition: opacity 0.5s;
+  animation: spin 5s linear infinite;
 `;
 
 export const CloseButton = styled.button`
@@ -71,16 +115,12 @@ export const CloseButton = styled.button`
 export const Logout = styled.button`
   font-size: 16px;
   line-height: 19px;
-  /* background-color: var(--pure-white);
-  color: var(--nav-black-transparent); */
-  background-color: ${(prop) =>
-    prop.isActive ? "var(--accent)" : "var(--hover-grey)"};
-  color: ${({ isActive, themeType }) =>
-    isActive && themeType ? "var(--pure-white)" : "var(--nav-black)"};
+  background-color: var(--accent);
+  color: #fff;
   height: 36px;
   align-items: flex-end;
   border-radius: 10px;
-  padding: 6px 16px 6px 8px;
+  padding: 6px 16px 6px 12px;
   display: flex;
   transition: 0.3s;
   margin-left: auto;
@@ -89,33 +129,76 @@ export const Logout = styled.button`
   & > svg {
     font-size: 23px;
     margin-right: 7px;
-    color: var(--accent);
+    color: #fff;
   }
   &:hover,
   &:active {
-    background-color: ${(prop) =>
-      prop.isActive ? "var(--accent)" : "var(--element-grey)"};
+    background-color: var(--accent-hover);
   }
 `;
 
 export const Profile = styled.div`
-  width: 50%;
+  width: 534px;
+  height: 375px;
+  background: var(--bg-grey-transparent);
+  border-radius: 10px;
   padding-top: 60px;
   padding: 18px 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
+
+  perspective: 1000px;
+`;
+
+export const UserImageContainer = styled.div.attrs(({ mouseX, mouseY }) => ({
+  style: {
+    transform: `rotateY(${(window.innerWidth / 2 - mouseX) / 20}deg) rotateX(${
+      (window.innerHeight / 2 + mouseY - 800) / 20
+    }deg)`,
+  },
+}))`
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 24px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: relative;
 `;
 
 export const UserImage = styled.img`
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-  width: 96px;
-  height: 96px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+`;
+
+export const UserImageCover = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+`;
+
+export const UserImageCoverContent = styled.div.attrs(({ rotation }) => ({
+  style: {
+    transform: `rotate(${rotation}deg)`,
+  },
+}))`
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(0, 0, 0, 0.1) 60%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
 `;
 
 export const UserName = styled.p`
@@ -131,13 +214,13 @@ export const UserMail = styled.p`
   font-size: 14px;
 `;
 
-export const Statistics = styled.div`
-  width: 50%;
-  background-image: url(${(props) => props.path});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: left;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// export const Statistics = styled.div`
+//   width: 50%;
+//   background-image: url(${(props) => props.path});
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position: left;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;

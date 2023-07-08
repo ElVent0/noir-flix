@@ -164,7 +164,13 @@ const Header = ({ themeToggle }) => {
           <>
             <Profile onClick={onOpenProfileModal}>
               <UserImage src={avatar} alt="User image" />
-              <p>Profile</p>
+              <p>
+                {session.user.user_metadata.name}
+                {/* {session.user.app_metadata.provider === "google"
+                  ? userData.full_name
+                  : session.user.user_metadata.name}
+                } */}
+              </p>
             </Profile>
           </>
         ) : (

@@ -43,11 +43,40 @@ export const ModalBackdrop = styled.div`
 export const Modal = styled.div`
   width: 640px;
   height: 451px;
-  background-color: ${(prop) =>
-    prop.themeType ? "var(--pure-white)" : "var(--hover-grey)"};
+  /* background-color: ${(prop) =>
+    prop.themeType ? "var(--pure-white)" : "var(--hover-grey)"}; */
+  /* background-color: var(--bg-grey); */
   border-radius: 10px;
   display: flex;
   overflow: hidden;
+`;
+
+export const UnderModal = styled.div`
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  z-index: -1;
+  height: 60%;
+  width: 30%;
+  filter: blur(140px);
+  background-image: linear-gradient(
+    132deg,
+    var(--accent),
+    #3c67e3 43%,
+    #4e00c2
+  );
+  opacity: 1;
+  transition: opacity 0.5s;
+  animation: spin 5s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export const ModalContent = styled.div`
@@ -58,12 +87,28 @@ export const ModalContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--bg-grey-transparent);
+
+  &::before {
+    content: "";
+    width: 200%;
+    height: 160%;
+    border-radius: 8px;
+    background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
+    position: absolute;
+    filter: blur(80px);
+    z-index: -1;
+    top: -30%;
+    left: -40%;
+    animation: spin 2s linear infinite;
+  }
 `;
 
 export const ModalPoster = styled.div`
   width: 300px;
   height: auto;
-  background-image: url(${(props) => props.path});
+  background-image: linear-gradient(132deg, #13131320 20%, #3d6dffa3),
+    url(${(props) => props.path});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -239,7 +284,6 @@ export const GoogleLogin = styled.button`
   }
   &:hover,
   &:focus {
-    background-color: ${(prop) =>
-      prop.themeType ? "var(--hover-grey)" : "var(--bg-grey)"};
+    background-color: var(--hover-grey);
   }
 `;
