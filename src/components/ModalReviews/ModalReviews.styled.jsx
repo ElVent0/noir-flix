@@ -76,7 +76,7 @@ export const ReviewItem = styled.li`
   }
 `;
 
-export const NothingBlock = styled.p`
+export const NothingBlock = styled.div`
   height: 276px;
   display: flex;
   justify-content: center;

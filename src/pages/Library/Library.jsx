@@ -12,7 +12,7 @@ import nothing from "../../media/nothing.png";
 import nothingLight from "../../media/nothing-2.png";
 import { getMovieById } from "../../api/movies";
 import { useEffect, useState, useContext } from "react";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ThemeContext } from "../../components/App";
 import { getUserMovies } from "../../api/database";
@@ -31,6 +31,7 @@ const Library = ({ onAddToRecentMovies }) => {
   const session = useSession();
   const supabase = useSupabaseClient();
   const themetype = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const getMoviesFromLibarary = async () => {
     const result = await getUserMovies(
@@ -52,10 +53,37 @@ const Library = ({ onAddToRecentMovies }) => {
     }
   };
 
+  const getDataForMovie = async () => {
+    const data = await getMovieById(searchParams.get("id"));
+
+    const result =
+      moviesListIds &&
+      moviesListIds.filter((item) => item.movie_id === data.id);
+
+    if (result === null || result.length === 0) {
+      navigate(`/?id=${data.id}`);
+      return;
+    }
+
+    if (moviesListIds) {
+      data.creation_date = result[0].creation_date;
+      data.stars = result[0].movie_rating;
+      data.for_later = result[0].movie_for_future;
+      setMovieData(data);
+      document.body.style.overflow = "hidden";
+    }
+  };
+
   useEffect(() => {
     if (session) {
       getMoviesFromLibarary();
     }
+
+    // if (searchParams.get("id") !== null) {
+    //   setIsOpenModal(true);
+    //   getDataForMovie();
+    // }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, inputSort]);
 
@@ -64,24 +92,6 @@ const Library = ({ onAddToRecentMovies }) => {
   useEffect(() => {
     if (searchParams.get("id") !== null) {
       setIsOpenModal(true);
-
-      const getDataForMovie = async () => {
-        const data = await getMovieById(searchParams.get("id"));
-
-        const result =
-          moviesListIds &&
-          moviesListIds.filter((item) => item.movie_id === data.id);
-
-        if (moviesListIds) {
-          data.creation_date = result[0].creation_date;
-          data.stars = result[0].movie_rating;
-          data.for_later = result[0].movie_for_future;
-          setMovieData(data);
-          document.body.style.overflow = "hidden";
-        }
-        // }
-      };
-
       getDataForMovie();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

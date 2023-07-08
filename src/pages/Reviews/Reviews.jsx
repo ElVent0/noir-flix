@@ -33,6 +33,7 @@ import { successDeleteToast } from "../../utils/toasters";
 import poster from "../../media/poster.png";
 import { getDate } from "../../utils/utils";
 import { ThemeContext } from "../../components/App";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Reviews = () => {
   const [reviewsList, setReviewsList] = useState([]);
@@ -105,7 +106,7 @@ const Reviews = () => {
           {reviewsList.map((item) => {
             return (
               <ReviewsItem key={item.id}>
-                <PosterContainer>
+                <PosterContainer to={`/?id=${item.movieId}`}>
                   <MoviePoster
                     src={
                       item.moviePoster
@@ -114,6 +115,7 @@ const Reviews = () => {
                     }
                     alt="Movie poster"
                   />
+                  <AiOutlineSearch />
                   <MovieName>{item.movieName}</MovieName>
                 </PosterContainer>
                 <ReviewContent>

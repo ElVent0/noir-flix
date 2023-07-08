@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const ReviewsStyled = styled.div`
   background-color: var(--pure-white);
@@ -81,12 +82,34 @@ export const ReviewsItem = styled.li`
   }
 `;
 
-export const PosterContainer = styled.div`
+export const PosterContainer = styled(Link)`
   width: 80px;
   background-color: var(--bg-grey);
   border-radius: 8px;
   padding-bottom: 4px;
   height: fit-content;
+  overflow: hidden;
+  position: relative;
+  & > svg {
+    position: absolute;
+    top: 44px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 1;
+    color: var(--text-main-transparent);
+    font-size: 0;
+    transition: 0.3s;
+  }
+  &:hover,
+  &:focus {
+    & > img {
+      left: -80px;
+      opacity: 0;
+    }
+    & > svg {
+      font-size: 40px;
+    }
+  }
 `;
 
 export const MoviePoster = styled.img`
@@ -95,6 +118,10 @@ export const MoviePoster = styled.img`
   border-radius: 8px;
   display: block;
   margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
+  left: 0;
+  transition: 0.3s;
 `;
 
 export const ReviewContent = styled.div`

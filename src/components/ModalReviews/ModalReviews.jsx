@@ -97,8 +97,6 @@ const ModalReviews = ({ movieData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieData]);
 
-  console.log(movieReviewsList);
-
   let initGood = 0;
   const goodReviews = movieReviewsList.reduce((a, b) => a + b.good, initGood);
 
@@ -148,6 +146,7 @@ const ModalReviews = ({ movieData }) => {
           placeholder="Your review"
           onChange={(e) => onChangeTextArea(e)}
           value={textArea}
+          id="review"
         ></TextArea>
         <NewReviewFormFooter>
           <GoodButton

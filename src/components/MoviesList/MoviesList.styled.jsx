@@ -207,3 +207,17 @@ export const CornerElementBottom = styled.div`
     box-shadow: -50px -50px 0 0 var(--bg-grey);
   }
 `;
+
+export const NothingBlock = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  & > img {
+    display: block;
+    margin: 0 auto 20px auto;
+  }
+  & > p {
+    text-align: center;
+  }
+`;

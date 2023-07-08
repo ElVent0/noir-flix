@@ -166,17 +166,48 @@ export const UserImageContainer = styled.div.attrs(({ mouseX, mouseY }) => ({
   height: 140px;
   border-radius: 50%;
   position: relative;
+  animation: upDown 3s ease-in-out infinite;
+  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  @keyframes upDown {
+    0% {
+      top: 0;
+    }
+    50% {
+      top: -20px;
+    }
+    100% {
+      top: 0;
+    }
+  }
 `;
 
 export const ShadowContainer = styled.div`
   width: 140px;
-  height: 14px;
-  background-color: #00000099;
+  height: 10px;
+  background-color: #000000;
   border-radius: 50%;
-  filter: blur(14px);
+  filter: blur(16px);
   margin-bottom: 16px;
   margin-left: auto;
   margin-right: auto;
+  animation: upDownShadow 3s ease-in-out infinite;
+  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  @keyframes upDownShadow {
+    0% {
+      width: 140px;
+      opacity: 1;
+    }
+    50% {
+      width: 40px;
+      opacity: 0.2;
+    }
+    100% {
+      width: 140px;
+      opacity: 1;
+    }
+  }
 `;
 
 export const UserImage = styled.img`
