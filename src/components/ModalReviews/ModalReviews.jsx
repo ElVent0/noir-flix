@@ -30,6 +30,8 @@ import { sendReviews, getMovieReviews } from "../../api/database";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { errorReviewToast, successReviewToast } from "../../utils/toasters.js";
 import { getDate } from "../../utils/utils";
+import { createAvatar } from "@dicebear/core";
+import { botttsNeutral } from "@dicebear/collection";
 
 const ModalReviews = ({ movieData }) => {
   const [textArea, setTextArea] = useState("");
@@ -124,6 +126,13 @@ const ModalReviews = ({ movieData }) => {
             {movieReviewsList.map((item) => (
               <ReviewItem key={item.id}>
                 <ItemHeader isgood={item.good}>
+                  <img
+                    src={createAvatar(botttsNeutral, {
+                      seed: item.userId,
+                    }).toDataUriSync()}
+                    width="20"
+                    alt="User avatar"
+                  />
                   <UserName>{item.username}</UserName>
                   {item.good ? <BiSolidLike /> : <BiSolidDislike />}
                   <UserDate>{getDate(item.created_at)}</UserDate>

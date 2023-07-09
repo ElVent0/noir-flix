@@ -111,7 +111,8 @@ const Reviews = () => {
       id,
       isUsersReviews,
       successDeleteToast,
-      setReviewsList
+      setReviewsList,
+      inputSort
     );
   };
 
@@ -120,20 +121,34 @@ const Reviews = () => {
       if (isRecommendations) {
         deleteReviewRecommendation(
           supabase,
+          session,
           id,
           setReviewsList,
-          session.user.id
+          session.user.id,
+          inputSort,
+          isUsersReviews
         );
         return;
       } else if (isNotRecommendations) {
         deleteReviewNotRecommendation(
           supabase,
+          session,
           id,
           setReviewsList,
-          session.user.id
+          session.user.id,
+          inputSort,
+          isUsersReviews
         );
       }
-      addReviewRecommendation(supabase, id, session.user.id, setReviewsList);
+      addReviewRecommendation(
+        supabase,
+        session,
+        id,
+        session.user.id,
+        setReviewsList,
+        inputSort,
+        isUsersReviews
+      );
     } else {
       errorReviewVote();
     }
@@ -144,20 +159,34 @@ const Reviews = () => {
       if (isNotRecommendations) {
         deleteReviewNotRecommendation(
           supabase,
+          session,
           id,
           setReviewsList,
-          session.user.id
+          session.user.id,
+          inputSort,
+          isUsersReviews
         );
         return;
       } else if (isRecommendations) {
         deleteReviewRecommendation(
           supabase,
+          session,
           id,
           setReviewsList,
-          session.user.id
+          session.user.id,
+          inputSort,
+          isUsersReviews
         );
       }
-      addReviewNotRecommendation(supabase, id, session.user.id, setReviewsList);
+      addReviewNotRecommendation(
+        supabase,
+        session,
+        id,
+        session.user.id,
+        setReviewsList,
+        inputSort,
+        isUsersReviews
+      );
     } else {
       errorReviewVote();
     }
@@ -204,7 +233,7 @@ const Reviews = () => {
           </>
         )}
       </ReviewsFilters>
-      {reviewsList && reviewsList.length !== 0 ? (
+      {reviewsList.length !== 0 ? (
         <ReviewsList>
           {reviewsList.map((item) => {
             let isRecommendations;
@@ -255,7 +284,9 @@ const Reviews = () => {
                           }).toDataUriSync()}
                           alt="User avatar"
                         />
-                        <UserName>{item.username}</UserName>
+                        <UserName isme={item.userId === session.user.id}>
+                          {item.username}
+                        </UserName>
                       </HeaderProfile>
                     ) : (
                       <HeaderProfile isme={false}>
@@ -265,6 +296,7 @@ const Reviews = () => {
                           }).toDataUriSync()}
                           alt="User avatar"
                         />
+
                         <UserName>{item.username}</UserName>
                       </HeaderProfile>
                     )}

@@ -98,6 +98,9 @@ export const ItemHeader = styled.div`
   margin-bottom: 8px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--element-grey);
+  & > img {
+    border-radius: 6px;
+  }
   & > svg {
     color: ${(prop) => (prop.isgood ? "#2ad349" : "#ff6969")};
   }
@@ -107,6 +110,7 @@ export const UserName = styled.p`
   font-size: 14px;
   line-height: 15px;
   color: var(--text-main);
+  font-weight: 700;
 `;
 
 export const UserDate = styled.p`
@@ -114,7 +118,6 @@ export const UserDate = styled.p`
   font-size: 12px;
   line-height: 15px;
   color: var(--text-main-transparent);
-  opacity: 0.6;
 `;
 
 export const ItemBody = styled.div``;
@@ -122,7 +125,7 @@ export const ItemBody = styled.div``;
 export const ItemReview = styled.p`
   font-size: 14px;
   line-height: 15px;
-  color: var(--text-main-transparent);
+  color: var(--text-main);
 `;
 
 export const NewReviewForm = styled.form`
@@ -167,8 +170,7 @@ export const TextArea = styled.textarea`
   font-size: 14px;
   transition: 0.3s;
   overflow: auto;
-  color: ${(prop) =>
-    prop.themeType ? "var(--pure-white)" : "var(--text-main)"};
+  color: var(--text-main);
   &:hover,
   &:focus {
     border: 1px solid var(--text-main);
@@ -199,7 +201,7 @@ export const GoodButton = styled.button`
   background-color: ${(prop) => (prop.isActive ? "#2ad349" : "transparent")};
   border: 1px solid #2ad349;
   font-size: 17px;
-  color: #fff;
+  color: var(--text-main);
   transition: 0.3s;
   display: flex;
   justify-content: center;
@@ -219,7 +221,7 @@ export const BadButton = styled.button`
   background-color: ${(prop) => (prop.isActive ? "#ff6969" : "transparent")};
   border: 1px solid #ff6969;
   font-size: 17px;
-  color: #fff;
+  color: var(--text-main);
   transition: 0.3s;
   display: flex;
   justify-content: center;

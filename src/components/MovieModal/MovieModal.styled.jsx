@@ -330,13 +330,13 @@ export const TrailerName = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* height: 26px; */
   padding: 4px 0;
   bottom: 0;
   overflow: hidden;
   & > p {
     text-align: center;
     font-size: 11.2px;
+    color: #fff;
   }
 `;
 

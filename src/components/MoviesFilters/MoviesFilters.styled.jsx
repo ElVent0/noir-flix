@@ -240,8 +240,7 @@ export const ButtonAll = styled.button`
   font-size: 16px;
   background-color: ${(props) =>
     props.stars === 0 ? "var(--accent)" : "var(--pure-white)"};
-  color: ${(props) =>
-    props.stars === 0 ? "var(--pure-white)" : "var(--accent)"};
+  color: ${(props) => (props.stars === 0 ? "#fff" : "var(--accent)")};
   border: ${(props) =>
     props.stars === 0
       ? "1px solid var(--pure-white)"

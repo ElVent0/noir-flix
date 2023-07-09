@@ -43,6 +43,7 @@ const ProfileModal = ({
 
   useEffect(() => {
     const handleMouseMove = (e) => {
+      if (!divRef.current) return;
       const div = divRef.current;
       const rect = div.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -111,7 +112,7 @@ const ProfileModal = ({
               ></UserImageCoverContent>
             </UserImageCover>
           </UserImageContainer>
-          <ShadowContainer></ShadowContainer>
+          <ShadowContainer themetype={themeType}></ShadowContainer>
           <UserName>
             {session.user.app_metadata.providers[
               session.user.app_metadata.providers.length - 1

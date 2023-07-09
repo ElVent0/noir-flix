@@ -210,7 +210,8 @@ export const ShadowContainer = styled.div`
   height: 10px;
   background-color: #000000;
   border-radius: 50%;
-  filter: blur(16px);
+  /* filter: blur(10px); */
+  filter: ${(prop) => (prop.themetype ? "blur(16px)" : "blur(12px)")};
   margin-bottom: 16px;
   margin-left: auto;
   margin-right: auto;

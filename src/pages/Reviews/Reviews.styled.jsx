@@ -39,8 +39,7 @@ export const FiltersButton = styled.button`
   position: relative;
   background-color: ${(props) =>
     props.isUsersReviews ? "var(--accent)" : "var(--pure-white)"};
-  color: ${(props) =>
-    props.isUsersReviews ? "var(--pure-white)" : "var(--accent)"};
+  color: ${(props) => (props.isUsersReviews ? "#fff" : "var(--accent)")};
   border: ${(props) =>
     props.isUsersReviews
       ? "1px solid var(--pure-white)"
@@ -148,6 +147,7 @@ export const ReviewContent = styled.div`
 
 export const UserName = styled.p`
   display: inline-block;
+  color: ${(props) => (props.isme ? "#fff" : "var(--text-main)")};
 `;
 
 export const DeleteContainer = styled.div`
@@ -185,11 +185,11 @@ export const DeleteButton = styled.button`
   & > svg {
     font-size: 18px;
     color: var(--text-main-transparent);
-    opacity: 0.2;
+    opacity: 0.4;
     transition: 0.3s;
     &:hover,
     &:focus {
-      opacity: 0.4;
+      opacity: 0.6;
     }
   }
 `;
@@ -232,7 +232,7 @@ export const HeaderProfile = styled.div`
 // `;
 
 export const MovieName = styled.p`
-  color: var(--text-main-transparent);
+  color: var(--text-main);
   font-size: 12.4px;
   text-align: center;
   padding: 0 4px;
@@ -297,7 +297,7 @@ export const UserReview = styled.p`
 export const ReviewDate = styled.p`
   font-size: 13px;
   color: var(--text-main-transparent);
-  opacity: 0.4;
+  opacity: 0.6;
   margin-left: 12px;
 `;
 

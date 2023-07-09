@@ -253,6 +253,7 @@ export const getReviews = async (supabase, setReviewsList, inputSort) => {
         return sumB - sumA;
       });
     }
+
     setReviewsList(result);
   }
 };
@@ -312,7 +313,8 @@ export const deleteReview = async (
   id,
   isUsersReviews,
   successDeleteToast,
-  setReviewsList
+  setReviewsList,
+  inputSort
 ) => {
   try {
     const { error } = await supabase.from("reviews").delete().match({
@@ -325,9 +327,9 @@ export const deleteReview = async (
       return;
     } else {
       if (!isUsersReviews) {
-        getReviews(supabase, setReviewsList);
+        getReviews(supabase, setReviewsList, inputSort);
       } else {
-        getUserReviews(supabase, session, setReviewsList);
+        getUserReviews(supabase, session, setReviewsList, inputSort);
       }
     }
     successDeleteToast();
@@ -378,9 +380,12 @@ export const getReviewNotRecommendation = async (supabase, id) => {
 
 export const addReviewRecommendation = async (
   supabase,
+  session,
   id,
   userId,
-  setReviewsList
+  setReviewsList,
+  inputSort,
+  isUsersReviews
 ) => {
   try {
     const reviewRecommendations = await getReviewRecommendation(supabase, id);
@@ -394,7 +399,11 @@ export const addReviewRecommendation = async (
       console.error(error);
       return;
     } else {
-      getReviews(supabase, setReviewsList);
+      if (isUsersReviews) {
+        getUserReviews(supabase, session, setReviewsList, inputSort);
+      } else {
+        getReviews(supabase, setReviewsList, inputSort);
+      }
     }
   } catch (e) {
     console.error("delete review error", e);
@@ -403,9 +412,12 @@ export const addReviewRecommendation = async (
 
 export const addReviewNotRecommendation = async (
   supabase,
+  session,
   id,
   userId,
-  setReviewsList
+  setReviewsList,
+  inputSort,
+  isUsersReviews
 ) => {
   try {
     const reviewNotRecommendations = await getReviewNotRecommendation(
@@ -422,7 +434,11 @@ export const addReviewNotRecommendation = async (
       console.error(error);
       return;
     } else {
-      getReviews(supabase, setReviewsList);
+      if (isUsersReviews) {
+        getUserReviews(supabase, session, setReviewsList, inputSort);
+      } else {
+        getReviews(supabase, setReviewsList, inputSort);
+      }
     }
   } catch (e) {
     console.error("delete review error", e);
@@ -431,9 +447,12 @@ export const addReviewNotRecommendation = async (
 
 export const deleteReviewRecommendation = async (
   supabase,
+  session,
   id,
   setReviewsList,
-  userId
+  userId,
+  inputSort,
+  isUsersReviews
 ) => {
   try {
     const reviewRecommendations = await getReviewRecommendation(supabase, id);
@@ -453,7 +472,11 @@ export const deleteReviewRecommendation = async (
       console.error(error);
       return;
     } else {
-      getReviews(supabase, setReviewsList);
+      if (isUsersReviews) {
+        getUserReviews(supabase, session, setReviewsList, inputSort);
+      } else {
+        getReviews(supabase, setReviewsList, inputSort);
+      }
     }
   } catch (e) {
     console.error("delete review error", e);
@@ -462,9 +485,12 @@ export const deleteReviewRecommendation = async (
 
 export const deleteReviewNotRecommendation = async (
   supabase,
+  session,
   id,
   setReviewsList,
-  userId
+  userId,
+  inputSort,
+  isUsersReviews
 ) => {
   try {
     const reviewNotRecommendations = await getReviewNotRecommendation(
@@ -487,7 +513,11 @@ export const deleteReviewNotRecommendation = async (
       console.error(error);
       return;
     } else {
-      getReviews(supabase, setReviewsList);
+      if (isUsersReviews) {
+        getUserReviews(supabase, session, setReviewsList, inputSort);
+      } else {
+        getReviews(supabase, setReviewsList, inputSort);
+      }
     }
   } catch (e) {
     console.error("delete review error", e);
