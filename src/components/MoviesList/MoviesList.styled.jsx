@@ -21,7 +21,7 @@ export const MoviesListStyled = styled.ul`
           z-index: -1;
           top: 30%;
           left: 20%;
-          opacity: 0.2;
+          opacity: 0.3;
           z-index: 1;
           animation: spin 6s linear infinite;`}
   }

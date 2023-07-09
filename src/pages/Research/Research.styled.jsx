@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ResearchStyled = styled.div`
   min-height: calc(100vh - 339px);

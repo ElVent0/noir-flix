@@ -111,17 +111,27 @@ export const ReviewsItem = styled.li`
   &:first-of-type {
     padding-top: 20px;
   }
-
+  &:last-child {
+    &::after {
+      content: "";
+      display: none;
+    }
+  }
   & {
     ${(prop) =>
-      prop.isone &&
-      `
-  &:last-child {
+      prop.isone
+        ? `
+    &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }`
+        : `
+        &:nth-last-child(2),
+    &:last-child {
     margin-bottom: 0;
     border-bottom: none;
   }`}
   }
-  /* &:nth-last-child(2), */
 `;
 
 export const ColumnsSort = styled.div`
