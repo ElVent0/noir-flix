@@ -134,6 +134,25 @@ export const NewReviewForm = styled.form`
   margin-top: 6px;
 `;
 
+export const NoReviewForm = styled.div`
+  background-color: var(--bg-grey);
+  border-radius: 10px;
+  height: 160px;
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  & > p {
+    width: 60%;
+    font-size: 14px;
+    line-height: 15px;
+    color: var(--text-main-transparent);
+    text-align: center;
+  }
+`;
+
 export const TextArea = styled.textarea`
   display: block;
   height: 74%;

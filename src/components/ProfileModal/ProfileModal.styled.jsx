@@ -178,8 +178,8 @@ export const Profile = styled.div`
 
 export const UserImageContainer = styled.div.attrs(({ mouseX, mouseY }) => ({
   style: {
-    transform: `rotateY(${(window.innerWidth / 2 - mouseX) / 20}deg) rotateX(${
-      (window.innerHeight / 2 + mouseY - 800) / 20
+    transform: `rotateY(${(window.innerWidth / 2 - mouseX) / 14}deg) rotateX(${
+      (window.innerHeight / 2 + mouseY - 800) / 14
     }deg)`,
   },
 }))`
@@ -260,8 +260,8 @@ export const UserImageCoverContent = styled.div.attrs(({ rotation }) => ({
   border-radius: 50%;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(0, 0, 0, 0.1) 60%,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 70%,
     rgba(0, 0, 0, 0.2) 100%
   );
 `;

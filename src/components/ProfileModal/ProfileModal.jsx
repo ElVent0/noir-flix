@@ -33,8 +33,8 @@ const ProfileModal = ({
   const [rotation, setRotation] = useState(0);
   const divRef = useRef(null);
 
-  const [mouseX, setMouseX] = useState(0);
-  const [mouseY, setMouseY] = useState(0);
+  const [mouseX, setMouseX] = useState(1411);
+  const [mouseY, setMouseY] = useState(74);
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -86,8 +86,6 @@ const ProfileModal = ({
     setIsProfileModal(false);
     document.body.style.overflow = "auto";
   };
-
-  console.log(session);
 
   return ReactDOM.createPortal(
     <ModalBackdrop

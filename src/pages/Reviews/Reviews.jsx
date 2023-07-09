@@ -19,26 +19,53 @@ import {
   DeleteOption,
   HeaderProfile,
   NothingBlock,
+  ReviewVotes,
+  ButtonUpDown,
+  FiltersParagraph,
+  FilterInputSort,
+  HeaderSort,
+  BodySort,
+  ItemSort,
+  ButtonSort,
 } from "./Reviews.styled.jsx";
 import nothing from "../../media/nothing.png";
 import nothingLight from "../../media/nothing-2.png";
-import { getReviews, getUserReviews, deleteReview } from "../../api/database";
+import {
+  getReviews,
+  getUserReviews,
+  deleteReview,
+  addReviewRecommendation,
+  addReviewNotRecommendation,
+  deleteReviewRecommendation,
+  deleteReviewNotRecommendation,
+} from "../../api/database";
 import { useEffect, useState, useContext } from "react";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
+import { PiTriangleFill, PiTriangle } from "react-icons/pi";
 import { AiFillDelete } from "react-icons/ai";
 import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from "@dicebear/collection";
-import { successDeleteToast } from "../../utils/toasters";
+import { successDeleteToast, errorReviewVote } from "../../utils/toasters";
 import poster from "../../media/poster.png";
 import { getDate } from "../../utils/utils";
 import { ThemeContext } from "../../components/App";
 import { AiOutlineSearch } from "react-icons/ai";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Reviews = () => {
   const [reviewsList, setReviewsList] = useState([]);
   const [isUsersReviews, setIsUsersReviews] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
+  const [isOpenSort, setIsOpenSort] = useState(false);
+  const [inputSort, setInputSort] = useState("New");
+
+  const onSortInLibrary = (item) => {
+    setInputSort(item);
+    setIsOpenSort((prev) => !prev);
+  };
+
+  const sortItemsInLibrary = ["Popular", "New"];
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -46,16 +73,23 @@ const Reviews = () => {
 
   const getData = async () => {
     if (!isUsersReviews) {
-      getReviews(supabase, setReviewsList);
+      getReviews(supabase, setReviewsList, inputSort);
     } else {
-      getUserReviews(supabase, session, setReviewsList);
+      getUserReviews(supabase, session, setReviewsList, inputSort);
     }
   };
 
   useEffect(() => {
     getData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputSort]);
 
   useEffect(() => {
     getData();
@@ -81,29 +115,122 @@ const Reviews = () => {
     );
   };
 
+  const onTriangleUp = (id, isRecommendations, isNotRecommendations) => {
+    if (session) {
+      if (isRecommendations) {
+        deleteReviewRecommendation(
+          supabase,
+          id,
+          setReviewsList,
+          session.user.id
+        );
+        return;
+      } else if (isNotRecommendations) {
+        deleteReviewNotRecommendation(
+          supabase,
+          id,
+          setReviewsList,
+          session.user.id
+        );
+      }
+      addReviewRecommendation(supabase, id, session.user.id, setReviewsList);
+    } else {
+      errorReviewVote();
+    }
+  };
+
+  const onTriangleDown = (id, isRecommendations, isNotRecommendations) => {
+    if (session) {
+      if (isNotRecommendations) {
+        deleteReviewNotRecommendation(
+          supabase,
+          id,
+          setReviewsList,
+          session.user.id
+        );
+        return;
+      } else if (isRecommendations) {
+        deleteReviewRecommendation(
+          supabase,
+          id,
+          setReviewsList,
+          session.user.id
+        );
+      }
+      addReviewNotRecommendation(supabase, id, session.user.id, setReviewsList);
+    } else {
+      errorReviewVote();
+    }
+  };
+
   return (
     <ReviewsStyled>
-      {/* {reviewsList.length !== 0 ? ( */}
-
-      {session && (
-        <ReviewsFilters>
-          <FiltersButton
-            onClick={onAllReviews}
-            isUsersReviews={!isUsersReviews}
-          >
-            All reviews
-          </FiltersButton>
-          <FiltersButton
-            onClick={onMineReviews}
-            isUsersReviews={isUsersReviews}
-          >
-            Only mine
-          </FiltersButton>
-        </ReviewsFilters>
-      )}
-      {reviewsList.length !== 0 ? (
+      <ReviewsFilters>
+        <FiltersParagraph>Sort</FiltersParagraph>
+        <FilterInputSort
+          onMouseEnter={() => setIsOpenSort((prev) => !prev)}
+          onMouseLeave={() => setIsOpenSort((prev) => !prev)}
+        >
+          <HeaderSort>
+            {inputSort}
+            <IoIosArrowDown />
+          </HeaderSort>
+          {isOpenSort && (
+            <BodySort isOpenSort={isOpenSort}>
+              {sortItemsInLibrary
+                .filter((item) => item !== inputSort)
+                .map((item) => (
+                  <ItemSort key={item} onClick={() => onSortInLibrary(item)}>
+                    <ButtonSort themeType={themetype}>{item}</ButtonSort>
+                  </ItemSort>
+                ))}
+            </BodySort>
+          )}
+        </FilterInputSort>
+        {session && (
+          <>
+            <FiltersButton
+              onClick={onAllReviews}
+              isUsersReviews={!isUsersReviews}
+            >
+              All reviews
+            </FiltersButton>
+            <FiltersButton
+              onClick={onMineReviews}
+              isUsersReviews={isUsersReviews}
+            >
+              Only mine
+            </FiltersButton>
+          </>
+        )}
+      </ReviewsFilters>
+      {reviewsList && reviewsList.length !== 0 ? (
         <ReviewsList>
           {reviewsList.map((item) => {
+            let isRecommendations;
+            let isNotRecommendations;
+
+            if (session) {
+              isRecommendations = item.recommendations.includes(
+                `${session.user.id}`
+              );
+
+              isNotRecommendations = item.notRecommendations.includes(
+                `${session.user.id}`
+              );
+            }
+
+            const recommendationsResult = () => {
+              const number =
+                item.recommendations.length - item.notRecommendations.length;
+
+              if (number <= 0) {
+                return number;
+              } else {
+                return `+${number}`;
+              }
+            };
+
             return (
               <ReviewsItem key={item.id}>
                 <PosterContainer to={`/?id=${item.movieId}`}>
@@ -173,6 +300,36 @@ const Reviews = () => {
                   </ReviewContentHeader>
                   <ReviewContentBody>
                     <UserReview>{item.content}</UserReview>
+                    <ReviewVotes>
+                      <ButtonUpDown
+                        type="button"
+                        onClick={() =>
+                          onTriangleUp(
+                            item.id,
+                            isRecommendations,
+                            isNotRecommendations
+                          )
+                        }
+                        isRecommendations={isRecommendations}
+                        session={session}
+                      >
+                        {session ? <PiTriangleFill /> : <PiTriangle />}
+                      </ButtonUpDown>
+                      <p>{recommendationsResult()}</p>
+                      <ButtonUpDown
+                        type="button"
+                        onClick={() =>
+                          onTriangleDown(
+                            item.id,
+                            isRecommendations,
+                            isNotRecommendations
+                          )
+                        }
+                        isNotRecommendations={isNotRecommendations}
+                      >
+                        {session ? <PiTriangleFill /> : <PiTriangle />}
+                      </ButtonUpDown>
+                    </ReviewVotes>
                   </ReviewContentBody>
                 </ReviewContent>
               </ReviewsItem>

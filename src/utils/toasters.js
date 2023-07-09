@@ -72,7 +72,7 @@ export const errorToastCreation = () =>
       color: "#606770",
     },
     iconTheme: {
-      primary: "#11b3ff",
+      primary: "#fa4b34",
       secondary: "#ffffff",
     },
   });
@@ -86,7 +86,20 @@ export const errorName = () =>
       color: "#606770",
     },
     iconTheme: {
-      primary: "#11b3ff",
+      primary: "#fa4b34",
+      secondary: "#ffffff",
+    },
+  });
+export const errorReviewVote = () =>
+  toast.error("You have to login first", {
+    duration: 4000,
+    style: {
+      padding: "16px",
+      textAlign: "center",
+      color: "#606770",
+    },
+    iconTheme: {
+      primary: "#fa4b34",
       secondary: "#ffffff",
     },
   });
@@ -100,7 +113,7 @@ export const errorMail = () =>
       color: "#606770",
     },
     iconTheme: {
-      primary: "#11b3ff",
+      primary: "#fa4b34",
       secondary: "#ffffff",
     },
   });
@@ -114,7 +127,7 @@ export const errorPassword = () =>
       color: "#606770",
     },
     iconTheme: {
-      primary: "#11b3ff",
+      primary: "#fa4b34",
       secondary: "#ffffff",
     },
   });

@@ -236,33 +236,52 @@ export const sendReviews = async (
   }
 };
 
-export const getReviews = async (supabase, setReviewsList) => {
+export const getReviews = async (supabase, setReviewsList, inputSort) => {
   const { data } = await supabase.from("reviews").select("*");
 
-  // Сортування за датою
   let result;
   if (window.location.pathname === "/reviews") {
-    result = data.sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
+    if (inputSort === "New") {
+      result = data.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    } else if (inputSort === "Popular") {
+      result = data.sort((a, b) => {
+        const sumA = a.recommendations.length - a.notRecommendations.length;
+        const sumB = b.recommendations.length - b.notRecommendations.length;
+        return sumB - sumA;
+      });
+    }
     setReviewsList(result);
   }
 };
 
-export const getUserReviews = async (supabase, session, setReviewsList) => {
+export const getUserReviews = async (
+  supabase,
+  session,
+  setReviewsList,
+  inputSort
+) => {
   const { data } = await supabase
     .from("reviews")
     .select("*")
     .eq("userId", session.user.id);
 
-  // Сортування за датою
   let result;
   if (window.location.pathname === "/reviews") {
-    result = data.sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
+    if (inputSort === "New") {
+      result = data.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    } else if (inputSort === "Popular") {
+      result = data.sort((a, b) => {
+        const sumA = a.recommendations.length - a.notRecommendations.length;
+        const sumB = b.recommendations.length - b.notRecommendations.length;
+        return sumB - sumA;
+      });
+    }
     setReviewsList(result);
   }
 };
@@ -312,6 +331,164 @@ export const deleteReview = async (
       }
     }
     successDeleteToast();
+  } catch (e) {
+    console.error("delete review error", e);
+  }
+};
+
+export const getReviewRecommendation = async (supabase, id) => {
+  try {
+    const { data: existingData, error: existingError } = await supabase
+      .from("reviews")
+      .select("recommendations")
+      .eq("id", id);
+
+    if (existingError) {
+      console.error(existingError);
+      return;
+    }
+
+    const existingRecommendations = existingData[0].recommendations || [];
+
+    return existingRecommendations;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getReviewNotRecommendation = async (supabase, id) => {
+  try {
+    const { data: existingData, error: existingError } = await supabase
+      .from("reviews")
+      .select("notRecommendations")
+      .eq("id", id);
+
+    if (existingError) {
+      console.error(existingError);
+      return;
+    }
+
+    const existingNotRecommendations = existingData[0].notRecommendations || [];
+
+    return existingNotRecommendations;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addReviewRecommendation = async (
+  supabase,
+  id,
+  userId,
+  setReviewsList
+) => {
+  try {
+    const reviewRecommendations = await getReviewRecommendation(supabase, id);
+
+    const { error } = await supabase
+      .from("reviews")
+      .update({ recommendations: [...reviewRecommendations, userId] })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    } else {
+      getReviews(supabase, setReviewsList);
+    }
+  } catch (e) {
+    console.error("delete review error", e);
+  }
+};
+
+export const addReviewNotRecommendation = async (
+  supabase,
+  id,
+  userId,
+  setReviewsList
+) => {
+  try {
+    const reviewNotRecommendations = await getReviewNotRecommendation(
+      supabase,
+      id
+    );
+
+    const { error } = await supabase
+      .from("reviews")
+      .update({ notRecommendations: [...reviewNotRecommendations, userId] })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    } else {
+      getReviews(supabase, setReviewsList);
+    }
+  } catch (e) {
+    console.error("delete review error", e);
+  }
+};
+
+export const deleteReviewRecommendation = async (
+  supabase,
+  id,
+  setReviewsList,
+  userId
+) => {
+  try {
+    const reviewRecommendations = await getReviewRecommendation(supabase, id);
+
+    const index = reviewRecommendations.indexOf(userId);
+
+    if (index !== -1) {
+      reviewRecommendations.splice(index, 1);
+    }
+
+    const { error } = await supabase
+      .from("reviews")
+      .update({ recommendations: reviewRecommendations })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    } else {
+      getReviews(supabase, setReviewsList);
+    }
+  } catch (e) {
+    console.error("delete review error", e);
+  }
+};
+
+export const deleteReviewNotRecommendation = async (
+  supabase,
+  id,
+  setReviewsList,
+  userId
+) => {
+  try {
+    const reviewNotRecommendations = await getReviewNotRecommendation(
+      supabase,
+      id
+    );
+
+    const index = reviewNotRecommendations.indexOf(userId);
+
+    if (index !== -1) {
+      reviewNotRecommendations.splice(index, 1);
+    }
+
+    const { error } = await supabase
+      .from("reviews")
+      .update({ notRecommendations: reviewNotRecommendations })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    } else {
+      getReviews(supabase, setReviewsList);
+    }
   } catch (e) {
     console.error("delete review error", e);
   }

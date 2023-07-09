@@ -32,13 +32,11 @@ export const FiltersButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  &:nth-child(2) {
-    margin-left: 10px;
-  }
   padding: 0 10px;
   transition: 0.6s;
   border-radius: 8px;
   font-size: 16px;
+  position: relative;
   background-color: ${(props) =>
     props.isUsersReviews ? "var(--accent)" : "var(--pure-white)"};
   color: ${(props) =>
@@ -60,6 +58,24 @@ export const FiltersButton = styled.button`
 
     100% {
       opacity: 1;
+    }
+  }
+  &:first-of-type {
+    margin-right: 10px;
+    &::before {
+      content: "";
+      width: 1px;
+      height: 30px;
+      background-color: var(--element-grey);
+      position: absolute;
+      left: -15px;
+      top: -3px;
+    }
+    &:first-child {
+      margin-left: 0;
+      &::before {
+        display: none;
+      }
     }
   }
 `;
@@ -126,6 +142,8 @@ export const MoviePoster = styled.img`
 
 export const ReviewContent = styled.div`
   width: calc(100% - 112px);
+  display: flex;
+  flex-direction: column;
 `;
 
 export const UserName = styled.p`
@@ -134,6 +152,7 @@ export const UserName = styled.p`
 
 export const DeleteContainer = styled.div`
   margin-left: auto;
+  margin-right: 11px;
 `;
 
 export const DeleteConfirmation = styled.div`
@@ -219,11 +238,60 @@ export const MovieName = styled.p`
   padding: 0 4px;
 `;
 
-export const ReviewContentBody = styled.div``;
+export const ReviewContentBody = styled.div`
+  flex-grow: 1;
+  display: flex;
+`;
+
+export const ReviewVotes = styled.div`
+  margin-left: 20px;
+  width: 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const ButtonUpDown = styled.button`
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  opacity: ${(prop) => (prop.isRecommendations ? "1" : "0.3")};
+
+  & > svg {
+    font-size: 30px;
+    color: ${(prop) =>
+      prop.isRecommendations ? "#2ad349" : "var(--text-main-transparent)"};
+  }
+
+  &:hover,
+  &:focus {
+    opacity: ${(prop) => (prop.isRecommendations ? "1" : "0.5")};
+  }
+
+  &:last-of-type {
+    transform: rotate(180deg);
+    opacity: ${(prop) => (prop.isNotRecommendations ? "1" : "0.3")};
+    & > svg {
+      color: ${(prop) =>
+        prop.isNotRecommendations ? "#ff6969" : "var(--text-main-transparent)"};
+    }
+    &:hover,
+    &:focus {
+      opacity: ${(prop) => (prop.isNotRecommendations ? "1" : "0.5")};
+    }
+  }
+`;
 
 export const UserReview = styled.p`
   color: var(--text-main-transparent);
   font-size: 14px;
+  width: calc(100% - 60px);
 `;
 
 export const ReviewDate = styled.p`
@@ -244,5 +312,117 @@ export const NothingBlock = styled.div`
   }
   & > p {
     text-align: center;
+  }
+`;
+
+export const FiltersParagraph = styled.p`
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--text-main);
+  margin-right: 10px;
+  margin-left: 30px;
+  position: relative;
+  &::before {
+    content: "";
+    width: 1px;
+    height: 30px;
+    background-color: var(--element-grey);
+    position: absolute;
+    left: -15px;
+    top: -6.5px;
+  }
+  &:first-child {
+    margin-left: 0;
+    &::before {
+      display: none;
+    }
+  }
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
+export const FilterInputSort = styled.div`
+  width: 120px;
+  height: 36px;
+  position: relative;
+  animation: animateOpacity 1s linear;
+  margin-right: 30px;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
+export const HeaderSort = styled.button`
+  width: 100%;
+  height: 100%;
+  border: 0.6px solid var(--element-grey);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px 0 12px;
+  color: var(--text-main);
+  background-color: transparent;
+  & > svg {
+    margin-left: auto;
+    font-size: 14px;
+  }
+`;
+
+export const BodySort = styled.ul`
+  position: absolute;
+  z-index: 1000;
+  width: 120px;
+  background-color: var(--pure-white);
+  border-radius: 4px;
+  overflow: hidden;
+  top: 36px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const ItemSort = styled.li`
+  position: relative;
+  &::after {
+    content: "";
+    width: 86%;
+    height: 1px;
+    background-color: var(--element-grey);
+    position: absolute;
+    bottom: 0;
+    left: 7%;
+  }
+  &:last-child {
+    &::after {
+      display: none;
+    }
+  }
+`;
+
+export const ButtonSort = styled.button`
+  width: 100%;
+  text-align: start;
+  background-color: var(--pure-white);
+  padding: 6px 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--text-main);
+  transition: 0.3s;
+  &:hover,
+  &:focus {
+    background-color: var(--hover-grey);
   }
 `;

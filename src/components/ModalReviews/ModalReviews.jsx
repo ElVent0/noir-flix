@@ -17,7 +17,10 @@ import {
   ItemReview,
   UserDate,
   NothingBlock,
+  NoReviewForm,
 } from "./ModalReviews.styled";
+import fingerprint from "../../media/fingerprint.png";
+import fingerprintLight from "../../media/fingerprint-2.png";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
@@ -140,34 +143,45 @@ const ModalReviews = ({ movieData }) => {
           </NothingBlock>
         )}
       </MoviesReviews>
-      <NewReviewForm onSubmit={(e) => onFormSubmit(e)}>
-        <TextArea
-          themeType={themeType}
-          placeholder="Your review"
-          onChange={(e) => onChangeTextArea(e)}
-          value={textArea}
-          id="review"
-        ></TextArea>
-        <NewReviewFormFooter>
-          <GoodButton
-            type="button"
-            isActive={goodButton}
-            valuse={goodButton}
-            onClick={onClickGood}
-          >
-            <BiSolidLike />
-          </GoodButton>
-          <BadButton
-            type="button"
-            isActive={badButton}
-            valuse={badButton}
-            onClick={onClickBad}
-          >
-            <BiSolidDislike />
-          </BadButton>
-          <ButtonCofirm type="submit">Confirm</ButtonCofirm>
-        </NewReviewFormFooter>
-      </NewReviewForm>
+      {session ? (
+        <NewReviewForm onSubmit={(e) => onFormSubmit(e)}>
+          <TextArea
+            themeType={themeType}
+            placeholder="Your review"
+            onChange={(e) => onChangeTextArea(e)}
+            value={textArea}
+            id="review"
+          ></TextArea>
+          <NewReviewFormFooter>
+            <GoodButton
+              type="button"
+              isActive={goodButton}
+              valuse={goodButton}
+              onClick={onClickGood}
+            >
+              <BiSolidLike />
+            </GoodButton>
+            <BadButton
+              type="button"
+              isActive={badButton}
+              valuse={badButton}
+              onClick={onClickBad}
+            >
+              <BiSolidDislike />
+            </BadButton>
+            <ButtonCofirm type="submit">Confirm</ButtonCofirm>
+          </NewReviewFormFooter>
+        </NewReviewForm>
+      ) : (
+        <NoReviewForm>
+          <img
+            src={themeType ? fingerprint : fingerprintLight}
+            width="54"
+            alt="fingerpring"
+          />
+          <p>You need to log in to leave a review</p>
+        </NoReviewForm>
+      )}
     </ModalReviewsStyled>
   );
 };
