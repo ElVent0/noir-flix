@@ -51,7 +51,6 @@ export const ThemeButton = styled.button`
   width: 36px;
   border-radius: 10px;
   display: flex;
-  justify-content: ${(prop) => (prop.themeType ? "flex-start" : "flex-end")};
   align-items: center;
   padding: 0 3px;
   transition: 0.3s;
@@ -63,6 +62,22 @@ export const ThemeButton = styled.button`
   &:hover,
   &:active {
     background-color: var(--hover-grey);
+  }
+`;
+
+export const MoviePlansButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 10px;
+  background-color: var(--pure-white);
+  & > svg {
+    font-size: 22px;
+    position: relative;
+    top: -1px;
+    color: var(--text-main);
   }
 `;
 

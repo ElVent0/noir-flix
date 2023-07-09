@@ -15,12 +15,14 @@ import {
   ThemeButtonDotDark,
   ProgressContainer,
   ProgressBar,
+  MoviePlansButton,
 } from "./Header.styled.jsx";
 import logo from "../../media/noirflix-3-3.png";
 import logoLight from "../../media/noirflix-3-4.png";
 import { TbLogin } from "react-icons/tb";
 import { RiSunFill } from "react-icons/ri";
 import { BsFillMoonStarsFill } from "react-icons/bs";
+import { FaClipboardList } from "react-icons/fa";
 import { useState, useEffect, useContext } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
@@ -160,6 +162,9 @@ const Header = ({ themeToggle }) => {
             </ThemeButtonDotDark>
           )}
         </ThemeButton>
+        {/* <MoviePlansButton>
+          <FaClipboardList />
+        </MoviePlansButton> */}
         {session ? (
           <>
             <Profile onClick={onOpenProfileModal}>

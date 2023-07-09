@@ -164,11 +164,33 @@ export const ModalContent = styled.div`
 
 export const ModalContentHeader = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding-top: 3px;
   padding-bottom: 6px;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--element-grey);
+  & > div {
+    max-width: 90%;
+  }
+`;
+
+export const MoviePlansButton = styled.button`
+  position: absolute;
+  top: 60px;
+  right: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background-color: var(--pure-white);
+  & > svg {
+    font-size: 22px;
+    position: relative;
+    top: -1px;
+    color: var(--text-main);
+  }
 `;
 
 export const Title = styled.p`

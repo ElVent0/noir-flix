@@ -23,7 +23,6 @@ export const ReviewsFilters = styled.div`
   display: flex;
   align-items: center;
   height: 68px;
-
   border-bottom: 1px solid var(--element-grey);
 `;
 
@@ -60,7 +59,7 @@ export const FiltersButton = styled.button`
     }
   }
   &:first-of-type {
-    margin-right: 10px;
+    margin-right: 6px;
     &::before {
       content: "";
       width: 1px;
@@ -81,6 +80,9 @@ export const FiltersButton = styled.button`
 
 export const ReviewsList = styled.ul`
   padding: 0 0 10px 0;
+  & {
+    ${(prop) => !prop.isone && `display: flex; flex-wrap: wrap; gap: 4%;`}
+  }
 `;
 
 export const ReviewsItem = styled.li`
@@ -88,12 +90,81 @@ export const ReviewsItem = styled.li`
   border-bottom: 1px solid var(--element-grey);
   display: flex;
   gap: 12px;
+  & {
+    ${(prop) =>
+      !prop.isone &&
+      `width: 48%;
+  position: relative;
+  &:nth-child(2n-1) {
+    &::after {
+      content: "";
+      width: 1px;
+      height: 80%;
+      background-color: var(--element-grey);
+      position: absolute;
+      right: -4%;
+      top: 10%;
+    }
+  }`}
+  }
   &:first-of-type {
     padding-top: 20px;
   }
+
+  & {
+    ${(prop) =>
+      prop.isone &&
+      `
   &:last-child {
     margin-bottom: 0;
     border-bottom: none;
+  }`}
+  }
+  /* &:nth-last-child(2), */
+`;
+
+export const ColumnsSort = styled.div`
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+`;
+
+export const ButtonColumns = styled.button`
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  transition: 0.6s;
+  border-radius: 8px;
+  font-size: 16px;
+  position: relative;
+  background-color: ${(props) =>
+    props.isone ? "var(--accent)" : "var(--pure-white)"};
+  color: ${(props) => (props.isone ? "#fff" : "var(--accent)")};
+  border: ${(props) =>
+    props.isone ? "1px solid var(--pure-white)" : "1px solid var(--accent)"};
+  &:hover,
+  &:focus {
+    background-color: ${(props) =>
+      props.isone ? "var(--accent-hover)" : "var(--bg-grey)"};
+  }
+  animation: animateOpacity 1s linear;
+  @keyframes animateOpacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+  &:last-of-type {
+    background-color: ${(props) =>
+      props.isone ? "var(--pure-white)" : "var(--accent)"};
+    color: ${(props) => (props.isone ? "var(--accent)" : "#fff")};
+    border: ${(props) =>
+      props.isone ? "1px solid var(--accent)" : "1px solid var(--pure-white)"};
   }
 `;
 

@@ -27,6 +27,8 @@ import {
   BodySort,
   ItemSort,
   ButtonSort,
+  ColumnsSort,
+  ButtonColumns,
 } from "./Reviews.styled.jsx";
 import nothing from "../../media/nothing.png";
 import nothingLight from "../../media/nothing-2.png";
@@ -52,6 +54,7 @@ import { getDate } from "../../utils/utils";
 import { ThemeContext } from "../../components/App";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
+import { TbColumns1, TbColumns2 } from "react-icons/tb";
 
 const Reviews = () => {
   const [reviewsList, setReviewsList] = useState([]);
@@ -59,6 +62,7 @@ const Reviews = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [inputSort, setInputSort] = useState("New");
+  const [isOne, setIsOne] = useState(true);
 
   const onSortInLibrary = (item) => {
     setInputSort(item);
@@ -232,9 +236,17 @@ const Reviews = () => {
             </FiltersButton>
           </>
         )}
+        <ColumnsSort>
+          <ButtonColumns isone={isOne} onClick={() => setIsOne(true)}>
+            <TbColumns1 />
+          </ButtonColumns>
+          <ButtonColumns isone={isOne} onClick={() => setIsOne(false)}>
+            <TbColumns2 />
+          </ButtonColumns>
+        </ColumnsSort>
       </ReviewsFilters>
       {reviewsList.length !== 0 ? (
-        <ReviewsList>
+        <ReviewsList isone={isOne}>
           {reviewsList.map((item) => {
             let isRecommendations;
             let isNotRecommendations;
@@ -261,7 +273,7 @@ const Reviews = () => {
             };
 
             return (
-              <ReviewsItem key={item.id}>
+              <ReviewsItem key={item.id} isone={isOne}>
                 <PosterContainer to={`/?id=${item.movieId}`}>
                   <MoviePoster
                     src={

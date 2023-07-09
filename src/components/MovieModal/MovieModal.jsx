@@ -42,8 +42,10 @@ import {
   CollectionItemLink,
   CollectionItemPoster,
   CollectionItemTitle,
+  MoviePlansButton,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
+import { FaClipboardList } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
@@ -411,6 +413,9 @@ const MovieModal = ({
               <ModalParagraph page={page}>
                 <span>{movieData.overview}</span>
               </ModalParagraph>
+              {/* <MoviePlansButton>
+                <FaClipboardList />
+              </MoviePlansButton> */}
             </ModalContentBody>
             {movieTrailer && (
               <TrailerList>
