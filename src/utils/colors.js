@@ -6,6 +6,7 @@ export const lightTheme = createGlobalStyle`
       --accent-hover: #179bd9;
       --accent-transparent: #11b4ffc3;
       --bg-grey: #f4f7f9;
+      --bg-grey-bg: linear-gradient(55deg, rgba(244, 247, 249,0.9) 0%, rgba(244, 247, 249,0.9) 34%, rgba(244, 247, 249,1) 64%, rgba(244, 247, 249,0.8) 83%, rgba(244, 247, 249,0.8) 100%);
       --bg-grey-transparent: #f4f7f9;
       --bg-super-transparent: #f4f7f9;
       --element-grey: #DADDE1;
@@ -15,6 +16,7 @@ export const lightTheme = createGlobalStyle`
       --nav-black: #242424;
       --nav-black-transparent: #24242490;
       --pure-white: #fff;
+      --pure-white-bg: linear-gradient(55deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.9) 34%, rgba(255,255,255,1) 64%, rgba(255,255,255,0.8) 83%, rgba(255,255,255,0.8) 100%);
       --more-check: linear-gradient(164deg, rgba(255,150,51,1) 0%, rgba(255,197,51,1) 100%);
   }`;
 
@@ -24,7 +26,9 @@ export const darkTheme = createGlobalStyle`
       --accent-hover: #179bd9;
       --accent-transparent: #11b4ffc3;
       --pure-white: #37373d;
+     --pure-white-bg: linear-gradient(55deg, rgba(55,55,61,0.6) 0%, rgba(55,55,61,0.8) 34%, rgba(55,55,61,1) 64%, rgba(55,55,61,0.8) 83%, rgba(55,55,61,0.6) 100%);
       --bg-grey: #252526;
+      --bg-grey-bg: linear-gradient(55deg, rgba(37, 37, 38,0.6) 0%, rgba(37, 37, 38,0.8) 34%, rgba(37, 37, 38,1) 64%, rgba(37, 37, 38,0.8) 83%, rgba(37, 37, 38,0.6) 100%);
       --bg-grey-transparent: #252526c8;
       --bg-super-transparent: #25252640;
       --hover-grey: #303032;

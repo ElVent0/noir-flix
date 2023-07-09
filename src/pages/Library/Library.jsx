@@ -144,6 +144,7 @@ const Library = ({ onAddToRecentMovies }) => {
                   onAllStarsButton={onAllStarsButton}
                   setInputSort={setInputSort}
                   inputSort={inputSort}
+                  moviesList={moviesList}
                 />
 
                 <MoviesList

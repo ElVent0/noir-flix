@@ -97,7 +97,7 @@ const MoviesList = ({
   }, [moviesList, stars, forLater]);
 
   return (
-    <MoviesListStyled>
+    <MoviesListStyled pathname={window.location.pathname}>
       {finalList.length !== 0 ? (
         finalList.map((item, index) => {
           const path = item.poster_path

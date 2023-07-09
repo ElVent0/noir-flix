@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const ReviewsStyled = styled.div`
-  background-color: var(--pure-white);
+  /* background-color: var(--pure-white); */
+  background: var(--pure-white-bg);
   min-height: calc(100vh - 217px);
   padding: 0 20px;
   border-radius: 10px;

@@ -19,6 +19,7 @@ import {
   GenresList,
   GenresItem,
   GenresButton,
+  MoviesCounter,
 } from "./MoviesFilters.styled";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -44,6 +45,7 @@ const ResearchFilters = ({
   setSearchInput,
   setCurrentGenre,
   currentGenre,
+  moviesList,
 }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
@@ -195,6 +197,7 @@ const ResearchFilters = ({
               <FaCrown />
             </MoreCheckButton>
           </MoreCheck>
+          <MoviesCounter>{moviesList.length} movies</MoviesCounter>
         </>
       )}
       {window.location.pathname === "/" && (

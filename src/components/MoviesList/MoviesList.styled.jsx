@@ -5,6 +5,35 @@ export const MoviesListStyled = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
+  position: relative;
+  overflow: hidden;
+  & {
+    ${(prop) =>
+      prop.pathname === "/" &&
+      `&::before {
+          content: "";
+          width: 60%;
+          height: 40%;
+          filter: blur(160px);
+          pointer-events: none;
+          background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
+          position: absolute;
+          z-index: -1;
+          top: 30%;
+          left: 20%;
+          opacity: 0.2;
+          z-index: 1;
+          animation: spin 6s linear infinite;`}
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export const MoviesItem = styled.li`
@@ -14,6 +43,7 @@ export const MoviesItem = styled.li`
   max-height: 231.47px;
   border-radius: 10px;
   position: relative;
+  z-index: 1;
 `;
 
 export const MoviesHeader = styled.div`

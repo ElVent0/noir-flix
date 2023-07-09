@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ModalBackdrop = styled.div`
   width: 100%;
@@ -108,7 +108,7 @@ export const CollectionItem = styled.li`
 export const CollectionItemLink = styled.button`
   display: flex;
   align-items: center;
-  background-color: var(--bg-grey);
+  background: var(--bg-grey-bg);
   border-radius: 10px;
   padding: 4px;
   color: var(--text-main);
@@ -133,11 +133,45 @@ export const CollectionItemTitle = styled.p`
 `;
 
 export const Modal = styled.div`
-  background: var(--bg-grey);
+  /* background: var(--bg-grey); */
+  background: var(--bg-grey-bg);
   border-radius: 10px;
   display: flex;
   padding: 6px 0 6px 6px;
   position: relative;
+
+  &::before {
+    content: "";
+    width: 90%;
+    height: 100%;
+    filter: blur(160px);
+    pointer-events: none;
+    background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
+    ${(props) =>
+      props.themetype &&
+      css`
+        background: linear-gradient(
+          132deg,
+          var(--accent),
+          #3d6eff99 43%,
+          #6600ff99
+        );
+      `};
+    position: absolute;
+    z-index: -1;
+    top: 10%;
+    left: 20%;
+    animation: spin 6s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export const ModalPoster = styled.img`
@@ -185,11 +219,16 @@ export const MoviePlansButton = styled.button`
   height: 34px;
   border-radius: 8px;
   background-color: var(--pure-white);
+  transition: 0.3s;
   & > svg {
     font-size: 22px;
     position: relative;
     top: -1px;
     color: var(--text-main);
+  }
+  &:hover,
+  &:active {
+    background-color: var(--hover-grey);
   }
 `;
 

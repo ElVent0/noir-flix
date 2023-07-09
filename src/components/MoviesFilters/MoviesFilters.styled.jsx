@@ -163,7 +163,8 @@ export const SearchInput = styled.input`
   height: 100%;
   border: none;
   outline: none;
-  background-color: var(--pure-white);
+  /* background-color: var(--pure-white); */
+  background-color: transparent;
   color: var(--text-main);
   font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "14px")};
   &::placeholder {
@@ -279,6 +280,12 @@ export const MoreCheck = styled.div`
       opacity: 1;
     }
   }
+`;
+
+export const MoviesCounter = styled.p`
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--text-main-transparent);
 `;
 
 export const MoreCheckButton = styled.button`

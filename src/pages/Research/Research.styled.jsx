@@ -1,11 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ResearchStyled = styled.div`
   min-height: calc(100vh - 339px);
-  background-color: var(--pure-white);
+  background: var(--pure-white-bg);
   padding: 0 20px 40px 20px;
   border-radius: 10px;
   animation: anumationOn 0.6s linear;
+  position: relative;
   @keyframes anumationOn {
     0% {
       opacity: 0;

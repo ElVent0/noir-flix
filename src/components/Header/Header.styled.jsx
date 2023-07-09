@@ -73,11 +73,16 @@ export const MoviePlansButton = styled.button`
   width: 36px;
   border-radius: 10px;
   background-color: var(--pure-white);
+  transition: 0.3s;
   & > svg {
     font-size: 22px;
     position: relative;
     top: -1px;
     color: var(--text-main);
+  }
+  &:hover,
+  &:active {
+    background-color: var(--hover-grey);
   }
 `;
 

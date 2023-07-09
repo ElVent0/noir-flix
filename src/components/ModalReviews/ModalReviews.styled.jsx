@@ -6,7 +6,8 @@ export const ModalReviewsStyled = styled.div`
 `;
 
 export const MoviesReviews = styled.div`
-  background-color: var(--bg-grey);
+  /* background-color: var(--bg-grey); */
+  background: var(--bg-grey-bg);
   border-radius: 10px;
   padding: 6px 6px 0 6px;
   color: var(--text-main);
@@ -129,7 +130,8 @@ export const ItemReview = styled.p`
 `;
 
 export const NewReviewForm = styled.form`
-  background-color: var(--bg-grey);
+  background: var(--bg-grey-bg);
+  /* background: var(--pure-white-transparent); */
   border-radius: 10px;
   padding: 6px;
   color: var(--text-main);

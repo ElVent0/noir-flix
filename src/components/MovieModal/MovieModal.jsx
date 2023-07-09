@@ -316,7 +316,7 @@ const MovieModal = ({
             </>
           )}
         </CollectionBlock>
-        <Modal>
+        <Modal themetype={themeType}>
           <PosterContainer>
             <ModalPoster
               width="338"
@@ -413,9 +413,9 @@ const MovieModal = ({
               <ModalParagraph page={page}>
                 <span>{movieData.overview}</span>
               </ModalParagraph>
-              {/* <MoviePlansButton>
+              <MoviePlansButton>
                 <FaClipboardList />
-              </MoviePlansButton> */}
+              </MoviePlansButton>
             </ModalContentBody>
             {movieTrailer && (
               <TrailerList>

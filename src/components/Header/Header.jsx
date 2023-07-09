@@ -162,9 +162,9 @@ const Header = ({ themeToggle }) => {
             </ThemeButtonDotDark>
           )}
         </ThemeButton>
-        {/* <MoviePlansButton>
+        <MoviePlansButton>
           <FaClipboardList />
-        </MoviePlansButton> */}
+        </MoviePlansButton>
         {session ? (
           <>
             <Profile onClick={onOpenProfileModal}>
