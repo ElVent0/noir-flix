@@ -27,11 +27,12 @@ import { useState, useEffect, useContext } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
 import PlansListModal from "../PlansListModal/PlansListModal";
-import { useSession } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from "@dicebear/collection";
 import { Toaster } from "react-hot-toast";
 import { ThemeContext } from "../App";
+import { getPlansList } from "../../api/database";
 
 const Header = ({ themeToggle }) => {
   const [isProfileModal, setIsProfileModal] = useState(false);
@@ -44,9 +45,11 @@ const Header = ({ themeToggle }) => {
   const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
   const [isPlansListModal, setIsPlansListModal] = useState(false);
   const [isOpenPlansListProfile, setIsOpenPlansListProfile] = useState(false);
+  const [plansList, setPlansList] = useState(null);
 
   const themeType = useContext(ThemeContext);
   const session = useSession();
+  const supabase = useSupabaseClient();
 
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
@@ -132,12 +135,14 @@ const Header = ({ themeToggle }) => {
 
   const changeIsPlansListModal = () => {
     if (!isPlansListModal) {
+      getPlansList(supabase, session, setPlansList);
       setIsPlansListModal((prev) => !prev);
       setIsOpenPlansListProfile((prev) => !prev);
     } else {
       setIsOpenPlansListProfile(false);
       setTimeout(() => {
         setIsPlansListModal((prev) => !prev);
+        setPlansList(null);
       }, 200);
     }
   };
@@ -209,11 +214,13 @@ const Header = ({ themeToggle }) => {
         )}
       </LoginMenu>
 
-      {isPlansListModal && (
+      {plansList && (
         <PlansListModal
           isFixed={isFixed}
           isOpenPlansListProfile={isOpenPlansListProfile}
           changeIsPlansListModal={changeIsPlansListModal}
+          plansList={plansList}
+          setPlansList={setPlansList}
         />
       )}
 
