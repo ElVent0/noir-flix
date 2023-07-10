@@ -75,6 +75,7 @@ import {
 import poster from "../../media/poster.png";
 import { v4 as uuidv4 } from "uuid";
 import { useSearchParams } from "react-router-dom";
+import { sendPlan, getPlansList, deletePlan } from "../../api/database";
 
 const MovieModal = ({
   movieData,
@@ -93,6 +94,8 @@ const MovieModal = ({
   const [movieTrailer, setMovieTrailer] = useState(null);
   const [isInLibrary, setIsInLibrary] = useState(false);
   const [collection, setCollection] = useState([]);
+  const [plansList, setPlansList] = useState([]);
+  const [isPlanned, setIsPlanned] = useState(false);
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -154,8 +157,16 @@ const MovieModal = ({
       setForLater(movieData.for_later);
     }
 
+    getPlansList(supabase, session, setPlansList);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setIsPlanned(plansList.some((i) => i.movieId === movieData.id));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plansList]);
 
   // -----------------------------------------------------------------------------------------
 
@@ -268,6 +279,15 @@ const MovieModal = ({
   const onStars = (number) => {
     setStars(number);
   };
+
+  const onSendPlanRequest = (movieId) => {
+    if (isPlanned) {
+      deletePlan(supabase, session, movieId, successDeleteToast, setPlansList);
+    } else {
+      sendPlan(supabase, session, movieData, successToast, setPlansList);
+    }
+  };
+
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore} isOpenModal={isOpenModal}>
       <ModalContainer movieData={movieData}>
@@ -413,8 +433,16 @@ const MovieModal = ({
               <ModalParagraph page={page}>
                 <span>{movieData.overview}</span>
               </ModalParagraph>
-              <MoviePlansButton>
-                <FaClipboardList />
+              <MoviePlansButton
+                type="button"
+                onClick={() => onSendPlanRequest(movieData.id)}
+                isplanned={isPlanned}
+              >
+                {plansList.some((i) => i.movieId === movieData.id) ? (
+                  <MdOutlineDone />
+                ) : (
+                  <FaClipboardList />
+                )}
               </MoviePlansButton>
             </ModalContentBody>
             {movieTrailer && (

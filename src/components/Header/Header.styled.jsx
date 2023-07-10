@@ -7,11 +7,10 @@ export const HeaderStyled = styled.div`
   display: flex;
   align-items: center;
   position: sticky;
-  /* justify-content: space-between; */
   top: 0px;
   z-index: 1000;
   border-radius: 0 0 10px 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: ${(prop) =>
     prop.isFixed ? "var(--pure-white)" : "transparent"};
   padding: ${(prop) => (prop.isFixed ? "0 20px" : "0px")};
@@ -72,17 +71,45 @@ export const MoviePlansButton = styled.button`
   height: 36px;
   width: 36px;
   border-radius: 10px;
-  background-color: var(--pure-white);
+  background-color: ${(prop) =>
+    prop.isplans ? "var(--accent)" : "var(--pure-white)"};
   transition: 0.3s;
   & > svg {
     font-size: 22px;
     position: relative;
     top: -1px;
-    color: var(--text-main);
   }
+  color: ${(prop) => (prop.isplans ? "#fff" : "var(--text-main)")};
   &:hover,
   &:active {
-    background-color: var(--hover-grey);
+    background-color: ${(prop) =>
+      prop.isplans ? "var(--accent)" : "var(--hover-grey)"};
+  }
+
+  animation: ${({ isplans }) =>
+    isplans ? "buttonOn .6s linear" : "buttonOff .6s linear"};
+
+  @keyframes buttonOn {
+    0% {
+      background-color: var(--pure-white);
+      color: var(--text-main);
+    }
+
+    100% {
+      background-color: var(--accent);
+      color: #fff;
+    }
+  }
+  @keyframes buttonOff {
+    0% {
+      background-color: var(--accent);
+      color: #fff;
+    }
+
+    100% {
+      background-color: var(--pure-white);
+      color: var(--text-main);
+    }
   }
 `;
 
@@ -262,6 +289,8 @@ export const ProgressContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
 `;
 
 export const ProgressBar = styled.div`

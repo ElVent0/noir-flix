@@ -177,6 +177,8 @@ export const deleteMovie = async (
   }
 };
 
+// -----------------------------------------------------------------------
+
 export const sendReviews = async (
   supabase,
   session,
@@ -521,5 +523,125 @@ export const deleteReviewNotRecommendation = async (
     }
   } catch (e) {
     console.error("delete review error", e);
+  }
+};
+
+// -----------------------------------------------------------------------
+
+export const getPlansList = async (supabase, session, setPlansList) => {
+  try {
+    const { data, error } = await supabase
+      .from("plans")
+      .select("*")
+      .eq("userId", session.user.id);
+
+    // let result = data.sort(
+    //   (a, b) =>
+    //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    // );
+
+    // let result = data;
+
+    if (error) {
+      console.error("getPlansList error", error);
+    } else {
+      setPlansList(data);
+    }
+  } catch (e) {
+    console.error("getPlansList error", e);
+  }
+};
+
+export const sendPlan = async (
+  supabase,
+  session,
+  movieData,
+  successToast,
+  setPlansList
+) => {
+  try {
+    const { error } = await supabase
+      .from("plans")
+      .insert({
+        userId: session.user.id,
+        movieId: movieData.id,
+        movieName: movieData.original_title,
+        movieYear: movieData.release_date.split("-")[0],
+        moviePoster: movieData.poster_path,
+      })
+      .single();
+
+    if (error) {
+      console.error("insert review error 1", error);
+      return;
+    } else {
+      successToast();
+      getPlansList(supabase, session, setPlansList);
+    }
+  } catch (e) {
+    console.error("insert review error 2", e);
+  }
+};
+
+export const deletePlan = async (
+  supabase,
+  session,
+  movieId,
+  successDeleteToast,
+  setPlansList
+) => {
+  try {
+    const { error } = await supabase.from("plans").delete().match({
+      userId: session.user.id,
+      movieId,
+    });
+
+    if (error) {
+      console.error("Помилка видалення рядка:", error);
+      return;
+    } else {
+      getPlansList(supabase, session, setPlansList);
+      successDeleteToast();
+    }
+  } catch (e) {
+    console.error("delete error", e);
+  }
+};
+
+export const moveUp = async (supabase, session, rowId, setPlansList) => {
+  try {
+    const { data: rows, error: selectError } = await supabase
+      .from("plans")
+      .select("*");
+
+    if (selectError) {
+      console.error(selectError);
+      return;
+    }
+    const targetRow = rows.find((row) => row.id === rowId);
+
+    if (!targetRow) {
+      console.error("Рядок не знайдено");
+      return;
+    }
+    const updatedRows = rows.filter((row) => row.id !== rowId);
+
+    updatedRows.splice(0, 0, targetRow);
+
+    const { error: updateError } = await supabase
+      .from("plans")
+      .upsert(updatedRows, { onConflict: ["id"] });
+
+    if (updateError) {
+      console.error(updateError);
+      return;
+    }
+
+    if (selectError) {
+    } else {
+      getPlansList(supabase, session, setPlansList);
+    }
+  } catch (e) {
+    console.error(e);
   }
 };

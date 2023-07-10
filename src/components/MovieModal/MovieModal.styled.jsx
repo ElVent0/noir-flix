@@ -153,8 +153,8 @@ export const Modal = styled.div`
         background: linear-gradient(
           132deg,
           var(--accent),
-          #3d6eff99 43%,
-          #6600ff99
+          #3d6dff 43%,
+          #6600ff
         );
       `};
     position: absolute;
@@ -181,8 +181,6 @@ export const ModalPoster = styled.img`
 `;
 
 export const PosterContainer = styled.div`
-  /* width: 300px;
-  height: 430px; */
   width: 338px;
   height: 484px;
   position: relative;
@@ -218,17 +216,19 @@ export const MoviePlansButton = styled.button`
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background-color: var(--pure-white);
+  background-color: ${(prop) =>
+    prop.isplanned ? "var(--accent)" : "var(--pure-white)"};
   transition: 0.3s;
   & > svg {
     font-size: 22px;
     position: relative;
     top: -1px;
-    color: var(--text-main);
+    color: ${(prop) => (prop.isplanned ? "#fff" : "var(--text-main)")};
   }
   &:hover,
   &:active {
-    background-color: var(--hover-grey);
+    background-color: ${(prop) =>
+      prop.isplanned ? "var(--accent-hover)" : "var(--hover-grey)"};
   }
 `;
 

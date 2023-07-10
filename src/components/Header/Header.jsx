@@ -26,6 +26,7 @@ import { FaClipboardList } from "react-icons/fa";
 import { useState, useEffect, useContext } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import LoginModal from "../LoginModal/LoginModal";
+import PlansListModal from "../PlansListModal/PlansListModal";
 import { useSession } from "@supabase/auth-helpers-react";
 import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from "@dicebear/collection";
@@ -41,6 +42,8 @@ const Header = ({ themeToggle }) => {
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isOpenModalProfile, setIsOpenModalProfle] = useState(false);
   const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
+  const [isPlansListModal, setIsPlansListModal] = useState(false);
+  const [isOpenPlansListProfile, setIsOpenPlansListProfile] = useState(false);
 
   const themeType = useContext(ThemeContext);
   const session = useSession();
@@ -128,6 +131,18 @@ const Header = ({ themeToggle }) => {
     }
   };
 
+  const changeIsPlansListModal = () => {
+    if (!isPlansListModal) {
+      setIsPlansListModal((prev) => !prev);
+      setIsOpenPlansListProfile((prev) => !prev);
+    } else {
+      setIsOpenPlansListProfile(false);
+      setTimeout(() => {
+        setIsPlansListModal((prev) => !prev);
+      }, 200);
+    }
+  };
+
   return (
     <HeaderStyled isFixed={isFixed}>
       <Navigation>
@@ -162,11 +177,15 @@ const Header = ({ themeToggle }) => {
             </ThemeButtonDotDark>
           )}
         </ThemeButton>
-        <MoviePlansButton>
-          <FaClipboardList />
-        </MoviePlansButton>
         {session ? (
           <>
+            <MoviePlansButton
+              type="button"
+              onClick={() => changeIsPlansListModal()}
+              isplans={isPlansListModal}
+            >
+              <FaClipboardList />
+            </MoviePlansButton>
             <Profile onClick={onOpenProfileModal}>
               <UserImage src={avatar} alt="User image" />
               <p>
@@ -190,6 +209,18 @@ const Header = ({ themeToggle }) => {
           </>
         )}
       </LoginMenu>
+
+      {isPlansListModal && (
+        <PlansListModal
+          // onCloseProfileModal={onCloseProfileModal}
+          // setIsProfileModal={setIsProfileModal}
+          // isOpenModalProfile={isOpenModalProfile}
+          // themeType={themeType}
+          isFixed={isFixed}
+          isOpenPlansListProfile={isOpenPlansListProfile}
+          changeIsPlansListModal={changeIsPlansListModal}
+        />
+      )}
 
       {isProfileModal && (
         <ProfileModal
