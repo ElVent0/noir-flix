@@ -47,20 +47,20 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   };
 
   useEffect(() => {
-    getData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentGenre]);
-
-  // -----------------------------------------------------------------------------------------
-
-  useEffect(() => {
     const getData = async () => {
       const data = await getMovies(1, "New");
       setTrendingList(data.results);
     };
     getData();
   }, []);
+
+  // -----------------------------------------------------------------------------------------
+
+  useEffect(() => {
+    getData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentGenre]);
 
   // -----------------------------------------------------------------------------------------
 

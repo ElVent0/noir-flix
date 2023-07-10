@@ -25,7 +25,6 @@ export const MoviesListStyled = styled.ul`
           z-index: 1;
           animation: spin 6s linear infinite;`}
   }
-
   @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -134,7 +133,6 @@ export const MoviesYear = styled.p`
 export const MoviesParagraph = styled.p`
   font-size: 13px;
   line-height: 15px;
-
   color: var(--text-main-transparent);
   margin-bottom: 6px;
   max-height: 45px;
@@ -176,7 +174,6 @@ export const MoreCheckContainer = styled.div`
   height: 30px;
   padding-right: 6px;
   padding-bottom: 6px;
-  /* display: ${({ forLater }) => (forLater === true ? "block" : "none")}; */
   background-color: var(--bg-grey);
   position: absolute;
   border-radius: 0 0 10px 0;

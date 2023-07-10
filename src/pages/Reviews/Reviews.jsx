@@ -64,13 +64,6 @@ const Reviews = () => {
   const [inputSort, setInputSort] = useState("New");
   const [isOne, setIsOne] = useState(true);
 
-  const onSortInLibrary = (item) => {
-    setInputSort(item);
-    setIsOpenSort((prev) => !prev);
-  };
-
-  const sortItemsInLibrary = ["Popular", "New"];
-
   const session = useSession();
   const supabase = useSupabaseClient();
   const themetype = useContext(ThemeContext);
@@ -89,16 +82,22 @@ const Reviews = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // -----------------------------------------------------------------------------------------
+
   useEffect(() => {
     getData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSort]);
 
+  // -----------------------------------------------------------------------------------------
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUsersReviews]);
+
+  // -----------------------------------------------------------------------------------------
 
   const onAllReviews = () => {
     setIsUsersReviews(false);
@@ -195,6 +194,13 @@ const Reviews = () => {
       errorReviewVote();
     }
   };
+
+  const onSortInLibrary = (item) => {
+    setInputSort(item);
+    setIsOpenSort((prev) => !prev);
+  };
+
+  const sortItemsInLibrary = ["Popular", "New"];
 
   return (
     <ReviewsStyled>

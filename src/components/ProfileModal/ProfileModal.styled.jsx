@@ -47,20 +47,15 @@ export const Modal = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-
   padding: 3px;
   position: relative;
   color: rgb(88 199 250 / 0%);
-
   &::before {
     content: "";
     width: 150%;
     height: 180%;
     border-radius: 8px;
-    /* background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff); */
-
     background: linear-gradient(132deg, var(--accent), #3d6eff 43%, #6600ff);
-
     ${(props) =>
       props.themetype &&
       css`
@@ -71,14 +66,12 @@ export const Modal = styled.div`
           #6600ff40
         );
       `};
-
     position: absolute;
     z-index: -1;
     top: -35%;
     left: -25%;
     animation: spin 2s linear infinite;
   }
-
   @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -156,7 +149,6 @@ export const Profile = styled.div`
   height: 375px;
   background-image: linear-gradient(132deg, #0f1f4dde 30%, #254dc4da),
     url(${(props) => props.path});
-
   ${(props) =>
     props.themetype &&
     css`
@@ -172,7 +164,6 @@ export const Profile = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
-
   perspective: 1000px;
 `;
 
@@ -210,7 +201,6 @@ export const ShadowContainer = styled.div`
   height: 10px;
   background-color: #000000;
   border-radius: 50%;
-  /* filter: blur(10px); */
   filter: ${(prop) => (prop.themetype ? "blur(16px)" : "blur(12px)")};
   margin-bottom: 16px;
   margin-left: auto;
@@ -280,14 +270,3 @@ export const UserMail = styled.p`
   color: var(--text-main);
   font-size: 14px;
 `;
-
-// export const Statistics = styled.div`
-//   width: 50%;
-//   background-image: url(${(props) => props.path});
-//   background-repeat: no-repeat;
-//   background-size: cover;
-//   background-position: left;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;

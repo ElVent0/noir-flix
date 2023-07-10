@@ -43,11 +43,6 @@ const ModalReviews = ({ movieData }) => {
   const supabase = useSupabaseClient();
   const themeType = useContext(ThemeContext);
 
-  //   console.log(session.user.identities.identity_data);
-  //   console.log(session.user.user_metadata.name);
-  //   console.log(session.user);
-  // console.log(movieData);
-
   const onDefaultState = () => {
     setTextArea("");
     setBadButton(false);

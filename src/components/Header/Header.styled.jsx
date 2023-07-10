@@ -10,7 +10,6 @@ export const HeaderStyled = styled.div`
   top: 0px;
   z-index: 1000;
   border-radius: 0 0 10px 10px;
-  /* overflow: hidden; */
   background-color: ${(prop) =>
     prop.isFixed ? "var(--pure-white)" : "transparent"};
   padding: ${(prop) => (prop.isFixed ? "0 20px" : "0px")};
@@ -24,7 +23,6 @@ export const HeaderStyled = styled.div`
       box-shadow: none;
       padding: 0;
     }
-
     100% {
       background-color: var(--pure-white);
       box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.4);
@@ -85,10 +83,8 @@ export const MoviePlansButton = styled.button`
     background-color: ${(prop) =>
       prop.isplans ? "var(--accent)" : "var(--hover-grey)"};
   }
-
   animation: ${({ isplans }) =>
     isplans ? "buttonOn .6s linear" : "buttonOff .6s linear"};
-
   @keyframes buttonOn {
     0% {
       background-color: var(--pure-white);
@@ -126,7 +122,6 @@ export const ThemeButtonDotLight = styled.div`
   top: 0;
   animation: ${({ themeType }) =>
     themeType ? "BottomThemeOn .6s linear" : "BottomThemeOff .6s linear"};
-
   @keyframes BottomThemeOn {
     0% {
       top: -30px;
@@ -160,7 +155,6 @@ export const ThemeButtonDotDark = styled.div`
   top: 0;
   animation: ${({ themeType }) =>
     !themeType ? "BottomThemeOn .6s linear" : "BottomThemeOff .6s linear"};
-
   @keyframes BottomThemeOn {
     0% {
       top: -30px;
@@ -258,7 +252,6 @@ export const Profile = styled.button`
   line-height: 19px;
   color: var(--nav-black-transparent);
   height: 36px;
-  /* width: 100px; */
   padding: 0 10px 0 6px;
   justify-content: center;
   align-items: center;

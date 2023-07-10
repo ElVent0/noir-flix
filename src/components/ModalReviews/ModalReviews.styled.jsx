@@ -6,12 +6,10 @@ export const ModalReviewsStyled = styled.div`
 `;
 
 export const MoviesReviews = styled.div`
-  /* background-color: var(--bg-grey); */
   background: var(--bg-grey-bg);
   border-radius: 10px;
   padding: 6px 6px 0 6px;
   color: var(--text-main);
-  /* height: calc(100% - 166px - 40px); */
 `;
 
 export const RatingList = styled.ul`
@@ -49,17 +47,14 @@ export const ReviewsList = styled.ul`
     display: block;
     width: 4px;
   }
-
   &::-webkit-scrollbar-track {
     background-color: var(--bg-grey);
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: var(--accent);
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--accent-hover);
     border-radius: 4px;
@@ -131,7 +126,6 @@ export const ItemReview = styled.p`
 
 export const NewReviewForm = styled.form`
   background: var(--bg-grey-bg);
-  /* background: var(--pure-white-transparent); */
   border-radius: 10px;
   padding: 6px;
   color: var(--text-main);

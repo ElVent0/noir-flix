@@ -129,13 +129,10 @@ const ResearchFilters = ({
 
               const onChangeGenre = (item) => {
                 const params = {};
-
                 if (searchParams.get("page")) {
                   params.page = "1";
                 }
-
                 setSearchParams(params);
-
                 setCurrentGenre(item);
               };
 

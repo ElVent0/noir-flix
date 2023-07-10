@@ -34,7 +34,6 @@ export const FiltersParagraph = styled.p`
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }
@@ -50,7 +49,6 @@ export const FilterInputSort = styled.div`
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }
@@ -142,7 +140,6 @@ export const Search = styled.div`
     0% {
       border: 0.6px solid transparent;
     }
-
     100% {
       border: 0.6px solid var(--element-grey);
     }
@@ -151,7 +148,6 @@ export const Search = styled.div`
     0% {
       border: 0.6px solid var(--element-grey);
     }
-
     100% {
       border: 0.6px solid transparent;
     }
@@ -163,7 +159,6 @@ export const SearchInput = styled.input`
   height: 100%;
   border: none;
   outline: none;
-  /* background-color: var(--pure-white); */
   background-color: transparent;
   color: var(--text-main);
   font-size: ${({ focusEvent }) => (focusEvent === true ? "18px" : "14px")};
@@ -204,7 +199,6 @@ export const StarsList = styled.ul`
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }
@@ -256,7 +250,6 @@ export const ButtonAll = styled.button`
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }
@@ -269,13 +262,11 @@ export const MoreCheck = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   animation: animateOpacity 1s linear;
   @keyframes animateOpacity {
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }
@@ -322,11 +313,9 @@ export const GenresList = styled.ul`
     0% {
       opacity: 0;
     }
-
     40% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }

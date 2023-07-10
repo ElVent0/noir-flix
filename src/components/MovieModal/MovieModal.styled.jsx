@@ -56,17 +56,14 @@ export const CollectionBlock = styled.div`
     display: block;
     width: 4px;
   }
-
   &::-webkit-scrollbar-track {
     background-color: var(--bg-grey);
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: var(--accent);
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--accent-hover);
     border-radius: 4px;
@@ -133,13 +130,11 @@ export const CollectionItemTitle = styled.p`
 `;
 
 export const Modal = styled.div`
-  /* background: var(--bg-grey); */
   background: var(--bg-grey-bg);
   border-radius: 10px;
   display: flex;
   padding: 6px 0 6px 6px;
   position: relative;
-
   &::before {
     content: "";
     width: 90%;
@@ -163,7 +158,6 @@ export const Modal = styled.div`
     left: 20%;
     animation: spin 6s linear infinite;
   }
-
   @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -278,20 +272,16 @@ export const ModalParagraph = styled.p`
     max-height: ${(props) => props.page === "library" && "114px"};
     overflow-y: scroll;
     margin-bottom: 0;
-
     ::-webkit-scrollbar {
       width: 8px;
     }
-
     ::-webkit-scrollbar-track {
       background: var(--bg-grey);
     }
-
     ::-webkit-scrollbar-thumb {
       background: var(--pure-white);
       border-radius: 4px;
     }
-
     ::-webkit-scrollbar-thumb:hover {
       background: #9d9d9d;
       border-radius: 4px;
@@ -333,12 +323,6 @@ export const TrailerItem = styled.li`
   & > div {
     pointer-events: none;
   }
-  /* &:hover,
-  &:focus {
-    & > div {
-      display: none;
-    }
-  } */
 `;
 
 export const TrailerButton = styled.a`
@@ -420,7 +404,6 @@ export const AddButton = styled.button`
 export const StarsList = styled.ul`
   display: flex;
   gap: 4px;
-  /* background-color: var(--pure-white); */
   background-color: ${(prop) =>
     prop.editStarsMode ? "var(--pure-white)" : "transparent"};
   height: 36px;
@@ -586,7 +569,6 @@ export const MoreCheckButtonPoster = styled.button`
     forLater === true ? "var(--more-check)" : "var(--bg-grey)"};
   border: ${({ forLater }) =>
     forLater === true ? "1px solid var(--more-check)" : "transparent"};
-
   & > svg {
     transition: 0.6s;
     &:hover,

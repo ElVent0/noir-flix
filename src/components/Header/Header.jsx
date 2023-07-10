@@ -54,7 +54,6 @@ const Header = ({ themeToggle }) => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const currentScrollPercentage =
       (scrollTop / (documentHeight - windowHeight)) * 100;
-
     setScrollPercentage(currentScrollPercentage);
   };
 
@@ -212,10 +211,6 @@ const Header = ({ themeToggle }) => {
 
       {isPlansListModal && (
         <PlansListModal
-          // onCloseProfileModal={onCloseProfileModal}
-          // setIsProfileModal={setIsProfileModal}
-          // isOpenModalProfile={isOpenModalProfile}
-          // themeType={themeType}
           isFixed={isFixed}
           isOpenPlansListProfile={isOpenPlansListProfile}
           changeIsPlansListModal={changeIsPlansListModal}

@@ -8,7 +8,6 @@ export const MainPosters = styled.div`
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 100%;
     }
@@ -125,7 +124,6 @@ export const MainPosterContent = styled.div`
   height: 100%;
   left: 66%;
   top: 0;
-  /* background-color: var(--pure-white); */
   background: var(--pure-white-bg);
   z-index: 998;
   padding: 12px;

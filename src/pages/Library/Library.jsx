@@ -43,28 +43,23 @@ const Library = ({ onAddToRecentMovies }) => {
 
     if (result) {
       const finalList = [];
-
       for (let item of result) {
         const newData = await getMovieById(item.movie_id);
         finalList.push(newData);
       }
-
       setMoviesList(finalList);
     }
   };
 
   const getDataForMovie = async () => {
     const data = await getMovieById(searchParams.get("id"));
-
     const result =
       moviesListIds &&
       moviesListIds.filter((item) => item.movie_id === data.id);
-
     if (result === null || result.length === 0) {
       navigate(`/?id=${data.id}`);
       return;
     }
-
     if (moviesListIds) {
       data.creation_date = result[0].creation_date;
       data.stars = result[0].movie_rating;
@@ -78,11 +73,6 @@ const Library = ({ onAddToRecentMovies }) => {
     if (session) {
       getMoviesFromLibarary();
     }
-
-    // if (searchParams.get("id") !== null) {
-    //   setIsOpenModal(true);
-    //   getDataForMovie();
-    // }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, inputSort]);

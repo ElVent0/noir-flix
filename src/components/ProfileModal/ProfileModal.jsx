@@ -13,12 +13,10 @@ import {
   UserImageCoverContent,
   UnderModal,
   ShadowContainer,
-  // Statistics,
 } from "./ProfileModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-// import path from "../../media/profile.jpg";
 import path from "../../media/profile.png";
 import { logout } from "../../api/auth.jsx";
 import { useState, useEffect, useRef } from "react";
@@ -31,11 +29,10 @@ const ProfileModal = ({
   themeType,
 }) => {
   const [rotation, setRotation] = useState(0);
-  const divRef = useRef(null);
-
   const [mouseX, setMouseX] = useState(1411);
   const [mouseY, setMouseY] = useState(74);
 
+  const divRef = useRef(null);
   const session = useSession();
   const supabase = useSupabaseClient();
 
@@ -74,14 +71,6 @@ const ProfileModal = ({
     };
   }, []);
 
-  // const userName = () => {
-  //   if (session.user.app_metadata.provider === "google") {
-  //     return userData.name;
-  //   } else if (session.user.app_metadata.provider === "email") {
-  //     return session.user.user_metadata.name;
-  //   }
-  // };
-
   const onLogout = () => {
     logout(supabase);
     setIsProfileModal(false);
@@ -94,18 +83,10 @@ const ProfileModal = ({
       isOpenModalProfile={isOpenModalProfile}
     >
       <Modal themetype={themeType}>
-        {/* <Statistics path={path}></Statistics> */}
         <Profile path={path} themetype={themeType}>
           <UserImageContainer mouseX={mouseX} mouseY={mouseY}>
-            <UserImage
-              src={avatar}
-              alt="User image"
-              // mouseX={mouseX}
-              // mouseY={mouseY}
-            />
-            <UserImageCover
-            // mouseX={mouseX} mouseY={mouseY}
-            >
+            <UserImage src={avatar} alt="User image" />
+            <UserImageCover>
               <UserImageCoverContent
                 ref={divRef}
                 rotation={rotation}

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const ReviewsStyled = styled.div`
-  /* background-color: var(--pure-white); */
   background: var(--pure-white-bg);
   min-height: calc(100vh - 217px);
   padding: 0 20px;
@@ -305,13 +304,6 @@ export const HeaderProfile = styled.div`
     margin-right: 6px;
   }
 `;
-
-// export const UserImage = styled.img`
-//   display: inline-block;
-//   margin-right: 6px;
-//   position: relative;
-//   top: 2px;
-// `;
 
 export const MovieName = styled.p`
   color: var(--text-main);

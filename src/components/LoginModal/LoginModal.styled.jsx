@@ -43,9 +43,6 @@ export const ModalBackdrop = styled.div`
 export const Modal = styled.div`
   width: 640px;
   height: 451px;
-  /* background-color: ${(prop) =>
-    prop.themeType ? "var(--pure-white)" : "var(--hover-grey)"}; */
-  /* background-color: var(--bg-grey); */
   border-radius: 10px;
   display: flex;
   overflow: hidden;
@@ -69,7 +66,6 @@ export const UnderModal = styled.div`
   opacity: 1;
   transition: opacity 0.5s;
   animation: spin 5s linear infinite;
-
   @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -96,13 +92,11 @@ export const ModalContent = styled.div`
   width: 340px;
   padding: 34px;
   position: relative;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--bg-grey-transparent);
-
   &::before {
     content: "";
     width: 200%;

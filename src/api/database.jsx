@@ -12,7 +12,6 @@ export const getUserMovies = async (
   // Сортування за датою
 
   let result;
-
   if (window.location.pathname === "/") {
     result = data.sort(
       (a, b) =>
@@ -534,13 +533,6 @@ export const getPlansList = async (supabase, session, setPlansList) => {
       .from("plans")
       .select("*")
       .eq("userId", session.user.id);
-
-    // let result = data.sort(
-    //   (a, b) =>
-    //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    // );
-
-    // let result = data;
 
     if (error) {
       console.error("getPlansList error", error);

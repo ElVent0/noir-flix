@@ -30,22 +30,18 @@ export const PlansList = styled.ul`
   position: relative;
   padding: 40px 10px 10px 10px;
   overflow-y: auto;
-
   &::-webkit-scrollbar {
     display: block;
     width: 4px;
   }
-
   &::-webkit-scrollbar-track {
     background-color: transparent;
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: var(--accent);
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--accent-hover);
     border-radius: 4px;
@@ -189,9 +185,7 @@ export const PlansPoster = styled.img`
   margin-right: 8px;
 `;
 
-export const PlansText = styled.div`
-  /* width: 70%; */
-`;
+export const PlansText = styled.div``;
 
 export const PlansName = styled.p`
   margin-bottom: 8px;

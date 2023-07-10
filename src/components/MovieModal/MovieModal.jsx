@@ -218,7 +218,6 @@ const MovieModal = ({
         successToast,
         setMoviesListIds
       );
-      // setIsInLibrary((prev) => !prev);
     } else if (page === "library") {
       updateStars(
         supabase,

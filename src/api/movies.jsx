@@ -1,7 +1,3 @@
-// import genresData from "../utils/genres.json";
-
-// console.log("g", genresData);
-
 const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
