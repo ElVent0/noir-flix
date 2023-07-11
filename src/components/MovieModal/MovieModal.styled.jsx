@@ -113,9 +113,34 @@ export const CollectionItemLink = styled.button`
   width: 100%;
   height: 100%;
   transition: 0.6s;
+  position: relative;
   &:hover,
   &:focus {
     background-color: var(--hover-grey);
+  }
+`;
+
+export const PosterConatainerForList = styled.div`
+  width: 44px;
+  height: 66px;
+  border-radius: 6px;
+  position: relative;
+`;
+
+export const IconInLibrary = styled.div`
+  position: absolute;
+  bottom: 2px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background-color: rgb(0, 159, 29);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > svg {
+    font-size: 13px;
+    color: #fff;
   }
 `;
 

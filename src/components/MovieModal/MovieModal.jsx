@@ -43,6 +43,8 @@ import {
   CollectionItemPoster,
   CollectionItemTitle,
   MoviePlansButton,
+  PosterConatainerForList,
+  IconInLibrary,
 } from "./MovieModal.styled";
 import { RiCloseLine } from "react-icons/ri";
 import { FaClipboardList } from "react-icons/fa";
@@ -50,7 +52,7 @@ import { useEffect, useState } from "react";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { FaCrown } from "react-icons/fa";
-import { MdOutlineDone } from "react-icons/md";
+import { MdOutlineDone, MdLibraryAddCheck } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
 import youtubeLogo from "../../media/youtube-logo.png";
 import { Toaster } from "react-hot-toast";
@@ -287,6 +289,8 @@ const MovieModal = ({
     }
   };
 
+  // console.log(moviesListIds.includes((item) => item.movie_id === item));
+
   return ReactDOM.createPortal(
     <ModalBackdrop onClick={onCloseReadMore} isOpenModal={isOpenModal}>
       <ModalContainer movieData={movieData}>
@@ -314,19 +318,26 @@ const MovieModal = ({
                       key={item.id}
                     >
                       <CollectionItemLink onClick={onChangeMovie}>
-                        <CollectionItemPoster
-                          src={
-                            item.poster_path
-                              ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
-                              : poster
-                          }
-                          alt="movie poster"
-                          width="44"
-                          height="66"
-                        />
+                        <PosterConatainerForList>
+                          <CollectionItemPoster
+                            src={
+                              item.poster_path
+                                ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+                                : poster
+                            }
+                            alt="movie poster"
+                            width="44"
+                            height="66"
+                          />
+                        </PosterConatainerForList>
                         <CollectionItemTitle>
                           {item.original_title}
                         </CollectionItemTitle>
+                        {moviesListIds.some((i) => i.movie_id === item.id) && (
+                          <IconInLibrary>
+                            <MdLibraryAddCheck />
+                          </IconInLibrary>
+                        )}
                       </CollectionItemLink>
                     </CollectionItem>
                   );
