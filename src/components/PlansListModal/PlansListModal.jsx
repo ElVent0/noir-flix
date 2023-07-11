@@ -15,10 +15,7 @@ import {
   NothingBlock,
   ButtonUp,
 } from "./PlansListModal.styled";
-import {
-  useState,
-  // useEffect
-} from "react";
+import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { AiFillDelete } from "react-icons/ai";
 import { TbReload } from "react-icons/tb";
@@ -35,17 +32,10 @@ const PlansListModal = ({
   plansList,
   setPlansList,
 }) => {
-  // const [plansList, setPlansList] = useState([]);
   const [rotation, setRotation] = useState(false);
 
   const session = useSession();
   const supabase = useSupabaseClient();
-
-  // useEffect(() => {
-  //   getPlansList(supabase, session, setPlansList);
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const onReload = () => {
     setRotation(true);
@@ -55,11 +45,13 @@ const PlansListModal = ({
     getPlansList(supabase, session, setPlansList);
   };
 
-  console.log(1234, plansList);
-
   return (
     <ModalContainer isFixed={isFixed}>
       <PlansHeader isopen={isOpenPlansListProfile}>
+        <MoviesCounter>
+          Plans: {plansList && plansList.length}{" "}
+          {plansList.length === 1 ? "movie" : "movies"}
+        </MoviesCounter>
         <ReloadButton
           type="button"
           onClick={() => onReload()}
@@ -67,7 +59,6 @@ const PlansListModal = ({
         >
           <TbReload />
         </ReloadButton>
-        <MoviesCounter>{plansList && plansList.length} movies</MoviesCounter>
         <ButtonClose type="button" onClick={changeIsPlansListModal}>
           <RiCloseLine />
         </ButtonClose>

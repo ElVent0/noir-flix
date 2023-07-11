@@ -118,8 +118,10 @@ export const ReloadButton = styled.button`
   height: 20px;
   background-color: transparent;
   & > svg {
-    font-size: 20px;
+    font-size: 16px;
     color: var(--text-main);
+    position: relative;
+    top: 1px;
     &:hover,
     &:focus {
       color: var(--text-main-transparent);
@@ -146,7 +148,7 @@ export const ButtonClose = styled.button`
   width: 20px;
   height: 20px;
   background-color: transparent;
-  margin-right: 10px;
+  margin-left: 4px;
   & > svg {
     font-size: 20px;
     color: var(--text-main);

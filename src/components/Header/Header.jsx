@@ -33,6 +33,7 @@ import { botttsNeutral } from "@dicebear/collection";
 import { Toaster } from "react-hot-toast";
 import { ThemeContext } from "../App";
 import { getPlansList } from "../../api/database";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const Header = ({ themeToggle }) => {
   const [isProfileModal, setIsProfileModal] = useState(false);
@@ -46,10 +47,13 @@ const Header = ({ themeToggle }) => {
   const [isPlansListModal, setIsPlansListModal] = useState(false);
   const [isOpenPlansListProfile, setIsOpenPlansListProfile] = useState(false);
   const [plansList, setPlansList] = useState(null);
+  const [previousPathname, setPreviousPathname] = useState("");
 
   const themeType = useContext(ThemeContext);
   const session = useSession();
   const supabase = useSupabaseClient();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
@@ -146,6 +150,21 @@ const Header = ({ themeToggle }) => {
       }, 200);
     }
   };
+
+  useEffect(() => {
+    const currentPathname = location.pathname;
+
+    if (
+      (searchParams.get("id") !== null && plansList) ||
+      (currentPathname !== previousPathname && plansList)
+    ) {
+      changeIsPlansListModal();
+    }
+
+    setPreviousPathname(location.pathname);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <HeaderStyled isFixed={isFixed}>
