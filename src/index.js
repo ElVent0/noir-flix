@@ -27,3 +27,4 @@ root.render(
 // reviewers
 // collections
 // topics
+// admin panel

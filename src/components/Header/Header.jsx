@@ -233,7 +233,7 @@ const Header = ({ themeToggle }) => {
         )}
       </LoginMenu>
 
-      {plansList && (
+      {session && plansList && (
         <PlansListModal
           isFixed={isFixed}
           isOpenPlansListProfile={isOpenPlansListProfile}
