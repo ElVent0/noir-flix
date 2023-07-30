@@ -152,21 +152,33 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
               setCurrentGenre={setCurrentGenre}
               currentGenre={currentGenre}
             />
-            <MoviesList
-              moviesList={moviesList}
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-              onAddToRecentMovies={onAddToRecentMovies}
-              page="research"
-            />
-            {moviesList && moviesList.length === 0 ? (
-              <NothingBlock>
-                <GiEmptyChessboard />
-                It seems that there is no such film...
-              </NothingBlock>
-            ) : (
-              <MoviesNavigation totalPages={totalPages} />
+            {moviesList && moviesList.length !== 0 && (
+              <>
+                <MoviesList
+                  moviesList={moviesList}
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                  onAddToRecentMovies={onAddToRecentMovies}
+                  page="research"
+                />
+                <MoviesNavigation totalPages={totalPages} />
+              </>
             )}
+            {
+              moviesList && moviesList.length === 0 && (
+                <NothingBlock>
+                  <GiEmptyChessboard />
+                  It seems that there is no such film...
+                </NothingBlock>
+              )
+              // : (
+              // <MoviesNavigation totalPages={totalPages} />
+              // )
+            }
+
+            {/* {moviesList && moviesList.length !== 0 && (
+              <MoviesNavigation totalPages={totalPages} />
+            )} */}
           </ResearchStyled>
           <RecentMovies
             poster={poster}

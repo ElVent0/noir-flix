@@ -97,82 +97,84 @@ const MoviesList = ({
   }, [moviesList, stars, forLater]);
 
   return (
-    <MoviesListStyled pathname={window.location.pathname}>
+    <>
       {finalList.length !== 0 ? (
-        finalList.map((item, index) => {
-          const path = item.poster_path
-            ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
-            : poster;
+        <MoviesListStyled pathname={window.location.pathname}>
+          {finalList.map((item, index) => {
+            const path = item.poster_path
+              ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+              : poster;
 
-          const onReadMore = async (id) => {
-            const params = {};
-            if (searchParams.get("page")) {
-              params.page = searchParams.get("page");
-            }
-            params.id = id;
-            setSearchParams(params);
-            onAddToRecentMovies(id);
-          };
-
-          let starsFinal = 0;
-
-          const getRatingList = () => {
-            const stars = finalList[index].stars;
-
-            if (stars) {
-              const ratingList = [];
-              for (let i = 1; i <= stars; i += 1) {
-                ratingList.push(true);
-                starsFinal += 1;
+            const onReadMore = async (id) => {
+              const params = {};
+              if (searchParams.get("page")) {
+                params.page = searchParams.get("page");
               }
-              for (let i = 1; i <= 5 - stars; i += 1) {
-                ratingList.push(false);
-              }
-              return ratingList;
-            }
-          };
+              params.id = id;
+              setSearchParams(params);
+              onAddToRecentMovies(id);
+            };
 
-          return (
-            <MoviesItem key={item.id}>
-              <MoviesHeader>
-                <MoviesPoster path={path}>
-                  {page === "library" && finalList[index].for_later && (
-                    <>
-                      <MoreCheckContainer>
-                        <MoreCheck>
-                          <FaCrown />
-                        </MoreCheck>
-                      </MoreCheckContainer>
-                      <CornerElementLeft></CornerElementLeft>
-                      <CornerElementBottom></CornerElementBottom>
-                    </>
-                  )}
-                </MoviesPoster>
-                <MoviesHeaderContent>
-                  <MoviesName>{item.title}</MoviesName>
-                  <MoviesYear>
-                    {new Date(item.release_date).getFullYear()}
-                  </MoviesYear>
-                  {page === "library" && (
-                    <StarsList>
-                      {getRatingList().map((item, index) => (
-                        <StarItem
-                          key={index}
-                          starsColor={starsColor(starsFinal)}
-                        >
-                          {item ? <TbStarFilled /> : <TbStar />}
-                        </StarItem>
-                      ))}
-                    </StarsList>
-                  )}
-                  <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
-                </MoviesHeaderContent>
-              </MoviesHeader>
-              <MoviesBody>{item.overview}</MoviesBody>
-              <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
-            </MoviesItem>
-          );
-        })
+            let starsFinal = 0;
+
+            const getRatingList = () => {
+              const stars = finalList[index].stars;
+
+              if (stars) {
+                const ratingList = [];
+                for (let i = 1; i <= stars; i += 1) {
+                  ratingList.push(true);
+                  starsFinal += 1;
+                }
+                for (let i = 1; i <= 5 - stars; i += 1) {
+                  ratingList.push(false);
+                }
+                return ratingList;
+              }
+            };
+
+            return (
+              <MoviesItem key={item.id}>
+                <MoviesHeader>
+                  <MoviesPoster path={path}>
+                    {page === "library" && finalList[index].for_later && (
+                      <>
+                        <MoreCheckContainer>
+                          <MoreCheck>
+                            <FaCrown />
+                          </MoreCheck>
+                        </MoreCheckContainer>
+                        <CornerElementLeft></CornerElementLeft>
+                        <CornerElementBottom></CornerElementBottom>
+                      </>
+                    )}
+                  </MoviesPoster>
+                  <MoviesHeaderContent>
+                    <MoviesName>{item.title}</MoviesName>
+                    <MoviesYear>
+                      {new Date(item.release_date).getFullYear()}
+                    </MoviesYear>
+                    {page === "library" && (
+                      <StarsList>
+                        {getRatingList().map((item, index) => (
+                          <StarItem
+                            key={index}
+                            starsColor={starsColor(starsFinal)}
+                          >
+                            {item ? <TbStarFilled /> : <TbStar />}
+                          </StarItem>
+                        ))}
+                      </StarsList>
+                    )}
+                    <MoviesParagraph>{genreIds(item)}</MoviesParagraph>
+                  </MoviesHeaderContent>
+                </MoviesHeader>
+                <MoviesBody>{item.overview}</MoviesBody>
+                <ReadMore onClick={() => onReadMore(item.id)}>More</ReadMore>
+              </MoviesItem>
+            );
+          })}
+        </MoviesListStyled>
       ) : (
         <NothingBlock>
           <img
@@ -183,7 +185,7 @@ const MoviesList = ({
           <p>There are no records with this filter in your library yet</p>
         </NothingBlock>
       )}
-    </MoviesListStyled>
+    </>
   );
 };
 

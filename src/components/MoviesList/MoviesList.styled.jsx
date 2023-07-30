@@ -240,6 +240,7 @@ export const NothingBlock = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  height: fit-content;
   & > img {
     display: block;
     margin: 0 auto 20px auto;
