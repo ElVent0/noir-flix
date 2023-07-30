@@ -46,6 +46,7 @@ const ResearchFilters = ({
   setCurrentGenre,
   currentGenre,
   moviesList,
+  finalList,
 }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
@@ -194,7 +195,7 @@ const ResearchFilters = ({
               <FaCrown />
             </MoreCheckButton>
           </MoreCheck>
-          <MoviesCounter>{moviesList.length} movies</MoviesCounter>
+          <MoviesCounter>{finalList.length} movies</MoviesCounter>
         </>
       )}
       {window.location.pathname === "/" && (

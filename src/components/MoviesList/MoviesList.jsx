@@ -22,7 +22,7 @@ import poster from "../../media/poster.png";
 import { TbStar } from "react-icons/tb";
 import { TbStarFilled } from "react-icons/tb";
 import { FaCrown } from "react-icons/fa";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import genresNames from "../../utils/genres.json";
 import { starsColor } from "../../utils/colors";
 import nothing from "../../media/nothing.png";
@@ -37,9 +37,8 @@ const MoviesList = ({
   forLater,
   onAddToRecentMovies,
   page,
+  finalList,
 }) => {
-  const [finalList, setFinalList] = useState([]);
-
   const themetype = useContext(ThemeContext);
 
   const genreIds = (item) => {
@@ -52,55 +51,14 @@ const MoviesList = ({
     }
   };
 
-  useEffect(() => {
-    if (page === "library") {
-      if (moviesListIds && moviesListIds.length > 0) {
-        const resultList = moviesList.map((item, index) => {
-          item.creation_date = moviesListIds[index].creation_date;
-          item.stars = moviesListIds[index].movie_rating;
-          item.for_later = moviesListIds[index].movie_for_future;
-          return item;
-        });
-
-        if (stars === 0 && forLater === false) {
-          setFinalList(resultList);
-          return;
-        } else if (stars === 0 && forLater === true) {
-          const result = finalList
-            ? resultList.filter((item) => item.for_later === forLater)
-            : finalList.filter((item) => item.for_later === forLater);
-
-          setFinalList(result);
-        } else if (stars !== 0 && forLater === false) {
-          const result = finalList
-            ? resultList.filter((item) => item.stars === stars)
-            : finalList.filter((item) => item.stars === stars);
-
-          setFinalList(result);
-        } else {
-          const result = finalList
-            ? resultList
-                .filter((item) => item.for_later === forLater)
-                .filter((item) => item.stars === stars)
-            : finalList
-                .filter((item) => item.for_later === forLater)
-                .filter((item) => item.stars === stars);
-
-          setFinalList(result);
-        }
-      }
-    } else {
-      setFinalList(moviesList);
-      return;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moviesList, stars, forLater]);
+  const veryFinalList =
+    window.location.pathname === "/" ? moviesList : finalList;
 
   return (
     <>
-      {finalList.length !== 0 ? (
+      {veryFinalList.length !== 0 ? (
         <MoviesListStyled pathname={window.location.pathname}>
-          {finalList.map((item, index) => {
+          {veryFinalList.map((item, index) => {
             const path = item.poster_path
               ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
               : poster;
@@ -118,7 +76,7 @@ const MoviesList = ({
             let starsFinal = 0;
 
             const getRatingList = () => {
-              const stars = finalList[index].stars;
+              const stars = veryFinalList[index].stars;
 
               if (stars) {
                 const ratingList = [];
@@ -137,7 +95,7 @@ const MoviesList = ({
               <MoviesItem key={item.id}>
                 <MoviesHeader>
                   <MoviesPoster path={path}>
-                    {page === "library" && finalList[index].for_later && (
+                    {page === "library" && veryFinalList[index].for_later && (
                       <>
                         <MoreCheckContainer>
                           <MoreCheck>

@@ -33,6 +33,48 @@ const Library = ({ onAddToRecentMovies }) => {
   const themetype = useContext(ThemeContext);
   const navigate = useNavigate();
 
+  const [finalList, setFinalList] = useState([]);
+
+  useEffect(() => {
+    if (moviesListIds && moviesListIds.length > 0) {
+      const resultList = moviesList.map((item, index) => {
+        item.creation_date = moviesListIds[index].creation_date;
+        item.stars = moviesListIds[index].movie_rating;
+        item.for_later = moviesListIds[index].movie_for_future;
+        return item;
+      });
+
+      if (stars === 0 && forLater === false) {
+        setFinalList(resultList);
+        return;
+      } else if (stars === 0 && forLater === true) {
+        const result = finalList
+          ? resultList.filter((item) => item.for_later === forLater)
+          : finalList.filter((item) => item.for_later === forLater);
+
+        setFinalList(result);
+      } else if (stars !== 0 && forLater === false) {
+        const result = finalList
+          ? resultList.filter((item) => item.stars === stars)
+          : finalList.filter((item) => item.stars === stars);
+
+        setFinalList(result);
+      } else {
+        const result = finalList
+          ? resultList
+              .filter((item) => item.for_later === forLater)
+              .filter((item) => item.stars === stars)
+          : finalList
+              .filter((item) => item.for_later === forLater)
+              .filter((item) => item.stars === stars);
+
+        setFinalList(result);
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moviesList, stars, forLater]);
+
   const getMoviesFromLibarary = async () => {
     const result = await getUserMovies(
       supabase,
@@ -135,6 +177,7 @@ const Library = ({ onAddToRecentMovies }) => {
                   setInputSort={setInputSort}
                   inputSort={inputSort}
                   moviesList={moviesList}
+                  finalList={finalList}
                 />
 
                 <MoviesList
@@ -148,6 +191,7 @@ const Library = ({ onAddToRecentMovies }) => {
                   setForLater={setForLater}
                   onAddToRecentMovies={onAddToRecentMovies}
                   page="library"
+                  finalList={finalList}
                 />
               </>
             ) : (

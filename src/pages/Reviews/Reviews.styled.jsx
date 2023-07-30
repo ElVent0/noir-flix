@@ -39,10 +39,7 @@ export const FiltersButton = styled.button`
   background-color: ${(props) =>
     props.isUsersReviews ? "var(--accent)" : "var(--pure-white)"};
   color: ${(props) => (props.isUsersReviews ? "#fff" : "var(--accent)")};
-  border: ${(props) =>
-    props.isUsersReviews
-      ? "1px solid var(--pure-white)"
-      : "1px solid var(--accent)"};
+  border: 1px solid var(--accent);
   &:hover,
   &:focus {
     background-color: ${(props) =>
@@ -152,8 +149,7 @@ export const ButtonColumns = styled.button`
   background-color: ${(props) =>
     props.isone ? "var(--accent)" : "var(--pure-white)"};
   color: ${(props) => (props.isone ? "#fff" : "var(--accent)")};
-  border: ${(props) =>
-    props.isone ? "1px solid var(--pure-white)" : "1px solid var(--accent)"};
+  border: 1px solid var(--accent);
   &:hover,
   &:focus {
     background-color: ${(props) =>
@@ -173,8 +169,6 @@ export const ButtonColumns = styled.button`
     background-color: ${(props) =>
       props.isone ? "var(--pure-white)" : "var(--accent)"};
     color: ${(props) => (props.isone ? "var(--accent)" : "#fff")};
-    border: ${(props) =>
-      props.isone ? "1px solid var(--accent)" : "1px solid var(--pure-white)"};
   }
 `;
 
