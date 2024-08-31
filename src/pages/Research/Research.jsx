@@ -31,8 +31,9 @@ const Research = ({ onAddToRecentMovies, recentList, setRecentList }) => {
   const supabase = useSupabaseClient();
 
   const getData = async () => {
+    const currentPage = searchParams.get("page");
     const data = await getMovies(
-      searchParams.get("page"),
+      currentPage ? currentPage : 1,
       inputSort,
       currentGenre
     );
